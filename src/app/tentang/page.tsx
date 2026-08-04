@@ -17,7 +17,7 @@ export default function AboutPage() {
   return (
     <main className="about-page">
       <nav className="nav shell">
-        <a className="wordmark" href="/"><Image src="/jcp-logo.svg" alt="JCP - Jogja Creative Production" width={120} height={76} priority /></a>
+        <a className="wordmark" href="/"><Image src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" width={120} height={76} priority /></a>
         <div className="nav-links"><a href="/">Beranda</a><a href="/layanan">Layanan</a><a href="/portfolio">Portofolio</a></div>
         <a className="nav-cta" href="/hubungi">Let&apos;s talk <i>↗</i></a>
       </nav>
