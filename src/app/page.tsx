@@ -24,7 +24,7 @@ export default function Home() {
     <main>
       <nav className="nav shell">
         <a className="wordmark" href="#home" aria-label="Jogja Creative Production">
-          <Image src="/jcp-logo.jpg" alt="JCP - Jogja Creative Production" width={120} height={76} priority />
+          <Image src="/jcp-logo.svg" alt="JCP - Jogja Creative Production" width={120} height={76} priority />
         </a>
         <div className="nav-links" aria-label="Navigasi utama">
           <a href="/tentang">Tentang</a>
