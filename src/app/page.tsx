@@ -29,7 +29,7 @@ export default function Home() {
         <div className="nav-links" aria-label="Navigasi utama">
           <a href="#about">Tentang</a>
           <a href="#services">Layanan</a>
-          <a href="#works">Portofolio</a>
+          <a href="/portfolio">Portofolio</a>
         </div>
         <a className="nav-cta" href="mailto:jogjacreativeproduction@gmail.com">Let&apos;s talk <i>↗</i></a>
       </nav>
