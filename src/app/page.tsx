@@ -7,9 +7,9 @@ const services = [
 ];
 
 const projects = [
-  { number: "01", category: "Drone Training", title: "Badan Otorita Borobudur", tone: "sun" },
-  { number: "02", category: "Visual Production", title: "Annual Meeting PT Tunas Tasik", tone: "ink" },
-  { number: "03", category: "Drone Training", title: "BPBD Kabupaten Gunungkidul", tone: "clay" },
+  { number: "01", category: "Drone Training", title: "Badan Otorita Borobudur", tone: "sun", image: "https://images.unsplash.com/photo-1722922262588-27e059c95b73?auto=format&fit=crop&w=1400&q=80" },
+  { number: "02", category: "Visual Production", title: "Annual Meeting PT Tunas Tasik", tone: "ink", image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1400&q=80" },
+  { number: "03", category: "Drone Training", title: "BPBD Kabupaten Gunungkidul", tone: "clay", image: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=80" },
 ];
 
 export default function Home() {
@@ -74,7 +74,7 @@ export default function Home() {
         <div className="project-grid">
           {projects.map((project) => (
             <article className={`project-card ${project.tone}`} key={project.number}>
-              <div className="project-art"><span>{project.number}</span><i /><i /><b>JCP</b></div>
+              <div className="project-art" style={{ backgroundImage: `linear-gradient(135deg, rgba(23, 15, 9, .15), rgba(23, 15, 9, .62)), url(${project.image})` }}><span>{project.number}</span><i /><i /><b>JCP</b></div>
               <p>{project.category}</p>
               <h3>{project.title}</h3>
               <a href="/hubungi" aria-label={`Tanyakan proyek ${project.title}`}>↗</a>
