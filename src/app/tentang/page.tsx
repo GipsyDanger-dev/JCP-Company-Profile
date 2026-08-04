@@ -19,7 +19,7 @@ export default function AboutPage() {
       <nav className="nav shell">
         <a className="wordmark" href="/"><Image src="/jcp-logo.jpg" alt="JCP - Jogja Creative Production" width={120} height={76} priority /></a>
         <div className="nav-links"><a href="/">Beranda</a><a href="/layanan">Layanan</a><a href="/portfolio">Portofolio</a></div>
-        <a className="nav-cta" href="mailto:jogjacreativeproduction@gmail.com">Let&apos;s talk <i>↗</i></a>
+        <a className="nav-cta" href="/hubungi">Let&apos;s talk <i>↗</i></a>
       </nav>
 
       <section className="about-hero shell">
