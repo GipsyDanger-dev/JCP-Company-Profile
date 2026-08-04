@@ -15,9 +15,10 @@ type SiteNavProps = { active?: "tentang" | "layanan" | "portfolio" | "hubungi" }
 
 export function SiteNav({ active }: SiteNavProps) {
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [announcementOpen, setAnnouncementOpen] = useState(true);
 
   return <header className="site-header">
-    <a className="nav-announcement" href="/hubungi">Punya project yang ingin diwujudkan? Mari mulai percakapannya <b>→</b></a>
+    {announcementOpen && <div className="nav-announcement"><a href="/hubungi">Punya project yang ingin diwujudkan? Mari mulai percakapannya <b>→</b></a><button type="button" aria-label="Tutup pengumuman" onClick={() => setAnnouncementOpen(false)}>×</button></div>}
     <nav className="nav shell" aria-label="Navigasi utama">
     <a className="wordmark" href="/" aria-label="Jogja Creative Production"><Image src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" width={120} height={76} priority /></a>
     <div className="nav-links">
