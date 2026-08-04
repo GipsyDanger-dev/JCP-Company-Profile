@@ -22,17 +22,7 @@ const process = [
 export default function Home() {
   return (
     <main>
-      <nav className="nav shell">
-        <a className="wordmark" href="#home" aria-label="Jogja Creative Production">
-          <Image src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" width={120} height={76} priority />
-        </a>
-        <div className="nav-links" aria-label="Navigasi utama">
-          <a href="/tentang">Tentang</a>
-          <a href="/layanan">Layanan</a>
-          <a href="/portfolio">Portofolio</a>
-        </div>
-        <a className="nav-cta" href="/hubungi">Let&apos;s talk <i>↗</i></a>
-      </nav>
+      <SiteNav />
 
       <section className="hero shell" id="home">
         <div className="hero-meta"><span className="dot" /> Yogyakarta, Indonesia <span>Est. 2022</span></div>
@@ -139,4 +129,4 @@ export default function Home() {
     </main>
   );
 }
-import Image from "next/image";
+import { SiteNav } from "@/components/site-nav";
