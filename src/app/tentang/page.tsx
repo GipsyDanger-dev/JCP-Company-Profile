@@ -34,8 +34,8 @@ export default function AboutPage() {
 
       <section className="vision shell">
         <p className="section-label">(Our direction)</p>
-        <div><span>Vision</span><h2>Menjadi Digital Creative Best Solution yang terpercaya, inovatif, dan berdampak.</h2></div>
-        <div className="mission"><span>Mission</span><ol><li>Menghadirkan produksi visual profesional yang terencana, detail, dan tepat waktu.</li><li>Membangun komunikasi visual yang efektif untuk memperkuat identitas brand.</li><li>Memberikan solusi terintegrasi agar klien dapat fokus mengembangkan usahanya.</li></ol></div>
+        <div><span>Vision</span><h2>Menjadi Digital Creative Best Solution yang terpercaya, inovatif, dan berdampak, dengan layanan kreatif dan teknologi digital yang memberi nilai terbaik bagi setiap klien.</h2></div>
+        <div className="mission"><span>Mission</span><ol><li>Menghadirkan layanan kreatif dan produksi visual dengan standar profesional, perencanaan matang, proses detail, serta eksekusi tepat waktu.</li><li>Membangun komunikasi visual yang efektif dan relevan untuk memperkuat identitas brand, menarik perhatian audiens, dan mendukung tujuan pemasaran klien.</li><li>Memberikan solusi terintegrasi untuk bisnis dan event—mulai desain, konten, hingga dokumentasi—agar klien dapat fokus mengembangkan usaha dengan percaya diri.</li></ol></div>
       </section>
 
       <section className="values"><div className="shell"><div className="values-heading"><p className="section-label">(What guides us)</p><h2>How we<br /><em>show up.</em></h2></div><div className="value-grid">{values.map(([number, title, description]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{description}</p></article>)}</div></div></section>

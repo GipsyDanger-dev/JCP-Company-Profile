@@ -68,6 +68,12 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="company-snapshot shell">
+        <p className="section-label">(About the company)</p>
+        <div className="snapshot-copy"><h2>A creative partner<br />built for <em>momentum.</em></h2><p>PT Jogja Creative Production adalah perusahaan digital kreatif di Yogyakarta yang membantu bisnis, institusi, dan penyelenggara event menjawab kebutuhan visual secara terintegrasi. Dari strategi brand hingga eksekusi di lapangan, kami membuat proses kreatif lebih terarah dan hasilnya lebih berdampak.</p></div>
+        <div className="snapshot-grid"><article><span>05</span><p>Unit layanan terintegrasi</p></article><article><span>2022</span><p>Tahun JCP mulai berkarya</p></article><article><span>DIY</span><p>Berbasis di Yogyakarta, melayani lintas kota</p></article></div>
+      </section>
+
       <section className="services shell" id="services">
         <div className="section-topline"><p className="section-label">(02) Our playground</p><p>Five ways we can move your story forward.</p></div>
         <div className="service-list">
