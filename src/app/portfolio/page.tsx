@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { SiteNav } from "@/components/site-nav";
 import { useState } from "react";
 
 const projects = [
@@ -18,11 +18,7 @@ export default function PortfolioPage() {
 
   return (
     <main className="portfolio-page">
-      <nav className="nav shell">
-        <a className="wordmark" href="/"><Image src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" width={120} height={76} priority /></a>
-        <div className="nav-links"><a href="/">Beranda</a><a href="/tentang">Tentang</a><a className="active" href="/portfolio">Portofolio</a></div>
-        <a className="nav-cta" href="/hubungi">Let&apos;s talk <i>↗</i></a>
-      </nav>
+      <SiteNav active="portfolio" />
 
       <section className="portfolio-hero shell">
         <p className="section-label">(Selected projects)</p>

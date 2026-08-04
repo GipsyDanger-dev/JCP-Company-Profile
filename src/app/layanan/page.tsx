@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SiteNav } from "@/components/site-nav";
 
 const services = [
   ["01", "North Production", "Foto, video, dan cerita visual untuk brand, bisnis, dan event.", "Photo & video production", "orange", "north-production"],
@@ -11,11 +11,7 @@ const services = [
 export default function ServicesPage() {
   return (
     <main className="services-page">
-      <nav className="nav shell">
-        <a className="wordmark" href="/"><Image src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" width={120} height={76} priority /></a>
-        <div className="nav-links"><a href="/">Beranda</a><a className="active" href="/layanan">Layanan</a><a href="/portfolio">Portofolio</a></div>
-        <a className="nav-cta" href="/hubungi">Let&apos;s talk <i>↗</i></a>
-      </nav>
+      <SiteNav active="layanan" />
 
       <section className="services-hero shell">
         <p className="section-label">(What we do)</p>
