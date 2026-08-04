@@ -24,7 +24,8 @@ export default function Home() {
     <main>
       <SiteNav />
 
-      <section className="hero shell" id="home">
+      <section className="hero hero-lines-hero shell" id="home">
+        <FloatingLines linesGradient={["#ff5a1f", "#ffb21d", "#f4f0e9"]} lineCount={[8, 13, 18]} lineDistance={[0.16, 0.105, 0.07]} animationSpeed={0.42} parallax parallaxStrength={0.055} />
         <div className="hero-meta"><span className="dot" /> Yogyakarta, Indonesia <span>Est. 2022</span></div>
         <div className="hero-grid">
           <div className="hero-copy">
@@ -33,8 +34,7 @@ export default function Home() {
             <p className="intro">Kami mengubah gagasan menjadi pengalaman visual yang punya arah, rasa, dan dampak.</p>
             <a className="primary-cta" href="#services">Jelajahi layanan <b>↓</b></a>
           </div>
-          <div className="hero-art hero-lines-art" aria-label="Animasi garis kreatif JCP">
-            <FloatingLines linesGradient={["#ff5a1f", "#ffb21d", "#f4f0e9"]} lineCount={[8, 13, 18]} lineDistance={[0.16, 0.105, 0.07]} animationSpeed={0.42} parallax parallaxStrength={0.055} />
+          <div className="hero-art hero-lines-art" aria-label="Identitas visual JCP">
             <span className="stamp">JCP<br /><small>creative<br />production</small></span>
             <span className="art-word">CREATE</span>
             <span className="art-note">visual strategy<br />with a pulse</span>
