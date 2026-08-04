@@ -28,7 +28,7 @@ export default function Home() {
         </a>
         <div className="nav-links" aria-label="Navigasi utama">
           <a href="#about">Tentang</a>
-          <a href="#services">Layanan</a>
+          <a href="/layanan">Layanan</a>
           <a href="/portfolio">Portofolio</a>
         </div>
         <a className="nav-cta" href="mailto:jogjacreativeproduction@gmail.com">Let&apos;s talk <i>↗</i></a>
