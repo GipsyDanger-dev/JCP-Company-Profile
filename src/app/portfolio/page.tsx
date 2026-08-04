@@ -32,7 +32,7 @@ export default function PortfolioPage() {
           {visibleProjects.map((project) => (
             <article className={`portfolio-card ${project.tone}`} key={project.number}>
               <div className="portfolio-art" style={{ backgroundImage: `linear-gradient(135deg, rgba(23, 15, 9, .18), rgba(23, 15, 9, .64)), url(${project.image})` }}><span>{project.number}</span><i /><i /><b>{project.year}</b><em>JCP</em></div>
-              <div className="portfolio-card-copy"><p>{project.category}</p><h2>{project.title}</h2><span>{project.client}</span><a href="/hubungi" aria-label={`Tanyakan proyek ${project.title}`}>View project <b>↗</b></a></div>
+              <div className="portfolio-card-copy"><p>{project.category}</p><h2>{project.title}</h2><span>{project.client}</span></div>
             </article>
           ))}
         </div>
