@@ -20,7 +20,7 @@ export function SiteNav({ active }: SiteNavProps) {
     <a className="wordmark" href="/" aria-label="Jogja Creative Production"><Image src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" width={120} height={76} priority /></a>
     <div className="nav-links">
       <a className={active === "tentang" ? "active" : ""} href="/tentang">Tentang</a>
-      <div className="nav-dropdown" onMouseLeave={() => setServicesOpen(false)}>
+      <div className="nav-dropdown" onMouseEnter={() => setServicesOpen(true)} onMouseLeave={() => setServicesOpen(false)}>
         <button className={active === "layanan" ? "active" : ""} type="button" aria-expanded={servicesOpen} aria-controls="services-menu" onClick={() => setServicesOpen((open) => !open)}>Layanan <span>↓</span></button>
         {servicesOpen && <div className="services-menu" id="services-menu">
           <div className="services-menu-intro"><span>(JCP SERVICES)</span><strong>Choose your<br />creative lane.</strong><a href="/layanan" onClick={() => setServicesOpen(false)}>Lihat semua layanan <b>↗</b></a></div>
