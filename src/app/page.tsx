@@ -12,13 +12,6 @@ const projects = [
   { number: "03", category: "Drone Training", title: "BPBD Kabupaten Gunungkidul", tone: "clay" },
 ];
 
-const process = [
-  ["01", "Listen", "Menyamakan tujuan, audiens, dan definisi hasil yang baik."],
-  ["02", "Shape", "Menerjemahkan insight menjadi arah kreatif yang terasa tepat."],
-  ["03", "Make", "Memproduksi dengan detail, ritme, dan standar profesional."],
-  ["04", "Move", "Mengirim karya yang siap dipakai untuk langkah berikutnya."],
-];
-
 export default function Home() {
   return (
     <main className="landing-page">
@@ -90,27 +83,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="process">
-        <div className="shell">
-          <div className="process-heading"><p className="section-label">(04) How we work</p><h2>Less noise.<br /><em>More meaning.</em></h2></div>
-          <div className="process-grid">
-            {process.map(([number, title, description]) => (
-              <article key={number}><span>{number}</span><h3>{title}</h3><p>{description}</p></article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="statement">
-        <div className="shell">
-          <p className="section-label">(05) Our point of view</p>
-          <h2>Good visual doesn&apos;t<br />just <em>look</em> good.</h2>
-          <div className="statement-bottom"><p>It helps people feel something, remember something, and choose something.</p><a href="/hubungi">Mulai proyek Anda <span>↗</span></a></div>
-        </div>
-      </section>
-
       <section className="contact-cta shell" id="contact">
-        <p className="section-label">(06) Start something</p>
+        <p className="section-label">(04) Start something</p>
         <div><h2>Got a good<br /><em>idea?</em></h2><a href="/hubungi">Tell us everything <span>↗</span></a></div>
         <p className="contact-detail">jogjacreativeproduction@gmail.com<br />+62 856-787-4388</p>
       </section>
