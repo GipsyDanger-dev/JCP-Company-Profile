@@ -21,7 +21,7 @@ const process = [
 
 export default function Home() {
   return (
-    <main>
+    <main className="landing-page">
       <SiteNav />
 
       <section className="hero hero-lines-hero hero-wide" id="home">
