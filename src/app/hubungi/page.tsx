@@ -1,4 +1,5 @@
 import Image from "next/image";
+import "./contact.css";
 
 export default function ContactPage() {
   return (
