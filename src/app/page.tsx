@@ -24,8 +24,8 @@ export default function Home() {
     <main>
       <SiteNav />
 
-      <section className="hero hero-lines-hero shell" id="home">
-        <FloatingLines linesGradient={["#ff5a1f", "#ffb21d", "#f4f0e9"]} lineCount={[8, 13, 18]} lineDistance={[0.16, 0.105, 0.07]} animationSpeed={0.42} parallax parallaxStrength={0.055} />
+      <section className="hero hero-lines-hero hero-wide" id="home">
+        <FloatingLines linesGradient={["#8f3f24", "#ff6826", "#ffbd34"]} lineCount={[7, 11, 15]} lineDistance={[0.18, 0.12, 0.085]} animationSpeed={0.42} parallax parallaxStrength={0.055} />
         <div className="hero-meta"><span className="dot" /> Yogyakarta, Indonesia <span>Est. 2022</span></div>
         <div className="hero-grid">
           <div className="hero-copy">
