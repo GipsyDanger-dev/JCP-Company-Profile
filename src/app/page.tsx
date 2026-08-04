@@ -6,6 +6,19 @@ const services = [
   ["05", "Drone Training", "Pelatihan terarah untuk terbang lebih aman dan lebih percaya diri."],
 ];
 
+const projects = [
+  { number: "01", category: "Drone Training", title: "Badan Otorita Borobudur", tone: "sun" },
+  { number: "02", category: "Visual Production", title: "Annual Meeting PT Tunas Tasik", tone: "ink" },
+  { number: "03", category: "Drone Training", title: "BPBD Kabupaten Gunungkidul", tone: "clay" },
+];
+
+const process = [
+  ["01", "Listen", "Menyamakan tujuan, audiens, dan definisi hasil yang baik."],
+  ["02", "Shape", "Menerjemahkan insight menjadi arah kreatif yang terasa tepat."],
+  ["03", "Make", "Memproduksi dengan detail, ritme, dan standar profesional."],
+  ["04", "Move", "Mengirim karya yang siap dipakai untuk langkah berikutnya."],
+];
+
 export default function Home() {
   return (
     <main>
@@ -69,12 +82,47 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="statement" id="works">
+      <section className="work shell" id="works">
+        <div className="section-topline"><p className="section-label">(03) Selected work</p><a href="mailto:jogjacreativeproduction@gmail.com">See more projects ↗</a></div>
+        <div className="work-intro">
+          <h2>Made with<br /><em>intention.</em></h2>
+          <p>Dari pelatihan yang lebih aman sampai event yang lebih hidup, setiap proyek dimulai dengan tujuan yang jelas.</p>
+        </div>
+        <div className="project-grid">
+          {projects.map((project) => (
+            <article className={`project-card ${project.tone}`} key={project.number}>
+              <div className="project-art"><span>{project.number}</span><i /><i /><b>JCP</b></div>
+              <p>{project.category}</p>
+              <h3>{project.title}</h3>
+              <a href="mailto:jogjacreativeproduction@gmail.com" aria-label={`Tanyakan proyek ${project.title}`}>↗</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="process">
         <div className="shell">
-          <p className="section-label">(03) Our point of view</p>
+          <div className="process-heading"><p className="section-label">(04) How we work</p><h2>Less noise.<br /><em>More meaning.</em></h2></div>
+          <div className="process-grid">
+            {process.map(([number, title, description]) => (
+              <article key={number}><span>{number}</span><h3>{title}</h3><p>{description}</p></article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="statement">
+        <div className="shell">
+          <p className="section-label">(05) Our point of view</p>
           <h2>Good visual doesn&apos;t<br />just <em>look</em> good.</h2>
           <div className="statement-bottom"><p>It helps people feel something, remember something, and choose something.</p><a href="mailto:jogjacreativeproduction@gmail.com">Mulai proyek Anda <span>↗</span></a></div>
         </div>
+      </section>
+
+      <section className="contact-cta shell" id="contact">
+        <p className="section-label">(06) Start something</p>
+        <div><h2>Got a good<br /><em>idea?</em></h2><a href="mailto:jogjacreativeproduction@gmail.com">Tell us everything <span>↗</span></a></div>
+        <p className="contact-detail">jogjacreativeproduction@gmail.com<br />+62 856-787-4388</p>
       </section>
 
       <footer className="footer shell">
