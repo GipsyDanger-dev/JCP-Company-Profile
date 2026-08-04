@@ -31,7 +31,7 @@ export default function Home() {
           <a href="/layanan">Layanan</a>
           <a href="/portfolio">Portofolio</a>
         </div>
-        <a className="nav-cta" href="mailto:jogjacreativeproduction@gmail.com">Let&apos;s talk <i>↗</i></a>
+        <a className="nav-cta" href="/hubungi">Let&apos;s talk <i>↗</i></a>
       </nav>
 
       <section className="hero shell" id="home">
