@@ -1,9 +1,9 @@
 import { SiteNav } from "@/components/site-nav";
 
 const values = [
-  ["01", "Creative Thinking", "Kami memulai dari pemahaman menyeluruh terhadap kebutuhan dan tujuan setiap proyek."],
-  ["02", "Visual Strategy", "Setiap elemen dirancang untuk memperjelas pesan dan memperkuat identitas brand."],
-  ["03", "Professional Execution", "Detail, presisi, dan kualitas menjadi standar dalam setiap eksekusi."],
+  ["01", "Creative Thinking", "Kami memulai setiap proyek dengan pemahaman menyeluruh terhadap kebutuhan dan tujuan klien. Setiap ide dikembangkan melalui proses berpikir kreatif, analisis visual, dan eksplorasi konsep, sehingga menghasilkan solusi yang relevan, segar, dan berbeda."],
+  ["02", "Visual Strategy", "Kami tidak hanya membuat desain yang indah, tetapi juga strategi visual yang memiliki arah komunikasi yang jelas. Setiap elemen disusun untuk menyampaikan pesan, memperkuat identitas, dan mendukung tujuan bisnis melalui konten yang terencana dan terukur."],
+  ["03", "Professional Execution", "Kualitas eksekusi adalah prioritas utama kami. Tim kami memastikan produksi dilakukan dengan detail, presisi, dan standar profesional, sehingga setiap hasil akhir memiliki nilai estetika, fungsional, dan berdampak bagi klien."],
 ];
 
 const teams = [
