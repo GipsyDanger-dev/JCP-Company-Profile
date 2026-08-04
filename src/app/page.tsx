@@ -27,7 +27,7 @@ export default function Home() {
           <Image src="/jcp-logo.jpg" alt="JCP - Jogja Creative Production" width={120} height={76} priority />
         </a>
         <div className="nav-links" aria-label="Navigasi utama">
-          <a href="#about">Tentang</a>
+          <a href="/tentang">Tentang</a>
           <a href="/layanan">Layanan</a>
           <a href="/portfolio">Portofolio</a>
         </div>
