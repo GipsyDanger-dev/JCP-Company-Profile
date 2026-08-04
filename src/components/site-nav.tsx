@@ -16,7 +16,9 @@ type SiteNavProps = { active?: "tentang" | "layanan" | "portfolio" | "hubungi" }
 export function SiteNav({ active }: SiteNavProps) {
   const [servicesOpen, setServicesOpen] = useState(false);
 
-  return <nav className="nav shell" aria-label="Navigasi utama">
+  return <header className="site-header">
+    <a className="nav-announcement" href="/hubungi">Punya project yang ingin diwujudkan? Mari mulai percakapannya <b>→</b></a>
+    <nav className="nav shell" aria-label="Navigasi utama">
     <a className="wordmark" href="/" aria-label="Jogja Creative Production"><Image src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" width={120} height={76} priority /></a>
     <div className="nav-links">
       <a className={active === "tentang" ? "active" : ""} href="/tentang">Tentang</a>
@@ -30,5 +32,6 @@ export function SiteNav({ active }: SiteNavProps) {
       <a className={active === "portfolio" ? "active" : ""} href="/portfolio">Portofolio</a>
     </div>
     <a className={`nav-cta${active === "hubungi" ? " active-cta" : ""}`} href="/hubungi">Let&apos;s talk <i>↗</i></a>
-  </nav>;
+    </nav>
+  </header>;
 }
