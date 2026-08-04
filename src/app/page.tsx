@@ -29,15 +29,10 @@ export default function Home() {
         <div className="hero-meta"><span className="dot" /> Yogyakarta, Indonesia <span>Est. 2022</span></div>
         <div className="hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow">Digital creative best solution</p>
-            <h1>Make it<br /><em>matter.</em></h1>
+            <p className="eyebrow">JCP / Jogja Creative Production</p>
+            <h1><span className="hero-brand">JCP</span><br />Make it<br /><em>matter.</em></h1>
             <p className="intro">Kami mengubah gagasan menjadi pengalaman visual yang punya arah, rasa, dan dampak.</p>
             <a className="primary-cta" href="#services">Jelajahi layanan <b>↓</b></a>
-          </div>
-          <div className="hero-art hero-lines-art" aria-label="Identitas visual JCP">
-            <span className="stamp">JCP<br /><small>creative<br />production</small></span>
-            <span className="art-word">CREATE</span>
-            <span className="art-note">visual strategy<br />with a pulse</span>
           </div>
         </div>
         <div className="hero-footer">
