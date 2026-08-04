@@ -14,7 +14,7 @@ export default function ServicesPage() {
       <nav className="nav shell">
         <a className="wordmark" href="/"><Image src="/jcp-logo.jpg" alt="JCP - Jogja Creative Production" width={120} height={76} priority /></a>
         <div className="nav-links"><a href="/">Beranda</a><a className="active" href="/layanan">Layanan</a><a href="/portfolio">Portofolio</a></div>
-        <a className="nav-cta" href="mailto:jogjacreativeproduction@gmail.com">Let&apos;s talk <i>↗</i></a>
+        <a className="nav-cta" href="/hubungi">Let&apos;s talk <i>↗</i></a>
       </nav>
 
       <section className="services-hero shell">
@@ -38,7 +38,7 @@ export default function ServicesPage() {
       <section className="services-close shell">
         <p className="section-label">Not sure where to start?</p>
         <h2>We&apos;ll figure it<br />out <em>together.</em></h2>
-        <a href="mailto:jogjacreativeproduction@gmail.com">Start with a conversation <span>↗</span></a>
+        <a href="/hubungi">Start with a conversation <span>↗</span></a>
       </section>
     </main>
   );

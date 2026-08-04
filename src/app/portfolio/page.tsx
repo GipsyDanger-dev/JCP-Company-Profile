@@ -36,14 +36,14 @@ export default function PortfolioPage() {
           {visibleProjects.map((project) => (
             <article className={`portfolio-card ${project.tone}`} key={project.number}>
               <div className="portfolio-art"><span>{project.number}</span><i /><i /><b>{project.year}</b><em>JCP</em></div>
-              <div className="portfolio-card-copy"><p>{project.category}</p><h2>{project.title}</h2><span>{project.client}</span><a href="mailto:jogjacreativeproduction@gmail.com" aria-label={`Tanyakan proyek ${project.title}`}>View project <b>↗</b></a></div>
+              <div className="portfolio-card-copy"><p>{project.category}</p><h2>{project.title}</h2><span>{project.client}</span><a href="/hubungi" aria-label={`Tanyakan proyek ${project.title}`}>View project <b>↗</b></a></div>
             </article>
           ))}
         </div>
       </section>
 
       <section className="portfolio-outro">
-        <div className="shell"><p className="section-label">Have a project in mind?</p><h2>Let&apos;s make<br /><em>something real.</em></h2><a href="mailto:jogjacreativeproduction@gmail.com">Start a conversation <span>↗</span></a></div>
+        <div className="shell"><p className="section-label">Have a project in mind?</p><h2>Let&apos;s make<br /><em>something real.</em></h2><a href="/hubungi">Start a conversation <span>↗</span></a></div>
       </section>
     </main>
   );

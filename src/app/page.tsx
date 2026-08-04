@@ -83,7 +83,7 @@ export default function Home() {
       </section>
 
       <section className="work shell" id="works">
-        <div className="section-topline"><p className="section-label">(03) Selected work</p><a href="mailto:jogjacreativeproduction@gmail.com">See more projects ↗</a></div>
+        <div className="section-topline"><p className="section-label">(03) Selected work</p><a href="/hubungi">See more projects ↗</a></div>
         <div className="work-intro">
           <h2>Made with<br /><em>intention.</em></h2>
           <p>Dari pelatihan yang lebih aman sampai event yang lebih hidup, setiap proyek dimulai dengan tujuan yang jelas.</p>
@@ -94,7 +94,7 @@ export default function Home() {
               <div className="project-art"><span>{project.number}</span><i /><i /><b>JCP</b></div>
               <p>{project.category}</p>
               <h3>{project.title}</h3>
-              <a href="mailto:jogjacreativeproduction@gmail.com" aria-label={`Tanyakan proyek ${project.title}`}>↗</a>
+              <a href="/hubungi" aria-label={`Tanyakan proyek ${project.title}`}>↗</a>
             </article>
           ))}
         </div>
@@ -115,13 +115,13 @@ export default function Home() {
         <div className="shell">
           <p className="section-label">(05) Our point of view</p>
           <h2>Good visual doesn&apos;t<br />just <em>look</em> good.</h2>
-          <div className="statement-bottom"><p>It helps people feel something, remember something, and choose something.</p><a href="mailto:jogjacreativeproduction@gmail.com">Mulai proyek Anda <span>↗</span></a></div>
+          <div className="statement-bottom"><p>It helps people feel something, remember something, and choose something.</p><a href="/hubungi">Mulai proyek Anda <span>↗</span></a></div>
         </div>
       </section>
 
       <section className="contact-cta shell" id="contact">
         <p className="section-label">(06) Start something</p>
-        <div><h2>Got a good<br /><em>idea?</em></h2><a href="mailto:jogjacreativeproduction@gmail.com">Tell us everything <span>↗</span></a></div>
+        <div><h2>Got a good<br /><em>idea?</em></h2><a href="/hubungi">Tell us everything <span>↗</span></a></div>
         <p className="contact-detail">jogjacreativeproduction@gmail.com<br />+62 856-787-4388</p>
       </section>
 
