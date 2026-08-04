@@ -33,10 +33,9 @@ export default function Home() {
             <p className="intro">Kami mengubah gagasan menjadi pengalaman visual yang punya arah, rasa, dan dampak.</p>
             <a className="primary-cta" href="#services">Jelajahi layanan <b>↓</b></a>
           </div>
-          <div className="hero-art" aria-label="Komposisi grafis JCP">
+          <div className="hero-art hero-lines-art" aria-label="Animasi garis kreatif JCP">
+            <FloatingLines linesGradient={["#ff5a1f", "#ffb21d", "#f4f0e9"]} lineCount={[8, 13, 18]} lineDistance={[0.16, 0.105, 0.07]} animationSpeed={0.42} parallax parallaxStrength={0.055} />
             <span className="stamp">JCP<br /><small>creative<br />production</small></span>
-            <span className="orbit orbit-one" />
-            <span className="orbit orbit-two" />
             <span className="art-word">CREATE</span>
             <span className="art-note">visual strategy<br />with a pulse</span>
           </div>
@@ -130,3 +129,4 @@ export default function Home() {
   );
 }
 import { SiteNav } from "@/components/site-nav";
+import { FloatingLines } from "@/components/floating-lines";
