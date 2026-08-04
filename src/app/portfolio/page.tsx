@@ -4,7 +4,7 @@ import { SiteNav } from "@/components/site-nav";
 import { useState } from "react";
 
 const projects = [
-  { number: "01", category: "Drone Training", client: "Badan Otorita Borobudur", title: "Pelatihan Drone Divisi Komunikasi Publik", year: "2025", tone: "orange", image: "https://images.unsplash.com/photo-1722922262588-27e059c95b73?auto=format&fit=crop&w=1600&q=80" },
+  { number: "01", category: "Drone Training", client: "Badan Otorita Borobudur", title: "Pelatihan Drone Divisi Komunikasi Publik", year: "2025", tone: "orange", image: "/portfolio/borobudur-drone-training.jpg" },
   { number: "02", category: "Visual Production", client: "PT Tunas Tasik", title: "Annual Meeting", year: "2025", tone: "ink", image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1600&q=80" },
   { number: "03", category: "Drone Training", client: "Kabupaten Sleman", title: "Program Jaring Pengaman Sosial", year: "2024", tone: "sage", image: "https://images.unsplash.com/photo-1473445361085-b9a07f55608b?auto=format&fit=crop&w=1600&q=80" },
   { number: "04", category: "Visual Production", client: "Hotel Grand Serela", title: "Hospitality Visual Story", year: "2024", tone: "clay", image: "https://images.unsplash.com/photo-1695093360120-490f21ca62a7?auto=format&fit=crop&w=1600&q=80" },
