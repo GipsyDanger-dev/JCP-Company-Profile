@@ -43,6 +43,8 @@ export default function AboutPage() {
       <section className="values"><div className="shell"><div className="values-heading"><p className="section-label">(What guides us)</p><h2>How we<br /><em>show up.</em></h2></div><div className="value-grid">{values.map(([number, title, description]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{description}</p></article>)}</div></div></section>
 
       <section className="team shell"><div className="team-heading"><p className="section-label">(The people)</p><h2>Small team.<br /><em>Big energy.</em></h2></div><div className="team-list">{teams.map(([group, names, role]) => <article key={group}><span>{group}</span><h3>{names}</h3><p>{role}</p></article>)}</div></section>
+
+      <section className="company-assurance"><div className="shell"><p className="section-label">(How we deliver)</p><div className="assurance-grid"><h2>Clear process.<br /><em>Reliable output.</em></h2><div><p>Setiap proyek dimulai dari pemahaman kebutuhan, tujuan komunikasi, dan konteks audiens. Tim kami kemudian menyusun arah visual, memproduksi secara detail, serta menjaga proses kerja tetap komunikatif hingga hasil siap digunakan.</p><p>JCP bekerja untuk kebutuhan UMKM, brand, institusi, hotel, dan event korporat—dengan layanan yang dapat disesuaikan terhadap skala proyek, kebutuhan teknis, dan anggaran.</p></div></div><div className="legal-strip"><article><span>Legal entity</span><p>PT Jogja Creative Production</p></article><article><span>Administration</span><p>Akta pendirian, Kemenkumham, dan NPWP tersedia sebagai dokumen perusahaan.</p></article><article><span>Base</span><p>Yogyakarta, Indonesia</p></article></div></div></section>
     </main>
   );
 }
