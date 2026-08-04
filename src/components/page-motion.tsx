@@ -1,23 +1,24 @@
 "use client";
 
-import { useRef } from "react";
 import { usePathname } from "next/navigation";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
-gsap.registerPlugin(useGSAP);
+const transition = { duration: 0.48, ease: [0.22, 1, 0.36, 1] as const };
 
 export function PageMotion({ children }: { children: React.ReactNode }) {
-  const container = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
 
-  useGSAP(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const sections = container.current?.querySelectorAll("main > section, main > footer") ?? [];
-    const timeline = gsap.timeline({ defaults: { ease: "power2.out" } });
-    timeline.fromTo(container.current, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.42 });
-    if (sections.length) timeline.fromTo(sections, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.055 }, 0.08);
-  }, { scope: container, dependencies: [pathname], revertOnUpdate: true });
-
-  return <div className="page-motion" ref={container}>{children}</div>;
+  return <AnimatePresence mode="wait" initial={false}>
+    <motion.div
+      className="page-motion"
+      key={pathname}
+      initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
+      transition={transition}
+    >
+      {children}
+    </motion.div>
+  </AnimatePresence>;
 }
