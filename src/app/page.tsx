@@ -29,9 +29,9 @@ export default function Home() {
         <div className="hero-meta"><span className="dot" /> Yogyakarta, Indonesia <span>Est. 2022</span></div>
         <div className="hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow">JCP / Jogja Creative Production</p>
-            <h1><span className="hero-brand">JCP</span><br />Make it<br /><em>matter.</em></h1>
-            <p className="intro">Kami mengubah gagasan menjadi pengalaman visual yang punya arah, rasa, dan dampak.</p>
+            <p className="eyebrow">PT. Jogja Creative Production</p>
+            <h1>Jogja Creative<br /><em>Production.</em></h1>
+            <p className="intro">Digital creative company dari Yogyakarta untuk visual production, branding, konten digital, dan pengalaman event yang punya arah serta dampak.</p>
             <a className="primary-cta" href="#services">Jelajahi layanan <b>↓</b></a>
           </div>
         </div>
