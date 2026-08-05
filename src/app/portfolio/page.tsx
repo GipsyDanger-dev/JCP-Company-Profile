@@ -7,9 +7,9 @@ const projects = [
   { number: "01", category: "Drone Training", client: "Badan Otorita Borobudur", title: "Pelatihan Drone Divisi Komunikasi Publik", year: "2025", tone: "orange", image: "/portfolio/borobudur-drone-training.jpg" },
   { number: "02", category: "Visual Production", client: "PT Tunas Tasik", title: "Annual Meeting", year: "2025", tone: "ink", image: "/portfolio/tunas-tasik-annual-meeting.jpg" },
   { number: "03", category: "Drone Training", client: "Kabupaten Sleman", title: "Program Jaring Pengaman Sosial", year: "2024", tone: "sage", image: "/portfolio/sleman-jaring-pengaman-sosial.jpg" },
-  { number: "04", category: "Visual Production", client: "Hotel Grand Serela", title: "Hospitality Visual Story", year: "2024", tone: "clay", image: "https://images.unsplash.com/photo-1695093360120-490f21ca62a7?auto=format&fit=crop&w=1600&q=80" },
+  { number: "04", category: "Visual Production", client: "Hotel Grand Serela", title: "Hospitality Visual Story", year: "2024", tone: "clay", image: "/portfolio/grand-serela-hospitality-visual-story.jpg" },
   { number: "05", category: "Drone Training", client: "BPBD Gunungkidul", title: "Pelatihan Drone Mitigasi Bencana", year: "2024", tone: "sun", image: "/portfolio/gunungkidul-drone-training.jpg" },
-  { number: "06", category: "Visual Production", client: "Produk Olahan Susu", title: "Bimbingan Teknis Akselerasi Produk", year: "2024", tone: "blue", image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1600&q=80" },
+  { number: "06", category: "Visual Production", client: "Produk Olahan Susu", title: "Bimbingan Teknis Akselerasi Produk", year: "2024", tone: "blue", image: "/portfolio/akselerasi-produk-bimtek.jpg" },
 ];
 
 export default function PortfolioPage() {
