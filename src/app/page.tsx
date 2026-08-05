@@ -60,7 +60,6 @@ export default function Home() {
               <span>{number}</span>
               <h3>{title}</h3>
               <p>{description}</p>
-              <b>↗</b>
             </article>
           ))}
         </div>
@@ -85,7 +84,7 @@ export default function Home() {
       <section className="contact-cta shell" id="contact">
         <p className="section-label">(04) Start something</p>
         <div><h2>Got a good<br /><em>idea?</em></h2><a href="/hubungi">Tell us everything <span>↗</span></a></div>
-        <p className="contact-detail">jogjacreativeproduction@gmail.com<br />+62 856-787-4388</p>
+        {/* <p className="contact-detail">jogjacreativeproduction@gmail.com<br />+62 856-787-4388</p> */}
       </section>
 
       <footer className="site-footer">
