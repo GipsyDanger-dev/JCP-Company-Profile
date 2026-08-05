@@ -41,7 +41,7 @@ export default function Home() {
             <h2>Creative work,<br /><em>made useful.</em></h2>
             <p className="manifesto-copy">JCP adalah partner kreatif untuk bisnis dan event yang ingin tampil lebih jelas, lebih berani, dan lebih mudah diingat.</p>
           </div>
-          <div className="roundel">IDEAS<br />INTO<br /><b>IMPACT</b></div>
+          <div className="manifesto-mark"><span>JCP</span><i /><small>PT Jogja Creative<br />Production</small></div>
         </div>
       </section>
 
