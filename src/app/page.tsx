@@ -66,7 +66,7 @@ export default function Home() {
       </section>
 
       <section className="work shell" id="works">
-        <div className="section-topline"><p className="section-label">(03) Selected work</p><a href="/hubungi">See more projects ↗</a></div>
+        <div className="section-topline"><p className="section-label">(03) Selected work</p><a href="/portfolio">See more projects ↗</a></div>
         <div className="work-intro">
           <h2>Made with<br /><em>intention.</em></h2>
           <p>Dari pelatihan yang lebih aman sampai event yang lebih hidup, setiap proyek dimulai dengan tujuan yang jelas.</p>
@@ -74,7 +74,7 @@ export default function Home() {
         <div className="project-grid">
           {projects.map((project) => (
             <article className={`project-card ${project.tone}`} key={project.number}>
-              <div className="project-art" style={{ backgroundImage: `linear-gradient(135deg, rgba(23, 15, 9, .15), rgba(23, 15, 9, .62)), url(${project.image})` }}><span>{project.number}</span><b>JCP</b></div>
+              <div className="project-art" style={{ backgroundImage: `url(${project.image})` }} />
               <p>{project.category}</p>
               <h3>{project.title}</h3>
               <a href="/hubungi" aria-label={`Tanyakan proyek ${project.title}`}>↗</a>
