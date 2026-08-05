@@ -25,7 +25,7 @@ export function SiteNav({ active }: SiteNavProps) {
     <button className="mobile-menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="mobile-main-menu" onClick={() => setMenuOpen((open) => !open)}>{menuOpen ? "Tutup" : "Menu"}</button>
     <div className={`nav-links${menuOpen ? " mobile-open" : ""}`} id="mobile-main-menu">
       <a className={active === "tentang" ? "active" : ""} href="/tentang" onClick={() => setMenuOpen(false)}>Tentang</a>
-      <div className="nav-dropdown" onMouseEnter={() => setServicesOpen(true)} onMouseLeave={() => setServicesOpen(false)}>
+      <div className="nav-dropdown" onMouseEnter={() => { if (window.matchMedia("(hover: hover)").matches) setServicesOpen(true); }} onMouseLeave={() => { if (window.matchMedia("(hover: hover)").matches) setServicesOpen(false); }}>
         <button className={active === "layanan" ? "active" : ""} type="button" aria-expanded={servicesOpen} aria-controls="services-menu" onClick={() => setServicesOpen((open) => !open)}>Layanan <span>↓</span></button>
         {servicesOpen && <div className="services-menu" id="services-menu">
           <div className="services-menu-intro"><span>(JCP SERVICES)</span><strong>Choose your<br />creative lane.</strong><a href="/layanan" onClick={() => setServicesOpen(false)}>Lihat semua layanan <b>↗</b></a></div>
