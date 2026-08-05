@@ -78,3 +78,5 @@ a { color:inherit; text-decoration:none; }
 .landing-page .site-header .nav-links{padding:4px!important;border:1px solid rgba(244,240,233,.15)!important;border-radius:999px!important}.landing-page .site-header:not(.is-landing-scrolled) .nav-links{background:rgba(244,240,233,.11)!important}.landing-page .site-header.is-landing-scrolled .nav-links{background:rgba(28,25,21,.07)!important;border-color:rgba(28,25,21,.09)!important}
 .manifesto{padding-bottom:150px!important;background:var(--ink)!important;border-radius:0 0 50% 50% / 0 0 7% 7%;overflow:hidden}
 @media(max-width:720px){.manifesto{padding-bottom:112px!important;border-radius:0 0 50% 50% / 0 0 3% 3%}}
+.landing-page .contact-cta:after{border-radius:63% 37% 0 0 / 78% 62% 0 0;transform:rotate(-1.4deg) scaleX(1.04);transform-origin:bottom center}.about-story{padding-bottom:170px;clip-path:polygon(0 0,100% 0,100% calc(100% - 82px),0 100%)}
+@media(max-width:720px){.landing-page .contact-cta:after{transform:rotate(-1deg) scaleX(1.04)}.about-story{padding-bottom:126px;clip-path:polygon(0 0,100% 0,100% calc(100% - 42px),0 100%)}}
