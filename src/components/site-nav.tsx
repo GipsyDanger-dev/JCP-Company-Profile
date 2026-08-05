@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 
 const services = [
@@ -24,6 +24,10 @@ export function SiteNav({ active }: SiteNavProps) {
   const previousScroll = useRef(0);
   const { scrollY } = useScroll();
 
+  useEffect(() => {
+    setAnnouncementOpen(localStorage.getItem("jcp-announcement-dismissed") !== "true");
+  }, []);
+
   useMotionValueEvent(scrollY, "change", (currentScroll) => {
     if (Math.abs(currentScroll - previousScroll.current) < 8) return;
     setNavVisible(currentScroll < 72 || currentScroll < previousScroll.current);
@@ -34,7 +38,7 @@ export function SiteNav({ active }: SiteNavProps) {
   });
 
   return <header className={`site-header${navVisible ? "" : " is-nav-hidden"}${landingPastHero ? " is-landing-scrolled" : ""}`}>
-    {announcementOpen && <div className="nav-announcement"><a href="/hubungi">Punya project yang ingin diwujudkan? Mari mulai percakapannya <b>→</b></a><button type="button" aria-label="Tutup pengumuman" onClick={() => setAnnouncementOpen(false)}>×</button></div>}
+    {announcementOpen && <div className="nav-announcement"><a href="/hubungi">Punya project yang ingin diwujudkan? Mari mulai percakapannya <b>→</b></a><button type="button" aria-label="Tutup pengumuman" onClick={() => { setAnnouncementOpen(false); localStorage.setItem("jcp-announcement-dismissed", "true"); }}>×</button></div>}
     <nav className="nav shell" aria-label="Navigasi utama">
     <a className="wordmark" href="/" aria-label="Jogja Creative Production"><Image src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" width={120} height={76} priority /></a>
     <button className="mobile-menu-toggle" type="button" aria-label={menuOpen ? "Tutup menu" : "Buka menu"} aria-expanded={menuOpen} aria-controls="mobile-main-menu" onClick={() => setMenuOpen((open) => !open)}><span className="t-icon-swap" data-state={menuOpen ? "b" : "a"}><span className="t-icon" data-icon="a">Menu</span><span className="t-icon" data-icon="b">×</span></span></button>
