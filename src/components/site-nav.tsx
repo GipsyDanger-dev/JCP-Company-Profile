@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const services = [
   ["01", "North Production", "Foto, video & dokumentasi", "north-production"],
@@ -17,8 +17,21 @@ export function SiteNav({ active }: SiteNavProps) {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [announcementOpen, setAnnouncementOpen] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [navVisible, setNavVisible] = useState(true);
 
-  return <header className="site-header">
+  useEffect(() => {
+    let previousScroll = window.scrollY;
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
+      if (Math.abs(currentScroll - previousScroll) < 8) return;
+      setNavVisible(currentScroll < 72 || currentScroll < previousScroll);
+      previousScroll = currentScroll;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return <header className={`site-header${navVisible ? "" : " is-nav-hidden"}`}>
     {announcementOpen && <div className="nav-announcement"><a href="/hubungi">Punya project yang ingin diwujudkan? Mari mulai percakapannya <b>→</b></a><button type="button" aria-label="Tutup pengumuman" onClick={() => setAnnouncementOpen(false)}>×</button></div>}
     <nav className="nav shell" aria-label="Navigasi utama">
     <a className="wordmark" href="/" aria-label="Jogja Creative Production"><Image src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" width={120} height={76} priority /></a>
