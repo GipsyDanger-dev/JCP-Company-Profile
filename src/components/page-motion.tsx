@@ -13,9 +13,9 @@ export function PageMotion({ children }: { children: React.ReactNode }) {
     <motion.div
       className="page-motion"
       key={pathname}
-      initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 18 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
+      initial={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
       transition={transition}
     >
       {children}
