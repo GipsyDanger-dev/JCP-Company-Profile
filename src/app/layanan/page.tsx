@@ -22,10 +22,9 @@ export default function ServicesPage() {
 
       <section className="service-showcase">
         <div className="shell">
-          {services.map(([number, title, description, label, tone, slug, logo]) => (
+          {services.map(([number, title, description, label, tone, slug]) => (
             <article className={`service-showcase-item ${tone}`} key={number}>
               <div className="service-index"><span>{number}</span><p>{label}</p></div>
-              <div className="service-graphic">{logo ? <img className="service-logo" src={logo} alt={`${title} logo`} /> : <><i /><i /><b>JCP</b></>}</div>
               <div className="service-description"><h2>{title}</h2><p>{description}</p><a href={`/layanan/${slug}`}>Lihat detail <span>↗</span></a></div>
             </article>
           ))}
