@@ -75,9 +75,7 @@ export default function Home() {
           {projects.map((project) => (
             <article className={`project-card ${project.tone}`} key={project.number}>
               <div className="project-art" style={{ backgroundImage: `url(${project.image})` }} />
-              <p>{project.category}</p>
-              <h3>{project.title}</h3>
-              <a href="/hubungi" aria-label={`Tanyakan proyek ${project.title}`}>↗</a>
+              <div className="project-copy"><p>{project.category}</p><h3>{project.title}</h3><a href="/hubungi" aria-label={`Tanyakan proyek ${project.title}`}>↗</a></div>
             </article>
           ))}
         </div>
