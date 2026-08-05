@@ -29,6 +29,7 @@ export function SiteNav({ active }: SiteNavProps) {
       previousScroll = currentScroll;
     };
     const handleTouchStart = (event: TouchEvent) => {
+      setNavVisible(true);
       touchPosition.current = event.touches[0]?.clientY ?? null;
     };
     const handleTouchMove = (event: TouchEvent) => {
