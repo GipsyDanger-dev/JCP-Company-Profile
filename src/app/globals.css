@@ -84,3 +84,4 @@ a { color:inherit; text-decoration:none; }
 @media(max-width:720px){.values{padding-top:84px}.values-lede{margin-top:26px;font-size:15px}.value-grid{margin-top:48px}.value-grid article{min-height:0}.value-grid article:before{right:0;top:28px;font-size:132px}.value-grid h3{margin:24px 0 15px;font-size:40px}}
 @media(min-width:721px){.site-header .nav{min-height:92px}.site-header .wordmark img{width:142px;height:78px}}
 @media(max-width:720px){.site-header .nav{min-height:72px}.site-header .wordmark img{width:106px!important;height:62px!important}}
+@media(min-width:390px) and (max-width:720px){.footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 18px}.footer-company,.footer-grid>div:last-child{grid-column:1/-1}}
