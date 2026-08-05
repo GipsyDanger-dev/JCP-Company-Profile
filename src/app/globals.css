@@ -69,3 +69,5 @@ a { color:inherit; text-decoration:none; }
 @media(max-width:720px){.site-header .nav{background:rgba(244,240,233,.95)}}
 .landing-page .site-header.is-landing-scrolled .nav{background:rgba(244,240,233,.94)!important;border-bottom:1px solid rgba(31,28,24,.16)!important;backdrop-filter:blur(24px) saturate(115%)!important;-webkit-backdrop-filter:blur(24px) saturate(115%)!important;box-shadow:0 10px 26px rgba(34,22,15,.12)!important}
 @media(max-width:720px){.landing-page .site-header.is-landing-scrolled .nav{background:rgba(244,240,233,.95)!important}}
+.site-header .nav.shell{width:100%;max-width:none;margin:0;padding-right:7.5vw;padding-left:7.5vw}
+@media(max-width:720px){.site-header .nav.shell{padding-right:16px;padding-left:16px}}
