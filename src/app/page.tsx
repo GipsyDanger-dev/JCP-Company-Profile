@@ -4,6 +4,7 @@ const services = [
   ["03", "North Booth", "Momen event yang dibuat seru, mudah dibagikan, dan sulit dilupakan."],
   ["04", "Virtual Tour 360", "Pengalaman ruang yang bisa dijelajahi dari mana saja."],
   ["05", "Drone Training", "Pelatihan terarah untuk terbang lebih aman dan lebih percaya diri."],
+  ["06", "AI Kreasi Cerdas", "Solusi AI tools yang dirancang dinamis sesuai kebutuhan."],
 ];
 
 const projects = [
@@ -47,12 +48,12 @@ export default function Home() {
 
       <section className="company-snapshot shell">
         <p className="section-label">(About the company)</p>
-        <div className="snapshot-copy"><h2>One stop creative<br />solution for <em>real work.</em></h2><div><p>PT Jogja Creative Production adalah perusahaan digital kreatif di Yogyakarta. Kami membantu bisnis, institusi, dan penyelenggara event yang membutuhkan visual profesional, tetapi terkendala waktu, sumber daya, atau konsistensi kualitas produksi.</p><p>Solusi kami terintegrasi: desain, branding, manajemen media sosial, dokumentasi foto-video, photobooth, virtual tour 360°, hingga pelatihan drone. Klien dapat fokus pada tujuan utamanya; kami mengelola proses kreatif dari perencanaan sampai hasil akhir.</p></div></div>
-        <div className="snapshot-grid"><article><span>05</span><p>Unit layanan terintegrasi</p></article><article><span>2022</span><p>Tahun JCP mulai berkarya</p></article><article><span>DIY</span><p>Berbasis di Yogyakarta, melayani lintas kota</p></article></div>
+        <div className="snapshot-copy"><h2>One stop creative<br />solution for <em>real work.</em></h2><div><p>PT Jogja Creative Production adalah perusahaan digital kreatif di Yogyakarta. Kami membantu bisnis, institusi, dan penyelenggara event yang membutuhkan visual profesional, tetapi terkendala waktu, sumber daya, atau konsistensi kualitas produksi.</p><p>Solusi kami terintegrasi: desain, branding, manajemen media sosial, dokumentasi foto-video, photobooth, virtual tour 360°, pelatihan drone, hingga solusi berbasis AI. Klien dapat fokus pada tujuan utamanya; kami mengelola proses kreatif dari perencanaan sampai hasil akhir.</p></div></div>
+        <div className="snapshot-grid"><article><span>06</span><p>Unit layanan terintegrasi</p></article><article><span>2022</span><p>Tahun JCP mulai berkarya</p></article><article><span>DIY</span><p>Berbasis di Yogyakarta, melayani lintas kota</p></article></div>
       </section>
 
       <section className="services shell" id="services">
-        <div className="section-topline"><p className="section-label">(02) Our playground</p><p>Five ways we can move your story forward.</p></div>
+        <div className="section-topline"><p className="section-label">(02) Our playground</p><p>Six ways we can move your story forward.</p></div>
         <div className="service-list">
           {services.map(([number, title, description]) => (
             <article className="service" key={number}>
@@ -90,7 +91,7 @@ export default function Home() {
       <footer className="site-footer">
         <div className="footer-shell">
           <section className="footer-banner"><div><p>(Start a project)</p><h2>Make the next<br /><em>move matter.</em></h2><a href="/hubungi">Tell us everything <span>↗</span></a></div><div className="footer-orbit" aria-hidden="true"><i /><i /><b>JCP</b></div></section>
-          <div className="footer-grid"><div className="footer-company"><strong>JCP</strong><p>PT Jogja Creative Production<br />Yogyakarta, Indonesia</p><div><a href="tel:+628567874388">+62 856-787-4388</a><a href="mailto:jogjacreativeproduction@gmail.com">jogjacreativeproduction@gmail.com</a></div></div><div><span>Quick links</span><a href="/tentang">Tentang JCP</a><a href="/layanan">Layanan</a><a href="/portfolio">Portofolio</a><a href="/hubungi">Hubungi kami</a></div><div><span>Creative units</span><a href="/layanan/north-production">North Production</a><a href="/layanan/north-creative">North Creative</a><a href="/layanan/north-booth">North Booth</a><a href="/layanan/virtual-tour-360">Virtual Tour 360</a><a href="/layanan/drone-training">Drone Training</a></div><div><span>Follow JCP</span><a href="https://wa.me/628567874388">WhatsApp ↗</a><a href="https://www.instagram.com/jogjacreativeproduction/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noreferrer">Instagram ↗</a><a href="mailto:jogjacreativeproduction@gmail.com">Email us ↗</a></div></div>
+          <div className="footer-grid"><div className="footer-company"><strong>JCP</strong><p>PT Jogja Creative Production<br />Yogyakarta, Indonesia</p><div><a href="tel:+628567874388">+62 856-787-4388</a><a href="mailto:jogjacreativeproduction@gmail.com">jogjacreativeproduction@gmail.com</a></div></div><div><span>Quick links</span><a href="/tentang">Tentang JCP</a><a href="/layanan">Layanan</a><a href="/portfolio">Portofolio</a><a href="/hubungi">Hubungi kami</a></div><div><span>Creative units</span><a href="/layanan/north-production">North Production</a><a href="/layanan/north-creative">North Creative</a><a href="/layanan/north-booth">North Booth</a><a href="/layanan/virtual-tour-360">Virtual Tour 360</a><a href="/layanan/drone-training">Drone Training</a><a href="/layanan/ai-kreasi-cerdas">AI Kreasi Cerdas</a></div><div><span>Follow JCP</span><a href="https://wa.me/628567874388">WhatsApp ↗</a><a href="https://www.instagram.com/jogjacreativeproduction/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noreferrer">Instagram ↗</a><a href="mailto:jogjacreativeproduction@gmail.com">Email us ↗</a></div></div>
           <div className="footer-bottom"><p>© 2026 PT Jogja Creative Production. All rights reserved.</p><p>Yogyakarta / Indonesia</p></div>
         </div>
       </footer>
