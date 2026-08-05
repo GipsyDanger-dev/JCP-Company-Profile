@@ -22,7 +22,7 @@ export function SiteNav({ active }: SiteNavProps) {
     {announcementOpen && <div className="nav-announcement"><a href="/hubungi">Punya project yang ingin diwujudkan? Mari mulai percakapannya <b>→</b></a><button type="button" aria-label="Tutup pengumuman" onClick={() => setAnnouncementOpen(false)}>×</button></div>}
     <nav className="nav shell" aria-label="Navigasi utama">
     <a className="wordmark" href="/" aria-label="Jogja Creative Production"><Image src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" width={120} height={76} priority /></a>
-    <button className="mobile-menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="mobile-main-menu" onClick={() => setMenuOpen((open) => !open)}>{menuOpen ? "Tutup" : "Menu"}</button>
+    <button className="mobile-menu-toggle" type="button" aria-label={menuOpen ? "Tutup menu" : "Buka menu"} aria-expanded={menuOpen} aria-controls="mobile-main-menu" onClick={() => setMenuOpen((open) => !open)}><span className="t-icon-swap" data-state={menuOpen ? "b" : "a"}><span className="t-icon" data-icon="a">Menu</span><span className="t-icon" data-icon="b">×</span></span></button>
     <div className={`nav-links${menuOpen ? " mobile-open" : ""}`} id="mobile-main-menu">
       <a className={active === "tentang" ? "active" : ""} href="/tentang" onClick={() => setMenuOpen(false)}>Tentang</a>
       <div className="nav-dropdown" onMouseEnter={() => { if (window.matchMedia("(hover: hover)").matches) setServicesOpen(true); }} onMouseLeave={() => { if (window.matchMedia("(hover: hover)").matches) setServicesOpen(false); }}>
