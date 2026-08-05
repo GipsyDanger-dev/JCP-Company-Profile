@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const services = [
   ["01", "North Production", "Foto, video & dokumentasi", "north-production"],
@@ -18,6 +18,7 @@ export function SiteNav({ active }: SiteNavProps) {
   const [announcementOpen, setAnnouncementOpen] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [navVisible, setNavVisible] = useState(true);
+  const touchPosition = useRef<number | null>(null);
 
   useEffect(() => {
     let previousScroll = window.scrollY;
@@ -27,8 +28,23 @@ export function SiteNav({ active }: SiteNavProps) {
       setNavVisible(currentScroll < 72 || currentScroll < previousScroll);
       previousScroll = currentScroll;
     };
+    const handleTouchStart = (event: TouchEvent) => {
+      touchPosition.current = event.touches[0]?.clientY ?? null;
+    };
+    const handleTouchMove = (event: TouchEvent) => {
+      const currentTouch = event.touches[0]?.clientY;
+      if (currentTouch === undefined || touchPosition.current === null || Math.abs(currentTouch - touchPosition.current) < 6) return;
+      setNavVisible(currentTouch > touchPosition.current);
+      touchPosition.current = currentTouch;
+    };
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
   }, []);
 
   return <header className={`site-header${navVisible ? "" : " is-nav-hidden"}`}>
