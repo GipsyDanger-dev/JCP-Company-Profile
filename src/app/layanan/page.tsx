@@ -4,7 +4,7 @@ const services = [
   ["01", "North Production", "Foto, video, dan cerita visual untuk brand, bisnis, dan event.", "Photo & video production", "orange", "north-production", "/services/north-production-logo.jpg"],
   ["02", "North Creative", "Identitas dan konten sosial yang membuat brand hadir dengan arah.", "Branding & social media", "paper", "north-creative", "/services/north-creative-logo.jpg"],
   ["03", "North Photo & Video Booth", "Pengalaman event yang langsung bisa dibagikan dan diingat.", "Event experience", "ink", "north-booth", "/services/north-booth-logo.jpg"],
-  ["04", "North Virtual Tour 360", "Ruang yang bisa dikunjungi sebelum orang datang ke sana.", "Immersive spaces", "sage", "virtual-tour-360"],
+  ["04", "North Virtual Tour 360", "Ruang yang bisa dikunjungi sebelum orang datang ke sana.", "Immersive spaces", "sage", "virtual-tour-360", "/services/virtual-tour-360-logo.jpg"],
   ["05", "Indonesia Drone Training Centre", "Keterampilan terbang, kamera, dan keselamatan untuk langkah berikutnya.", "Training & safety", "sun", "drone-training"],
   ["06", "AI Kreasi Cerdas", "Solusi berbasis AI tools yang dirancang dinamis sesuai kebutuhan pelanggan.", "AI creative solutions", "paper", "ai-kreasi-cerdas"],
 ];
