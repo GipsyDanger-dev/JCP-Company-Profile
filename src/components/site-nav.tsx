@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useMotionValueEvent, useScroll } from "framer-motion";
 
 const services = [
   ["01", "North Production", "Foto, video & dokumentasi", "north-production"],
@@ -18,35 +19,14 @@ export function SiteNav({ active }: SiteNavProps) {
   const [announcementOpen, setAnnouncementOpen] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [navVisible, setNavVisible] = useState(true);
-  const touchPosition = useRef<number | null>(null);
+  const previousScroll = useRef(0);
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    let previousScroll = window.scrollY;
-    const handleScroll = () => {
-      const currentScroll = window.scrollY;
-      if (Math.abs(currentScroll - previousScroll) < 8) return;
-      setNavVisible(currentScroll < 72 || currentScroll < previousScroll);
-      previousScroll = currentScroll;
-    };
-    const handleTouchStart = (event: TouchEvent) => {
-      setNavVisible(true);
-      touchPosition.current = event.touches[0]?.clientY ?? null;
-    };
-    const handleTouchMove = (event: TouchEvent) => {
-      const currentTouch = event.touches[0]?.clientY;
-      if (currentTouch === undefined || touchPosition.current === null || Math.abs(currentTouch - touchPosition.current) < 6) return;
-      setNavVisible(currentTouch > touchPosition.current);
-      touchPosition.current = currentTouch;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchmove", handleTouchMove, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-    };
-  }, []);
+  useMotionValueEvent(scrollY, "change", (currentScroll) => {
+    if (Math.abs(currentScroll - previousScroll.current) < 8) return;
+    setNavVisible(currentScroll < 72 || currentScroll < previousScroll.current);
+    previousScroll.current = currentScroll;
+  });
 
   return <header className={`site-header${navVisible ? "" : " is-nav-hidden"}`}>
     {announcementOpen && <div className="nav-announcement"><a href="/hubungi">Punya project yang ingin diwujudkan? Mari mulai percakapannya <b>→</b></a><button type="button" aria-label="Tutup pengumuman" onClick={() => setAnnouncementOpen(false)}>×</button></div>}
