@@ -10,6 +10,7 @@ const services = [
   ["03", "North Booth", "Photobooth untuk event", "north-booth"],
   ["04", "Virtual Tour 360", "Ruang yang bisa dijelajahi", "virtual-tour-360"],
   ["05", "Drone Training", "Pelatihan drone profesional", "drone-training"],
+  ["06", "AI Kreasi Cerdas", "Solusi AI sesuai kebutuhan", "ai-kreasi-cerdas"],
 ] as const;
 
 type SiteNavProps = { active?: "tentang" | "layanan" | "portfolio" | "hubungi" };

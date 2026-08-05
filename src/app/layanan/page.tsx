@@ -6,6 +6,7 @@ const services = [
   ["03", "North Photo & Video Booth", "Pengalaman event yang langsung bisa dibagikan dan diingat.", "Event experience", "ink", "north-booth"],
   ["04", "North Virtual Tour 360", "Ruang yang bisa dikunjungi sebelum orang datang ke sana.", "Immersive spaces", "sage", "virtual-tour-360"],
   ["05", "Indonesia Drone Training Centre", "Keterampilan terbang, kamera, dan keselamatan untuk langkah berikutnya.", "Training & safety", "sun", "drone-training"],
+  ["06", "AI Kreasi Cerdas", "Solusi berbasis AI tools yang dirancang dinamis sesuai kebutuhan pelanggan.", "AI creative solutions", "paper", "ai-kreasi-cerdas"],
 ];
 
 export default function ServicesPage() {
