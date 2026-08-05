@@ -25,7 +25,7 @@ export default function ServicesPage() {
           {services.map(([number, title, description, label, tone, slug]) => (
             <article className={`service-showcase-item ${tone}`} key={number}>
               <div className="service-index"><span>{number}</span><p>{label}</p></div>
-              <div className="service-description"><h2>{title}</h2><p>{description}</p><a href={`/layanan/${slug}`}>Lihat detail <span>↗</span></a></div>
+              <div className="service-description"><h2>{title}</h2><p>{description}</p><a href={`/layanan/${slug}`}>Lihat detail</a></div>
             </article>
           ))}
         </div>
