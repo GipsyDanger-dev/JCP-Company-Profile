@@ -7,7 +7,7 @@ import { useMotionValueEvent, useScroll } from "framer-motion";
 const services = [
   ["01", "North Production", "Foto, video & dokumentasi", "north-production"],
   ["02", "North Creative", "Branding & social media", "north-creative"],
-  ["03", "North Booth", "Photobooth untuk event", "north-booth"],
+  ["03", "North Photobooth", "Photobooth untuk event", "north-booth"],
   ["04", "Virtual Tour 360", "Ruang yang bisa dijelajahi", "virtual-tour-360"],
   ["05", "Drone Training", "Pelatihan drone profesional", "drone-training"],
   ["06", "AI Kreasi Cerdas", "Solusi AI sesuai kebutuhan", "ai-kreasi-cerdas"],
