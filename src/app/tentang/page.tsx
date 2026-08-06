@@ -10,7 +10,7 @@ const teams = [
   ["Leadership", "Franko Nero", "CEO"],
   ["Marketing", "Prayoga R. · Ghevira Zahira · Bernicka Dea · Robica Tatah", "Head of Marketing & Marketing"],
   ["Creative", "Rifqi Rahman · Susiana Irma · Desta Ratu · Widji Dwi", "Head of Creative & Creative"],
-  ["Visual Communication", "Rizki Hidayat · Arsyillah Majid · Framanahadi · Muhammad Ghazi · Fajarudin N.", "Editor, Videographer & Graphic Designer"],
+  ["Visual Communication", "Rizki Hidayat · Arsyillah Majid · Muhammad Ghazi · Fajarudin N.", "Editor, Videographer & Graphic Designer"],
 ];
 
 export default function AboutPage() {
