@@ -1,3 +1,8 @@
+import { SiteNav } from "@/components/site-nav";
+import { FloatingLines } from "@/components/floating-lines";
+import { Magnet } from "@/components/magnet";
+import { GlareHover } from "@/components/glare-hover";
+
 const services = [
   ["01", "North Production", "Foto, video, dan visual story yang membuat brand terasa hidup."],
   ["02", "North Creative", "Identitas dan konten yang memberi brand Anda tempat untuk tumbuh."],
@@ -41,7 +46,7 @@ export default function Home() {
             <h2>Creative work,<br /><em>made useful.</em></h2>
             <p className="manifesto-copy">JCP adalah partner kreatif untuk bisnis dan event yang ingin tampil lebih jelas, lebih berani, dan lebih mudah diingat.</p>
           </div>
-          <div className="manifesto-mark"><span>JCP</span><i /><small>PT Jogja Creative<br />Production</small></div>
+          <div className="manifesto-mark"><Magnet><GlareHover glareOpacity={0.28} glareSize={45}><img className="manifesto-mark-logo" src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" /></GlareHover></Magnet></div>
         </div>
       </section>
 
@@ -83,7 +88,6 @@ export default function Home() {
       <section className="contact-cta shell" id="contact">
         <p className="section-label">(04) Start something</p>
         <div><h2>Got a good<br /><em>idea?</em></h2><a href="/hubungi">Tell us everything <span>↗</span></a></div>
-        {/* <p className="contact-detail">jogjacreativeproduction@gmail.com<br />+62 856-787-4388</p> */}
       </section>
 
       <footer className="site-footer">
@@ -96,5 +100,3 @@ export default function Home() {
     </main>
   );
 }
-import { SiteNav } from "@/components/site-nav";
-import { FloatingLines } from "@/components/floating-lines";
