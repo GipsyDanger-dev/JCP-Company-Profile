@@ -94,6 +94,6 @@ a { color:inherit; text-decoration:none; }
 .service-gallery-card.is-wide{grid-column:1/-1}
 .service-gallery-card.is-wide .service-gallery-copy h3{font-size:56px}
 .service-gallery-art.is-video{background:#2a211d}
-.service-gallery-art.is-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.service-gallery-art.is-video video{display:block;width:100%;height:auto}
 .service-gallery-art.is-video::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(135deg,rgba(23,15,9,.18),rgba(23,15,9,.64))}
-@media(max-width:720px){.service-gallery-card.is-wide .service-gallery-art{aspect-ratio:4/3}.service-gallery-card.is-wide .service-gallery-copy h3{font-size:39px}}
+@media(max-width:720px){.service-gallery-card.is-wide .service-gallery-copy h3{font-size:39px}}
