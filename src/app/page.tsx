@@ -85,6 +85,10 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="contact-cta shell" id="contact">
+        <p className="section-label">(04) Start something</p>
+        <div><h2>Got a good<br /><em>idea?</em></h2><a href="/hubungi">Tell us everything <span>↗</span></a></div>
+      </section>
     </main>
   );
 }

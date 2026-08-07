@@ -1,12 +1,7 @@
 export function Footer() {
   return (
-    <>
-      <section className="contact-cta is-full-width shell" id="contact">
-        <p className="section-label">(04) Start something</p>
-        <div><h2>Got a good<br /><em>idea?</em></h2><a href="/hubungi">Tell us everything <span>↗</span></a></div>
-      </section>
-      <footer className="site-footer is-full-width">
-        <div className="footer-shell">
+    <footer className="site-footer is-full-width">
+      <div className="footer-shell">
         <section className="footer-banner">
           <div>
             <p>(Start a project)</p>
@@ -52,7 +47,6 @@ export function Footer() {
           <p>Yogyakarta / Indonesia</p>
         </div>
       </div>
-    </footer>
-    </>
+     </footer>
   );
 }
