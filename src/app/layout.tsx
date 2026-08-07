@@ -5,6 +5,10 @@ import { PageMotion } from "@/components/page-motion";
 export const metadata: Metadata = {
   title: "Jogja Creative Production | Digital Creative Best Solution",
   description: "One-stop creative solution for visual production, branding, and digital experiences.",
+  icons: {
+    icon: "/jcp-logo-nobg.png",
+    apple: "/jcp-logo-nobg.png",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
