@@ -13,7 +13,7 @@ export async function POST(request: Request) {
   const resendReady = [process.env.RESEND_API_KEY, process.env.INQUIRY_FROM_EMAIL, process.env.INQUIRY_TO_EMAIL].every((value) => value && !value.includes("replace-with") && !value.includes("re_replace") && !value.includes("your-verified-domain"));
   if (resendReady) {
     const notified = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify({ from: process.env.INQUIRY_FROM_EMAIL, to: [process.env.INQUIRY_TO_EMAIL], reply_to: inquiry.email, subject: `[JCP Inquiry] ${inquiry.service} - ${inquiry.name}`, text: `Nama: ${inquiry.name}\nEmail: ${inquiry.email}\nLayanan: ${inquiry.service}\n\nPesan:\n${inquiry.message}` }) });
-    if (!notified.ok) return NextResponse.json({ error: "Inquiry tersimpan, tetapi notifikasi email gagal." }, { status: 502 });
+    if (!notified.ok) console.error("Resend email notification failed:", await notified.text());
   }
   return NextResponse.json({ ok: true }, { status: 201 });
 }
