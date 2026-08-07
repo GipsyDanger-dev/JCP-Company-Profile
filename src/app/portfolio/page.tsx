@@ -10,6 +10,12 @@ const projects = [
   { number: "04", category: "Visual Production", client: "Hotel Grand Serela", title: "Hospitality Visual Story", year: "2024", tone: "clay", image: "/portfolio/grand-serela-hospitality-visual-story.jpg" },
   { number: "05", category: "Drone Training", client: "BPBD Gunungkidul", title: "Pelatihan Drone Mitigasi Bencana", year: "2024", tone: "sun", image: "/portfolio/gunungkidul-drone-training.jpg" },
   { number: "06", category: "Visual Production", client: "Produk Olahan Susu", title: "Bimbingan Teknis Akselerasi Produk", year: "2024", tone: "blue", image: "/portfolio/akselerasi-produk-bimtek.jpg" },
+  { number: "07", category: "Drone Training", client: "Indonesia Drone Training Centre", title: "Flight Training", year: "2025", tone: "orange", image: "/services/drone-training-gallery/drone-training-1.jpg" },
+  { number: "08", category: "Drone Training", client: "Indonesia Drone Training Centre", title: "Field Operation", year: "2025", tone: "ink", image: "/services/drone-training-gallery/drone-training-2.jpg" },
+  { number: "09", category: "Drone Training", client: "Indonesia Drone Training Centre", title: "Aerial Practice", year: "2025", tone: "clay", image: "/services/drone-training-gallery/drone-training-3.jpg" },
+  { number: "10", category: "Drone Training", client: "Indonesia Drone Training Centre", title: "Pilot Session", year: "2025", tone: "sage", image: "/services/drone-training-gallery/drone-training-4.jpg" },
+  { number: "11", category: "Drone Training", client: "Indonesia Drone Training Centre", title: "Equipment Setup", year: "2025", tone: "sun", image: "/services/drone-training-gallery/drone-training-5.jpg" },
+  { number: "12", category: "Drone Training", client: "Indonesia Drone Training Centre", title: "Certification Day", year: "2025", tone: "paper", image: "/services/drone-training-gallery/drone-training-6.jpg" },
 ];
 
 export default function PortfolioPage() {
@@ -23,11 +29,11 @@ export default function PortfolioPage() {
       <section className="portfolio-hero shell">
         <p className="section-label">(Selected projects)</p>
         <h1>Work that<br /><em>moves.</em></h1>
-        <div><p>Berbagai cerita, medium, dan tantangan. Satu standar: karya yang terasa tepat untuk orang yang melihatnya.</p><span>06 projects / 02 disciplines</span></div>
+        <div><p>Berbagai cerita, medium, dan tantangan. Satu standar: karya yang terasa tepat untuk orang yang melihatnya.</p><span>12 projects / 02 disciplines</span></div>
       </section>
 
       <section className="portfolio-list shell">
-        <div className="portfolio-filters"><span>Filter by</span><button className={filter === "Semua" ? "selected" : ""} onClick={() => setFilter("Semua")}>Semua <b>06</b></button><button className={filter === "Visual Production" ? "selected" : ""} onClick={() => setFilter("Visual Production")}>North Production <b>03</b></button><button className={filter === "Drone Training" ? "selected" : ""} onClick={() => setFilter("Drone Training")}>Drone Training <b>03</b></button></div>
+        <div className="portfolio-filters"><span>Filter by</span><button className={filter === "Semua" ? "selected" : ""} onClick={() => setFilter("Semua")}>Semua <b>12</b></button><button className={filter === "Visual Production" ? "selected" : ""} onClick={() => setFilter("Visual Production")}>North Production <b>03</b></button><button className={filter === "Drone Training" ? "selected" : ""} onClick={() => setFilter("Drone Training")}>Drone Training <b>09</b></button></div>
         <div className="portfolio-grid">
           {visibleProjects.map((project) => (
             <article className={`portfolio-card ${project.tone}`} key={project.number}>
