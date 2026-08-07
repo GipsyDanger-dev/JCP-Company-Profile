@@ -29,14 +29,13 @@ const projects = [
   { number: "23", category: "North Photobooth", client: "North Photobooth", title: "360 Video Booth", year: "2025", tone: "orange", image: "/services/north-booth-gallery/north-booth-1.jpg" },
   { number: "24", category: "North Photobooth", client: "North Photobooth", title: "360 Booth Activation", year: "2025", tone: "orange", image: "/services/north-booth-gallery/north-booth-1.jpg" },
   { number: "25", category: "North Photobooth", client: "North Photobooth", title: "Guest Moments", year: "2025", tone: "ink", image: "/services/north-booth-gallery/north-booth-2.jpg" },
-  { number: "26", category: "North Photobooth", client: "North Photobooth", title: "Instant Capture", year: "2025", tone: "clay", image: "/services/north-booth-gallery/north-booth-3.jpg" },
-  { number: "27", category: "North Photobooth", client: "North Photobooth", title: "Group Session", year: "2025", tone: "sage", image: "/services/north-booth-gallery/north-booth-4.jpg" },
+  { number: "26", category: "North Photobooth", client: "North Photobooth", title: "Instant Capture", year: "2025", tone: "clay", image: "/services/north-booth-gallery/north-booth-4.jpg" },
+  { number: "27", category: "North Photobooth", client: "North Photobooth", title: "Group Session", year: "2025", tone: "sage", image: "/services/north-booth-gallery/north-booth-3.jpg" },
   { number: "28", category: "North Photobooth", client: "North Photobooth", title: "Props & Play", year: "2025", tone: "sun", image: "/services/north-booth-gallery/north-booth-5.jpg" },
   { number: "29", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "360 Experience", year: "2025", tone: "orange", image: "/services/virtual-tour-360-gallery/virtual-tour-360-1.jpg" },
-  { number: "30", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "Interactive Walkthrough", year: "2025", tone: "ink", image: "/services/virtual-tour-360-gallery/virtual-tour-360-1.jpg" },
-  { number: "31", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "Immersive Journey", year: "2025", tone: "clay", image: "/services/virtual-tour-360-gallery/virtual-tour-360-2.jpg" },
-  { number: "32", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "Discover Every Corner", year: "2025", tone: "sun", image: "/services/virtual-tour-360-gallery/virtual-tour-360-3.jpg" },
-  { number: "33", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "Seamless Story", year: "2025", tone: "clay", image: "/services/virtual-tour-360-gallery/virtual-tour-360-4.jpg" },
+  { number: "30", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "Interactive Walkthrough", year: "2025", tone: "ink", image: "/services/virtual-tour-360-gallery/virtual-tour-360-2.jpg" },
+  { number: "31", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "Immersive Journey", year: "2025", tone: "clay", image: "/services/virtual-tour-360-gallery/virtual-tour-360-3.jpg" },
+  { number: "32", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "Discover Every Corner", year: "2025", tone: "sun", image: "/services/virtual-tour-360-gallery/virtual-tour-360-4.jpg" },
 ];
 
 export default function PortfolioPage() {
@@ -50,7 +49,7 @@ export default function PortfolioPage() {
       <section className="portfolio-hero shell">
         <p className="section-label">(Selected projects)</p>
         <h1>Work that<br /><em>moves.</em></h1>
-        <div><p>Berbagai cerita, medium, dan tantangan. Satu standar: karya yang terasa tepat untuk orang yang melihatnya.</p><span>33 projects / 5 disciplines</span></div>
+        <div><p>Berbagai cerita, medium, dan tantangan. Satu standar: karya yang terasa tepat untuk orang yang melihatnya.</p><span>32 projects / 5 disciplines</span></div>
       </section>
 
       <section className="portfolio-list shell">
