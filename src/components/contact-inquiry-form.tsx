@@ -7,16 +7,21 @@ const initialState = { name: "", email: "", service: "", message: "" };
 export function ContactInquiryForm() {
   const [form, setForm] = useState(initialState);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStatus("sending");
     try {
       const response = await fetch("/api/inquiries", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
-      if (!response.ok) throw new Error("Request failed");
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Request failed");
       setForm(initialState);
       setStatus("success");
-    } catch { setStatus("error"); }
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : "Terjadi kesalahan");
+      setStatus("error");
+    }
   }
 
   return <form className="inquiry-form" onSubmit={submit}>
@@ -27,6 +32,6 @@ export function ContactInquiryForm() {
     <label>Ceritakan singkat<textarea required value={form.message} onChange={(event) => setForm({ ...form, message: event.target.value })} placeholder="Tujuan, timeline, atau hal lain yang perlu kami tahu." rows={4} /></label>
     <button className="form-cta" disabled={status === "sending"}>{status === "sending" ? "Mengirim..." : "Kirim inquiry"}<span>↗</span></button>
     {status === "success" && <p className="form-feedback success">Inquiry terkirim. Tim JCP akan segera menghubungi Anda.</p>}
-    {status === "error" && <p className="form-feedback error">Maaf, inquiry belum terkirim. Silakan coba lagi atau hubungi WhatsApp kami.</p>}
+    {status === "error" && <p className="form-feedback error">{errorMsg || "Maaf, inquiry belum terkirim. Silakan coba lagi atau hubungi WhatsApp kami."}</p>}
   </form>;
 }

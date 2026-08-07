@@ -8,6 +8,7 @@ export async function POST(request: Request) {
   if (!/^\S+@\S+\.\S+$/.test(body.email)) return NextResponse.json({ error: "Email tidak valid." }, { status: 400 });
   if (required.some((key) => !process.env[key])) return NextResponse.json({ error: "Layanan inquiry belum dikonfigurasi." }, { status: 503 });
   const inquiry = { name: body.name.trim(), email: body.email.trim(), service: body.service.trim(), message: body.message.trim() };
+  if (inquiry.message.length < 10) return NextResponse.json({ error: "Pesan minimal 10 karakter." }, { status: 400 });
   const stored = await fetch(`${process.env.SUPABASE_URL}/rest/v1/inquiries`, { method: "POST", headers: { apikey: process.env.SUPABASE_SERVICE_ROLE_KEY!, Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`, "Content-Type": "application/json", Prefer: "return=minimal" }, body: JSON.stringify(inquiry) });
   if (!stored.ok) return NextResponse.json({ error: "Gagal menyimpan inquiry." }, { status: 502 });
   const resendReady = [process.env.RESEND_API_KEY, process.env.INQUIRY_FROM_EMAIL, process.env.INQUIRY_TO_EMAIL].every((value) => value && !value.includes("replace-with") && !value.includes("re_replace") && !value.includes("your-verified-domain"));
