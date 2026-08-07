@@ -43,7 +43,7 @@ export function Footer() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2026 PT Jogja Creative Production. All rights reserved.</p>
+          <p>PT Jogja Creative Production. All rights reserved.</p>
           <p>Yogyakarta / Indonesia</p>
         </div>
       </div>

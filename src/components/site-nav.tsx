@@ -53,6 +53,7 @@ export function SiteNav({ active }: SiteNavProps) {
         </div>}
       </div>
       <a className={active === "portfolio" ? "active" : ""} href="/portfolio" onClick={() => setMenuOpen(false)}>Portofolio</a>
+      <a className="nav-mobile-cta" href="/hubungi" onClick={() => setMenuOpen(false)}>Let&apos;s talk <i>↗</i></a>
     </div>
     <a className={`nav-cta${active === "hubungi" ? " active-cta" : ""}`} href="/hubungi" onClick={() => setMenuOpen(false)}>Let&apos;s talk <i>↗</i></a>
     </nav>
