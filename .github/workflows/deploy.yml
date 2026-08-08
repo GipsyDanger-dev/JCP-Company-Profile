@@ -1,20 +1,28 @@
-  name: Deploy JCP Company Profile
+name: Deploy JCP Company Profile
 
-  on:
-    push:
-      branches: [main]
+on:
+  push:
+    branches: [main]
 
-  jobs:
-    deploy:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Deploy to VPS
-          env:
-            DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-            DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          run: |
-            install -d -m 700 ~/.ssh
-            printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/id_ed25519
-            chmod 600 ~/.ssh/id_ed25519
-            ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
-            ssh -o IdentitiesOnly=yes root@"$DEPLOY_HOST" /usr/local/sbin/deploy-jcp-web
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check secrets configured
+        if: ${{ secrets.DEPLOY_KEY == '' || secrets.DEPLOY_HOST == '' }}
+        run: |
+          echo "::error::Secret DEPLOY_KEY atau DEPLOY_HOST belum dikonfigurasi di repo."
+          echo "Tambahkan di GitHub: Settings -> Secrets and variables -> Actions."
+          exit 1
+
+      - name: Deploy to VPS
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+          ssh -o IdentitiesOnly=yes root@"$DEPLOY_HOST" /usr/local/sbin/deploy-jcp-web
