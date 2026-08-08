@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import { SiteNav } from "@/components/site-nav";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "Layanan Jasa Kreatif | Foto Video, Photobooth, Virtual Tour, Drone & AI",
+  "6 unit layanan JCP Yogyakarta: North Production (foto video), North Creative (branding & social media), North Photobooth, North Virtual Tour 360°, Indonesia Drone Training Centre, dan AI Kreasi Cerdas.",
+  "/layanan"
+);
 
 const services = [
   ["01", "North Production", "Foto, video, dan cerita visual untuk brand, bisnis, dan event.", "Photo & video production", "orange", "north-production", "/services/north-production-logo.jpg"],

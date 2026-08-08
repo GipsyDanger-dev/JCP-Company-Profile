@@ -1,5 +1,7 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SiteNav } from "@/components/site-nav";
+import { pageMetadata, SITE_URL } from "@/lib/seo";
 
 type GalleryItem = { image?:string; title:string; category:string; tone:string; video?:string; poster?:string; wide?:boolean };
 type ServiceDetail = { name:string; label:string; intro:string; audience:string; offers:string[]; points:string[]; faq:string; gallery?:GalleryItem[]; instagram?:string; ig?:string };
@@ -13,5 +15,45 @@ const details: Record<string, ServiceDetail> = {
   "ai-kreasi-cerdas": { name:"AI Kreasi Cerdas", label:"AI creative solutions", intro:"Solusi menggunakan AI tools yang dirancang dinamis sesuai kebutuhan setiap pelanggan.", audience:"Bisnis dan organisasi yang ingin mengeksplorasi pemanfaatan AI untuk kebutuhan kreatif maupun alur kerja yang lebih sesuai dengan tujuan mereka.", offers:["Pemetaan kebutuhan pelanggan","Rancangan solusi berbasis AI tools","Konfigurasi yang disesuaikan dengan kebutuhan","Pendampingan penerapan solusi"], points:["Pendekatan dinamis sesuai kebutuhan","Berangkat dari tujuan dan konteks pelanggan","Solusi yang dapat disesuaikan seiring kebutuhan berkembang"], faq:"Setiap solusi dirancang melalui diskusi kebutuhan agar AI tools yang digunakan relevan dengan tujuan pelanggan.",gallery:[{ image:"/services/ai-kreasi-cerdas-gallery/ai-kreasi-cerdas-01.jpg", title:"AI Automation", category:"AI Automation", tone:"orange" },{ image:"/services/ai-kreasi-cerdas-gallery/ai-kreasi-cerdas-02.jpg", title:"Chatbot", category:"AI Design", tone:"ink" },{ video:"/services/ai-kreasi-cerdas-gallery/ai-kreasi-cerdas-01.mp4", poster:"/services/ai-kreasi-cerdas-gallery/ai-kreasi-cerdas-01.jpg", title:"AI Workflow", category:"AI Process", tone:"clay" },{ image:"/services/ai-kreasi-cerdas-gallery/ai-kreasi-cerdas-03.jpg", title:"Content Generation", category:"AI Content", tone:"sage" },{ image:"/services/ai-kreasi-cerdas-gallery/ai-kreasi-cerdas-04.jpg", title:"Modern Interior", category:"AI Styling", tone:"sun" }] },
 };
 
+const serviceTitles: Record<string, string> = {
+  "north-production": "North Production | Jasa Foto & Video Profesional Yogyakarta",
+  "north-creative": "North Creative | Jasa Branding & Social Media Management",
+  "north-booth": "North Photobooth | Sewa Photobooth & Videobooth Event di Jogja",
+  "virtual-tour-360": "Virtual Tour 360 | Jasa Foto Panorama 360° Properti & Hotel",
+  "drone-training": "Drone Training Centre | Pelatihan Drone Profesional di Yogyakarta",
+  "ai-kreasi-cerdas": "AI Kreasi Cerdas | Solusi AI untuk Bisnis: Chatbot, Otomasi, Konten",
+};
+
+const truncate = (text: string, max = 158) => (text.length <= max ? text : `${text.slice(0, max - 1).trimEnd()}…`);
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const service = details[slug as keyof typeof details];
+  if (!service) return {};
+  return pageMetadata(serviceTitles[slug] ?? service.name, `${service.label}. ${truncate(service.intro)}`, `/layanan/${slug}`);
+}
+
 export function generateStaticParams(){ return Object.keys(details).map((slug)=>({slug})); }
-export default async function ServiceDetail({params}:{params:Promise<{slug:string}>}){ const {slug}=await params; const service=details[slug as keyof typeof details]; if(!service) notFound(); return <main><SiteNav active="layanan" /><div className="service-detail shell"><p className="section-label">{service.label}</p><h1>{service.name}</h1><p className="detail-intro">{service.intro}</p><section><span>Untuk siapa</span><p>{service.audience}</p></section><section><span>Yang kami kerjakan</span><ul>{service.offers.map(x=><li key={x}>{x}</li>)}</ul></section><section><span>Kenapa JCP</span><ul>{service.points.map(x=><li key={x}>{x}</li>)}</ul></section><section><span>Info penting</span><p>{service.faq}</p></section>{service.gallery && <section className="service-gallery"><p className="section-label">(Selected work)</p><div className={`service-gallery-grid ${service.gallery.some((g:any)=>g.wide)?"":"is-masonry"}`}>{(service.gallery as GalleryItem[]).map((item, i)=><article className={`service-gallery-card ${item.tone}${item.wide?" is-wide":""}`} key={item.video ?? item.image}>{item.video ? <div className="service-gallery-art is-video"><video src={item.video} poster={item.poster} autoPlay muted loop playsInline preload="metadata" aria-label={item.title} /><span>{String(i+1).padStart(2,"0")}</span><em>JCP</em></div> : <div className="service-gallery-art"><img src={item.image} alt={item.title} loading="lazy" /><span>{String(i+1).padStart(2,"0")}</span><em>JCP</em></div>}<div className="service-gallery-copy"><p>{item.category}</p><h3>{item.title}</h3></div></article>)}</div></section>}{service.instagram && <section className="service-social"><span>Instagram</span><a href={service.instagram} target="_blank" rel="noreferrer">{service.ig} <b>↗</b></a></section>}<a className="detail-cta" href="/hubungi">Diskusikan kebutuhan Anda ↗</a></div></main>; }
+export default async function ServiceDetail({params}:{params:Promise<{slug:string}>}){ const {slug}=await params; const service=details[slug as keyof typeof details]; if(!service) notFound(); const ld = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        name: service.name,
+        description: service.intro,
+        url: `${SITE_URL}/layanan/${slug}`,
+        provider: { "@type": "Organization", name: "PT Jogja Creative Production", url: SITE_URL },
+        areaServed: "Yogyakarta, Indonesia",
+        audience: { "@type": "Audience", name: service.audience },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Beranda", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "Layanan", item: `${SITE_URL}/layanan` },
+          { "@type": "ListItem", position: 3, name: service.name, item: `${SITE_URL}/layanan/${slug}` },
+        ],
+      },
+    ],
+  };
+  return <main><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} /><SiteNav active="layanan" /><div className="service-detail shell"><p className="section-label">{service.label}</p><h1>{service.name}</h1><p className="detail-intro">{service.intro}</p><section><span>Untuk siapa</span><p>{service.audience}</p></section><section><span>Yang kami kerjakan</span><ul>{service.offers.map(x=><li key={x}>{x}</li>)}</ul></section><section><span>Kenapa JCP</span><ul>{service.points.map(x=><li key={x}>{x}</li>)}</ul></section><section><span>Info penting</span><p>{service.faq}</p></section>{service.gallery && <section className="service-gallery"><p className="section-label">(Selected work)</p><div className={`service-gallery-grid ${service.gallery.some((g:any)=>g.wide)?"":"is-masonry"}`}>{(service.gallery as GalleryItem[]).map((item, i)=><article className={`service-gallery-card ${item.tone}${item.wide?" is-wide":""}`} key={item.video ?? item.image}>{item.video ? <div className="service-gallery-art is-video"><video src={item.video} poster={item.poster} autoPlay muted loop playsInline preload="metadata" aria-label={item.title} /><span>{String(i+1).padStart(2,"0")}</span><em>JCP</em></div> : <div className="service-gallery-art"><img src={item.image} alt={item.title} loading="lazy" /><span>{String(i+1).padStart(2,"0")}</span><em>JCP</em></div>}<div className="service-gallery-copy"><p>{item.category}</p><h3>{item.title}</h3></div></article>)}</div></section>}{service.instagram && <section className="service-social"><span>Instagram</span><a href={service.instagram} target="_blank" rel="noreferrer">{service.ig} <b>↗</b></a></section>}<a className="detail-cta" href="/hubungi">Diskusikan kebutuhan Anda ↗</a></div></main>; }
