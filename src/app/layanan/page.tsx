@@ -6,7 +6,7 @@ const services = [
   ["03", "North Photobooth", "Pengalaman event yang langsung bisa dibagikan dan diingat.", "Event experience", "ink", "north-booth", "/services/north-booth-logo.jpg"],
   ["04", "North Virtual Tour 360", "Ruang yang bisa dikunjungi sebelum orang datang ke sana.", "Immersive spaces", "sage", "virtual-tour-360", "/services/virtual-tour-360-logo.jpg"],
   ["05", "Indonesia Drone Training Centre", "Keterampilan terbang, kamera, dan keselamatan untuk langkah berikutnya.", "Training & safety", "sun", "drone-training", "/services/drone-training-logo.jpg"],
-  ["06", "AI Kreasi Cerdas", "Solusi berbasis AI tools yang dirancang dinamis sesuai kebutuhan pelanggan.", "AI creative solutions", "paper", "ai-kreasi-cerdas"],
+  ["06", "AI Kreasi Cerdas", "Solusi berbasis AI tools yang dirancang dinamis sesuai kebutuhan pelanggan.", "AI creative solutions", "paper", "ai-kreasi-cerdas", "/services/ai-kreasi-cerdas-logo.jpg"],
 ];
 
 export default function ServicesPage() {
@@ -22,10 +22,11 @@ export default function ServicesPage() {
 
       <section className="service-showcase">
         <div className="shell">
-          {services.map(([number, title, description, label, tone, slug]) => (
+          {services.map(([number, title, description, label, tone, slug, logo]) => (
             <article className={`service-showcase-item ${tone}`} key={number}>
               <div className="service-index"><span>{number}</span><p>{label}</p></div>
               <div className="service-description"><h2>{title}</h2><p>{description}</p><a href={`/layanan/${slug}`}>Lihat detail</a></div>
+              <div className="service-graphic"><img className="service-logo" src={logo} alt={`Logo ${title}`} /></div>
             </article>
           ))}
         </div>

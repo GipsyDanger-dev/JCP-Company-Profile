@@ -13,8 +13,8 @@ const services = [
 ];
 
 const projects = [
-  { number: "01", category: "Drone Training", title: "Badan Otorita Borobudur", tone: "sun", image: "/portfolio/borobudur-drone-training.jpg" },
-  { number: "02", category: "Visual Production", title: "Annual Meeting PT Tunas Tasik", tone: "ink", image: "/portfolio/tunas-tasik-annual-meeting.jpg" },
+  { number: "01", category: "Drone Training", title: "Badan Otorita Borobudur", tone: "sun", image: "/portfolio/sleman-jaring-pengaman-sosial.jpg" },
+  { number: "02", category: "North Photobooth", title: "360 Booth Activation", tone: "ink", image: "/services/north-booth-gallery/north-booth-1.jpg" },
   { number: "03", category: "Drone Training", title: "BPBD Kabupaten Gunungkidul", tone: "clay", image: "/portfolio/gunungkidul-drone-training.jpg" },
 ];
 
