@@ -1,7 +1,32 @@
+import type { Metadata } from "next";
 import { SiteNav } from "@/components/site-nav";
 import { FloatingLines } from "@/components/floating-lines";
 import { Magnet } from "@/components/magnet";
 import { GlareHover } from "@/components/glare-hover";
+import { pageMetadata, SITE_URL, SITE_NAME } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "Jogja Creative Production | Jasa Foto Video & Drone di Yogyakarta",
+  "JCP — perusahaan kreatif digital Yogyakarta: jasa foto video, branding, social media, photobooth, virtual tour 360°, pelatihan drone, dan solusi AI untuk bisnis dan event.",
+  "/"
+);
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: "PT Jogja Creative Production",
+      alternateName: "JCP",
+      url: SITE_URL,
+      logo: `${SITE_URL}/jcp-logo-nobg.png`,
+      sameAs: ["https://www.instagram.com/jogjacreativeproduction/", "https://wa.me/6285600604388"],
+      contactPoint: { "@type": "ContactPoint", telephone: "+62-856-0060-4388", contactType: "customer service", areaServed: "ID", availableLanguage: "Indonesian" },
+      address: { "@type": "PostalAddress", streetAddress: "Perum Griya Mlati Indah No. B4, Mulungan Kulon, Sendangadi, Mlati", addressLocality: "Sleman", addressRegion: "DI Yogyakarta", postalCode: "55285", addressCountry: "ID" },
+    },
+    { "@type": "WebSite", name: SITE_NAME, url: SITE_URL },
+  ],
+};
 
 const services = [
   ["01", "North Production", "Foto, video, dan visual story yang membuat brand terasa hidup."],
@@ -21,6 +46,7 @@ const projects = [
 export default function Home() {
   return (
     <main className="landing-page">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <SiteNav />
 
       <section className="hero hero-lines-hero hero-wide" id="home">

@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import { SiteNav } from "@/components/site-nav";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "Tentang Kami | Jogja Creative Production (JCP)",
+  "Kenali PT Jogja Creative Production: perusahaan kreatif digital Yogyakarta dengan 6 unit layanan — foto video, photobooth, social media management, virtual tour 360°, pelatihan drone, dan solusi AI.",
+  "/tentang"
+);
 
 const values = [
   ["01", "Creative Thinking", "Kami memulai setiap proyek dengan pemahaman menyeluruh terhadap kebutuhan dan tujuan klien. Setiap ide dikembangkan melalui proses berpikir kreatif, analisis visual, dan eksplorasi konsep, sehingga menghasilkan solusi yang relevan, segar, dan berbeda."],
