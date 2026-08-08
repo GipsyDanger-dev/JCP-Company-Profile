@@ -10,7 +10,10 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check secrets configured
-        if: ${{ secrets.DEPLOY_KEY == '' || secrets.DEPLOY_HOST == '' }}
+        if: env.DEPLOY_KEY == '' || env.DEPLOY_HOST == ''
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
         run: |
           echo "::error::Secret DEPLOY_KEY atau DEPLOY_HOST belum dikonfigurasi di repo."
           echo "Tambahkan di GitHub: Settings -> Secrets and variables -> Actions."
