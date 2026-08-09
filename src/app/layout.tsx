@@ -7,7 +7,7 @@ import { PreFooter } from "@/components/pre-footer";
 import { SITE_URL, SITE_NAME, OG_IMAGE } from "@/lib/seo";
 
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], display: "swap", variable: "--font-bebas-neue" });
-const dmMono = DM_Mono({ weight: "400", style: ["normal", "italic"], subsets: ["latin"], display: "swap", variable: "--font-dm-mono" });
+const dmMono = DM_Mono({ weight: "400", subsets: ["latin"], display: "swap", variable: "--font-dm-mono" });
 const manrope = Manrope({ subsets: ["latin"], display: "swap", variable: "--font-manrope" });
 
 export const viewport: Viewport = {

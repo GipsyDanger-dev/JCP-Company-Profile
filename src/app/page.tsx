@@ -3,7 +3,7 @@ import { SiteNav } from "@/components/site-nav";
 import { FloatingLines } from "@/components/floating-lines";
 import { Magnet } from "@/components/magnet";
 import { GlareHover } from "@/components/glare-hover";
-import { pageMetadata, SITE_URL, SITE_NAME } from "@/lib/seo";
+import { pageMetadata, organizationLd, SITE_URL, SITE_NAME } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
   "Jogja Creative Production | Jasa Foto Video & Drone di Yogyakarta",
@@ -14,16 +14,7 @@ export const metadata: Metadata = pageMetadata(
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
-    {
-      "@type": "Organization",
-      name: "PT Jogja Creative Production",
-      alternateName: "JCP",
-      url: SITE_URL,
-      logo: `${SITE_URL}/jcp-logo-nobg.png`,
-      sameAs: ["https://www.instagram.com/jogjacreativeproduction/", "https://wa.me/6285600604388"],
-      contactPoint: { "@type": "ContactPoint", telephone: "+62-856-0060-4388", contactType: "customer service", areaServed: "ID", availableLanguage: "Indonesian" },
-      address: { "@type": "PostalAddress", streetAddress: "Perum Griya Mlati Indah No. B4, Mulungan Kulon, Sendangadi, Mlati", addressLocality: "Sleman", addressRegion: "DI Yogyakarta", postalCode: "55285", addressCountry: "ID" },
-    },
+    organizationLd(),
     { "@type": "WebSite", name: SITE_NAME, url: SITE_URL },
   ],
 };
