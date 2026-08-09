@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import { SiteNav } from "@/components/site-nav";
+import { HeroLines } from "@/components/hero-lines";
 import { Magnet } from "@/components/magnet";
 import { GlareHover } from "@/components/glare-hover";
 import Image from "next/image";
 import { pageMetadata, organizationLd, SITE_URL, SITE_NAME } from "@/lib/seo";
-
-// Three.js dimuat terpisah (ssr:false) agar tidak menghambat LCP hero.
-// Hero tetap tampil dengan background gelap + teks saat chunk dimuat.
-const FloatingLines = dynamic(() => import("@/components/floating-lines"), { ssr: false });
 
 export const metadata: Metadata = pageMetadata(
   "Jogja Creative Production | Jasa Foto Video & Drone di Yogyakarta",
@@ -46,7 +42,7 @@ export default function Home() {
       <SiteNav />
 
       <section className="hero hero-lines-hero hero-wide" id="home">
-        <FloatingLines linesGradient={["#8f3f24", "#ff6826", "#ffbd34"]} lineCount={[7, 11, 15]} lineDistance={[0.18, 0.12, 0.085]} animationSpeed={0.42} parallax parallaxStrength={0.055} />
+        <HeroLines linesGradient={["#8f3f24", "#ff6826", "#ffbd34"]} lineCount={[7, 11, 15]} lineDistance={[0.18, 0.12, 0.085]} animationSpeed={0.42} parallax parallaxStrength={0.055} />
         <div className="hero-grid">
           <div className="hero-copy">
             <p className="eyebrow">PT. Jogja Creative Production</p>
