@@ -3,6 +3,7 @@ import { SiteNav } from "@/components/site-nav";
 import { FloatingLines } from "@/components/floating-lines";
 import { Magnet } from "@/components/magnet";
 import { GlareHover } from "@/components/glare-hover";
+import Image from "next/image";
 import { pageMetadata, organizationLd, SITE_URL, SITE_NAME } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
@@ -95,7 +96,7 @@ export default function Home() {
         <div className="project-grid">
           {projects.map((project) => (
             <article className={`project-card ${project.tone}`} key={project.number}>
-              <div className="project-art" style={{ backgroundImage: `url(${project.image})` }} />
+              <div className="project-art"><Image src={project.image} alt={project.title} fill sizes="(min-width: 720px) 33vw, 100vw" /></div>
               <div className="project-copy"><p>{project.category}</p><h3>{project.title}</h3></div>
             </article>
           ))}
