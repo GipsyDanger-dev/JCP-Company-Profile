@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { SiteNav } from "@/components/site-nav";
 import { pageMetadata, SITE_URL } from "@/lib/seo";
 
@@ -43,7 +44,7 @@ export default function ServicesPage() {
             <article className={`service-showcase-item ${tone}`} key={number}>
               <div className="service-index"><span>{number}</span><p>{label}</p></div>
               <div className="service-description"><h2>{title}</h2><p>{description}</p><a href={`/layanan/${slug}`}>Lihat detail</a></div>
-              <div className="service-graphic"><img className="service-logo" src={logo} alt={`Logo ${title}`} /></div>
+              <div className="service-graphic"><Image className="service-logo" src={logo} alt={`Logo ${title}`} width={1080} height={1080} sizes="250px" /></div>
             </article>
           ))}
         </div>
