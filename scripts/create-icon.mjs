@@ -8,6 +8,6 @@ await sharp("JCP_logo.jpg")
   .resize(size, size, { fit: "contain", background: { r: 244, g: 240, b: 233 } })
   .composite([{ input: mask, blend: "dest-in" }])
   .png()
-  .toFile("public/jcp-logo-icon.png");
+  .toFile("scripts/assets/jcp-logo-icon.png");
 
 console.log("rounded icon created");

@@ -1,9 +1,10 @@
 import sharp from "sharp";
 
-// Sumber: icon 512x512 hasil create-icon.mjs (rounded + background krem).
+// Sumber: master icon 512x512 hasil create-icon.mjs (rounded + background krem),
+// disimpan di luar public/ agar tidak terpublikasikan sebagai URL.
 // Favicon & apple-touch-icon cukup beresolusi kecil; resize + palette PNG
 // menekan bobot dari ~102KB menjadi beberapa KB tanpa perubahan visual berarti.
-const source = "public/jcp-logo-icon.png";
+const source = "scripts/assets/jcp-logo-icon.png";
 
 await sharp(source)
   .resize(32, 32, { fit: "contain" })
