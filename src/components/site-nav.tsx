@@ -41,7 +41,7 @@ export function SiteNav({ active }: SiteNavProps) {
   return <header className={`site-header${navVisible ? "" : " is-nav-hidden"}${landingPastHero ? " is-landing-scrolled" : ""}`}>
     {announcementOpen === true && <div className="nav-announcement"><a href="/hubungi">Punya project yang ingin diwujudkan? Mari mulai percakapannya <b>→</b></a><button type="button" aria-label="Tutup pengumuman" onClick={() => { setAnnouncementOpen(false); localStorage.setItem("jcp-announcement-dismissed", "true"); }}>×</button></div>}
     <nav className="nav shell" aria-label="Navigasi utama">
-    <a className="wordmark" href="/" aria-label="Jogja Creative Production"><img src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" width="128" height="76" loading="eager" /></a>
+    <a className="wordmark" href="/" aria-label="Jogja Creative Production"><img src="/jcp-logo-nav.png" alt="JCP - Jogja Creative Production" width="288" height="288" loading="eager" /></a>
     <button className="mobile-menu-toggle" type="button" aria-label={menuOpen ? "Tutup menu" : "Buka menu"} aria-expanded={menuOpen} aria-controls="mobile-main-menu" onClick={() => setMenuOpen((open) => !open)}><span className="t-icon-swap" data-state={menuOpen ? "b" : "a"}><span className="t-icon" data-icon="a">Menu</span><span className="t-icon" data-icon="b">×</span></span></button>
     <div className={`nav-links${menuOpen ? " mobile-open" : ""}`} id="mobile-main-menu">
       <a className={active === "tentang" ? "active" : ""} href="/tentang" onClick={() => setMenuOpen(false)}>Tentang</a>

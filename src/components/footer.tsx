@@ -12,7 +12,7 @@ export function Footer() {
         </section>
         <div className="footer-grid">
           <div className="footer-company">
-            <img className="footer-company-logo" src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" />
+            <img className="footer-company-logo" src="/jcp-logo-nav.png" alt="JCP - Jogja Creative Production" width="288" height="288" loading="lazy" />
             <p>PT Jogja Creative Production<br />Yogyakarta, Indonesia</p>
             <div>
               <a href="tel:+6285600604388">+62 856-0060-4388</a>
