@@ -20,6 +20,9 @@ importers:
       react-dom:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
+      sharp:
+        specifier: ^0.35.3
+        version: 0.35.3(@types/node@22.15.3)
       three:
         specifier: ^0.185.1
         version: 0.185.1
@@ -36,9 +39,6 @@ importers:
       '@types/three':
         specifier: ^0.185.3
         version: 0.185.3
-      sharp:
-        specifier: ^0.35.3
-        version: 0.35.3(@types/node@22.15.3)
       typescript:
         specifier: 5.9.2
         version: 5.9.2
