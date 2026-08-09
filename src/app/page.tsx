@@ -72,7 +72,7 @@ export default function Home() {
             <h2>Creative work,<br /><em>made useful.</em></h2>
             <p className="manifesto-copy">JCP adalah partner kreatif untuk bisnis dan event yang ingin tampil lebih jelas, lebih berani, dan lebih mudah diingat.</p>
           </div>
-          <div className="manifesto-mark"><Magnet><GlareHover glareOpacity={0.28} glareSize={45}><img className="manifesto-mark-logo" src="/jcp-logo-nobg.png" alt="JCP - Jogja Creative Production" /></GlareHover></Magnet></div>
+          <div className="manifesto-mark"><Magnet><GlareHover glareOpacity={0.28} glareSize={45}><img className="manifesto-mark-logo" src="/jcp-logo-nav.png" alt="JCP - Jogja Creative Production" width="288" height="288" loading="lazy" /></GlareHover></Magnet></div>
         </div>
       </section>
 
