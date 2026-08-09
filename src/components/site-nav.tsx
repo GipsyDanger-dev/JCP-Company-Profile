@@ -38,7 +38,8 @@ export function SiteNav({ active }: SiteNavProps) {
     // yang akan tertutup), supaya heading besar "Make the next move matter."
     // tidak tertabrak oleh navbar fixed saat scroll naik di area footer.
     const banner = document.querySelector(".footer-banner");
-    const bannerUnderNav = Boolean(banner && banner.getBoundingClientRect().top < 96 && banner.getBoundingClientRect().bottom > 0);
+    const headerHeight = document.querySelector(".site-header")?.getBoundingClientRect().height ?? 96;
+    const bannerUnderNav = Boolean(banner && banner.getBoundingClientRect().top < headerHeight && banner.getBoundingClientRect().bottom > 0);
     setNavVisible(currentScroll < 72 || (!bannerUnderNav && currentScroll < previousScroll.current));
     previousScroll.current = currentScroll;
   });
