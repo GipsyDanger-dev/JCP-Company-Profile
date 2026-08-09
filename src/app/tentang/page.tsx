@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SiteNav } from "@/components/site-nav";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
   "Tentang Kami | Jogja Creative Production (JCP)",
@@ -21,9 +21,27 @@ const teams = [
   ["Visual Communication", "Rizki Hidayat · Arsyillah Majid · Muhammad Ghazi · Fajarudin N.", "Editor, Videographer & Graphic Designer"],
 ];
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "Tentang Jogja Creative Production (JCP)",
+  url: `${SITE_URL}/tentang`,
+  about: {
+    "@type": "Organization",
+    name: "PT Jogja Creative Production",
+    alternateName: "JCP",
+    url: SITE_URL,
+    logo: `${SITE_URL}/jcp-logo-nobg.png`,
+    sameAs: ["https://www.instagram.com/jogjacreativeproduction/", "https://wa.me/6285600604388"],
+    contactPoint: { "@type": "ContactPoint", telephone: "+62-856-0060-4388", contactType: "customer service", areaServed: "ID", availableLanguage: "Indonesian" },
+    address: { "@type": "PostalAddress", streetAddress: "Perum Griya Mlati Indah No. B4, Mulungan Kulon, Sendangadi, Mlati", addressLocality: "Sleman", addressRegion: "DI Yogyakarta", postalCode: "55285", addressCountry: "ID" },
+  },
+};
+
 export default function AboutPage() {
   return (
     <main className="about-page">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <SiteNav active="tentang" />
 
       <section className="about-hero shell">
