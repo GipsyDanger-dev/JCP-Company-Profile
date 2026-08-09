@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SiteNav } from "@/components/site-nav";
 import "./contact.css";
 import { ContactInquiryForm } from "@/components/contact-inquiry-form";
-import { pageMetadata, SITE_URL } from "@/lib/seo";
+import { pageMetadata, organizationLd, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
   "Hubungi Kami | Konsultasi Proyek Kreatif di Yogyakarta",
@@ -15,16 +15,7 @@ const structuredData = {
   "@type": "ContactPage",
   name: "Hubungi Jogja Creative Production",
   url: `${SITE_URL}/hubungi`,
-  mainEntity: {
-    "@type": "Organization",
-    name: "PT Jogja Creative Production",
-    alternateName: "JCP",
-    url: SITE_URL,
-    sameAs: ["https://www.instagram.com/jogjacreativeproduction/", "https://wa.me/6285600604388"],
-    email: "jogjacreativeproduction@gmail.com",
-    contactPoint: { "@type": "ContactPoint", telephone: "+62-856-0060-4388", contactType: "customer service", areaServed: "ID", availableLanguage: "Indonesian" },
-    address: { "@type": "PostalAddress", streetAddress: "Perum Griya Mlati Indah No. B4, Mulungan Kulon, Sendangadi, Mlati", addressLocality: "Sleman", addressRegion: "DI Yogyakarta", postalCode: "55285", addressCountry: "ID" },
-  },
+  mainEntity: organizationLd({ email: "jogjacreativeproduction@gmail.com" }),
 };
 
 export default function ContactPage() {
