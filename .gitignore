@@ -5,7 +5,4 @@ node_modules/
 dev-server.log
 dev-server.err.log
 tsconfig.tsbuildinfo
-JCP_logo.jpg
-JCP_logo.svg
-JCP_logo_NoBG.png
 dev-server.out.log
