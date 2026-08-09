@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SiteNav } from "@/components/site-nav";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
   "Layanan Jasa Kreatif | Foto Video, Photobooth, Virtual Tour, Drone & AI",
@@ -17,9 +17,18 @@ const services = [
   ["06", "AI Kreasi Cerdas", "Solusi berbasis AI tools yang dirancang dinamis sesuai kebutuhan pelanggan.", "AI creative solutions", "paper", "ai-kreasi-cerdas", "/services/ai-kreasi-cerdas-logo.jpg"],
 ];
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Layanan Jogja Creative Production",
+  url: `${SITE_URL}/layanan`,
+  itemListElement: services.map((service, index) => ({ "@type": "ListItem", position: index + 1, name: service[1], url: `${SITE_URL}/layanan/${service[5]}` })),
+};
+
 export default function ServicesPage() {
   return (
     <main className="services-page">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <SiteNav active="layanan" />
 
       <section className="services-hero shell">

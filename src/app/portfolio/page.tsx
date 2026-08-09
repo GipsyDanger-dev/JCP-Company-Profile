@@ -1,6 +1,7 @@
 "use client";
 
 import { SiteNav } from "@/components/site-nav";
+import { SITE_URL } from "@/lib/seo";
 import { useState } from "react";
 
 const projects = [
@@ -40,12 +41,25 @@ const projects = [
   { number: "34", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "Discover Every Corner", tone: "sun", image: "/services/virtual-tour-360-gallery/virtual-tour-360-4.jpg" },
 ];
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Portofolio Jogja Creative Production",
+  url: `${SITE_URL}/portfolio`,
+  description: "34 proyek pilihan Jogja Creative Production: pelatihan drone, foto video, photobooth, virtual tour 360°, hingga solusi AI.",
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: projects.map((project, index) => ({ "@type": "ListItem", position: index + 1, name: project.title, image: `${SITE_URL}${project.image}` })),
+  },
+};
+
 export default function PortfolioPage() {
   const [filter, setFilter] = useState("Semua");
   const visibleProjects = projects.filter((project) => filter === "Semua" || project.category === filter);
 
   return (
     <main className="portfolio-page">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <SiteNav active="portfolio" />
 
       <section className="portfolio-hero shell">
