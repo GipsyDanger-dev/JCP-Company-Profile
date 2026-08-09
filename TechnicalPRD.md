@@ -1,214 +1,202 @@
- # PT. Jogja Creative Production — Technical PRD (AI Agent)
+# PT. Jogja Creative Production — Technical PRD (AI Agent)
 
-## Technology Stack
+> Dokumen hidup: menggambarkan **keadaan aktual** project (per Agustus 2026), bukan template generik.
+> Bagian yang berlabel "Planned" adalah rencana yang **belum** diimplementasikan.
 
-| Category | Technology | Purpose |
+## Ringkasan Project
+
+Company profile site untuk PT. Jogja Creative Production (JCP) — agency kreatif asal Yogyakarta.
+Konten dominan statis (SSR/SSG dari source code); satu-satunya bagian dinamis adalah formulir
+inquiry yang disimpan ke Supabase. Tidak ada admin dashboard, blog, career, auth, atau dashboard.
+
+## Technology Stack (Aktual)
+
+| Category | Technology | Catatan |
 |---|---|---|
-| Framework | Next.js 15 (App Router) | SSR, SEO, RSC |
-| UI | React 19 | Frontend |
-| Language | TypeScript | Type safety |
-| Styling | Tailwind CSS v4 | Styling |
-| Components | shadcn/ui | Accessible UI |
-| Animation | Framer Motion + GSAP | Motion & storytelling |
-| Icons | Lucide React | Icons |
-| Forms | React Hook Form + Zod | Forms & validation |
-| State | Zustand | Global state |
-| Data Fetching | TanStack Query | Server state |
-| Backend | Next.js API Routes | Backend |
-| Database | PostgreSQL (Supabase) | Persistence |
-| ORM | Drizzle ORM | Type-safe database access |
-| Storage | Supabase Storage | Media |
-| Authentication | Supabase Auth | Authentication |
-| Email | Resend | Transactional email |
-| Analytics | GA4, Microsoft Clarity, Meta Pixel | Analytics |
-| Monitoring | Sentry | Error tracking |
-| Deployment | Vercel + Cloudflare | Hosting & CDN |
-| Package Manager | pnpm | Dependencies |
+| Framework | Next.js 15.5.2 (App Router) | SSR + RSC; `outputFileTracingRoot` di next.config.ts |
+| UI | React 19.1.1 | — |
+| Language | TypeScript 5.9.2 | strict |
+| Styling | **Custom CSS** (globals.css + contact.css) | CSS variables, **bukan** Tailwind |
+| Fonts | `next/font/google`: Bebas Neue (display), Manrope (body), DM Mono (mono) | self-hosted, `--font-*` CSS variables |
+| Animation | Framer Motion 12 (page transitions, scroll nav) + Three.js 0.185 (hero WebGL) | Three.js di-lazy-load via `next/dynamic` (hero-lines.tsx) |
+| Icons | Karakter teks (mis. `↗︎` = U+2197 + U+FE0E) | tanpa icon library; VS15 mencegah emoji di Android |
+| Forms | Komponen custom (contact-inquiry-form.tsx) | validasi server-side di API route; tanpa React Hook Form/Zod |
+| Backend | Next.js API Route `/api/inquiries` | fetch langsung ke Supabase PostgREST + Resend |
+| Database | PostgreSQL via Supabase (serverless) | akses via REST API; **tanpa** client lib maupun ORM |
+| Email | Resend (API, opsional) | diaktifkan hanya jika env terisi |
+| Image | `next/image` (WebP/AVIF, lazy, sizes) | sharp sebagai dev tool untuk script optimasi |
+| Deployment | GitHub Actions → VPS (SSH) | bukan Vercel/Cloudflare |
+| Package Manager | pnpm | — |
+
+### Yang TIDAK digunakan (pernah ada di PRD lama — dihapus karena tidak sesuai)
+
+Tailwind, shadcn/ui, Lucide, React Hook Form, Zod, Zustand, TanStack Query, GSAP,
+Drizzle ORM, Supabase JS client, Supabase Auth, Supabase Storage, Sentry, Vercel, Cloudflare.
 
 ## Architecture
 
 ```text
 Browser
    │
-Cloudflare CDN
+Next.js 15 (App Router) ── SSR/SSG: 5 halaman statis
    │
-Next.js 15 (App Router)
-   ├── React Frontend
-   └── API Routes
-          │
-     Business Logic
-          │
-      Drizzle ORM
-          │
- PostgreSQL (Supabase)
-          │
- Supabase Storage
+   ├── /api/inquiries (POST)
+   │        ├── Supabase PostgREST  → table public.inquiries (RLS, server-only write)
+   │        └── Resend API (opsional) → notifikasi email inquiry
+   │
+   └── Statis: layout, nav, footer, konten dari source
 ```
+
+Tidak ada lapisan application/domain/infrastructure terpisah; struktur mengikuti
+konvensi App Router (app/, components/, lib/).
 
 ## Content Management
 
-Content will be managed directly through Supabase tables and Supabase Storage. No custom admin dashboard will be developed. Static company information can be maintained through source files, while dynamic content (portfolio, blog, careers, testimonials, and inquiries) is accessed via Supabase.
+- **Konten statis** (profil, layanan, portfolio, FAQ) dikelola langsung di source code
+  (data array dalam file halaman). Perubahan = edit code + deploy.
+- **Inquiry** tersimpan di tabel `public.inquiries` (Supabase). Tidak ada admin dashboard.
+- Skema database: `supabase/inquiries.sql` (satu tabel; RLS aktif tanpa insert policy —
+  hanya API route server yang bisa menulis via `SUPABASE_SERVICE_ROLE_KEY`).
 
-## Project Structure
+## Project Structure (Aktual)
 
 ```text
 src/
 ├── app/
+│   ├── api/inquiries/route.ts     # satu-satunya API route
+│   ├── globals.css                # seluruh styling global (CSS murni)
+│   ├── layout.tsx                 # root layout: fonts, metadata, nav, footer
+│   ├── page.tsx                   # home (hero, manifesto, showcase, selected work, CTA)
+│   ├── tentang/page.tsx           # about
+│   ├── layanan/page.tsx           # daftar layanan
+│   ├── layanan/[slug]/page.tsx    # 6 halaman detail layanan (gallery, JSON-LD)
+│   ├── portfolio/page.tsx         # 34 proyek (kartu + galeri)
+│   ├── portfolio/layout.tsx       # metadata portfolio
+│   ├── hubungi/page.tsx           # kontak + form inquiry (contact.css)
+│   ├── robots.ts
+│   └── sitemap.ts                 # 11 URL
 ├── components/
-├── features/
-│   ├── home/
-│   ├── about/
-│   ├── services/
-│   ├── portfolio/
-│   ├── blog/
-│   ├── career/
-│   ├── contact/
-│   ├── auth/
-│   └── dashboard/
-├── shared/
-├── hooks/
-├── lib/
-├── services/
-├── repositories/
-├── providers/
-├── types/
-├── constants/
-├── styles/
-└── middleware.ts
+│   ├── site-nav.tsx               # navbar fixed + hide-on-scroll (framer-motion)
+│   ├── footer.tsx / pre-footer.tsx
+│   ├── hero-lines.tsx             # client wrapper: lazy-load Three.js hero
+│   ├── floating-lines.tsx         # kanvas WebGL garis gelombang
+│   ├── page-motion.tsx            # transisi halaman (AnimatePresence)
+│   ├── glare-hover.tsx / magnet.tsx
+│   └── contact-inquiry-form.tsx
+└── lib/seo.ts                     # helper metadata/JSON-LD
+
+scripts/           # tooling dev (bukan runtime)
+├── create-icon.mjs / optimize-icon.mjs   # favicon 32px (653B) + apple-touch 180px (7KB)
+├── optimize-ai.mjs / optimize-booth-gallery.mjs / measure-images.mjs  # optimasi gambar
+└── parse-lighthouse.mjs                  # parser hasil audit Lighthouse
+
+supabase/inquiries.sql
+public/            # favicon, logo (svg/png), og-image.jpg, portfolio/, services/
 ```
 
-## Design System
+## Design System (Aktual)
 
-### Color Tokens
+### Color Tokens (CSS variables di globals.css)
 
-- Primary: Emerald 600
-- Secondary: Slate 900
-- Background: White
-- Surface: Gray 50
-- Text Primary: Gray 900
-- Text Secondary: Gray 500
-- Success: Green
-- Warning: Amber
-- Danger: Red
-- Border: Gray 200
+| Token | Nilai | Penggunaan |
+|---|---|---|
+| `--paper` | `#f4f0e9` | latar terang, teks pada hero gelap |
+| `--ink` | `#181714` | teks utama pada latar terang |
+| `--orange` | `#ff5a1f` | aksen utama (CTA hover, highlight) |
+| `--line` | `#d6d0c7` | border/dividers |
+| `--muted` | `#777168` | teks sekunder |
+
+Palet tambahan: hero gelap `#271817`, aksen garis WebGL `#8f3f24 / #ff6826 / #ffbd34`.
 
 ### Typography
 
-- Display: Geist
-- Heading: Geist
-- Body: Inter
-- Caption: Inter
-
-### Spacing
-
-8-point spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96
-
-### Radius
-
-- sm: 8px
-- md: 12px
-- lg: 16px
-- xl: 24px
-- 2xl: 32px
+- **Display:** Bebas Neue (judul hero besar, `clamp()` responsive)
+- **Body:** Manrope
+- **Mono/Caption:** DM Mono (label, meta)
 
 ### Motion
 
-**GSAP**
-- Hero reveal
-- Scroll storytelling
-- Horizontal gallery
-- Sticky sections
+- **Framer Motion** — transisi antar halaman, perilaku scroll navbar (hide/show), hover states
+- **Three.js (WebGL)** — hero "floating lines" interaktif + parallax; **lazy-loaded**
+  (chunk terpisah, `ssr:false`) sehingga tidak memblokir LCP
+- Utilitas: `glare-hover` (efek glare CSS), `magnet` (tarikan pointer)
 
-**Framer Motion**
-- Buttons
-- Cards
-- Modal
-- Hover states
-- Page transitions
+## SEO (Aktual)
 
-## SEO
+- `metadataBase` + metadata per halaman via `generateMetadata` (lib/seo.ts)
+- `sitemap.ts` (11 URL) + `robots.ts`
+- JSON-LD: Organization, WebSite (home); Service + BreadcrumbList (6 halaman layanan)
+- Open Graph + Twitter Card, `og-image.jpg` 1200×630
+- Font self-hosted (`next/font`) — tanpa render-blocking eksternal
 
-- Server-side rendering
-- Metadata API
-- Schema.org
-- Open Graph
-- Twitter Card
-- XML Sitemap
-- robots.txt
-- Canonical URL
-- Dynamic metadata
-- Breadcrumb schema
+## Performance (Kondisi Terukur)
+
+| Metrik | Mobile (Lighthouse) |
+|---|---|
+| Skor performa | 79/100 |
+| LCP | 2.6s (target ≤ 2.5s) |
+| TBT | 690ms |
+| Bobot halaman | 415 KB |
+
+Praktik: semua gambar via `next/image` (WebP/AVIF + lazy), hero Three.js di luar bundle awal
+(main page chunk ±9.4KB), favicon 653B. Pengukuran: `scripts/parse-lighthouse.mjs`.
 
 ## Analytics
 
-- Google Analytics 4
-- Microsoft Clarity
-- Meta Pixel
-- Custom conversion events
+**Belum terpasang.** Rencana (kandidat, semua punya free tier): Google Analytics 4,
+Microsoft Clarity, Meta Pixel. Menunggu keputusan klien; integrasi dicatat sebagai TODO
+di root layout (`<head>`) + custom conversion events untuk inquiry.
 
-## Page Specifications
+## Page Specifications (Aktual)
 
-### Home
-- Hero section
-- Company overview
-- Featured services
-- Featured portfolio
-- Client logos
-- Testimonials
-- CTA
+### Home (`/`)
+- Hero: WebGL floating lines + headline besar "Jogja Creative Production." + CTA "Jelajahi layanan"
+- Manifesto "Who we are" (logo JCP + teks)
+- Showcase layanan (termasuk "AI Kreasi Cerdas")
+- Selected work (3 kartu proyek)
+- CTA akhir + pre-footer banner "Make the next move matter."
 
-### About
-- Company profile
-- Vision & mission
-- Timeline
-- Team
-- Core values
+### Tentang (`/tentang`)
+- Profil perusahaan, nilai, dsb. (konten statis)
 
-### Services
-- Service listing
-- Detail page
-- Workflow
-- Benefits
-- FAQ
-- CTA
+### Layanan (`/layanan` + `/layanan/[slug]`)
+- Listing layanan + **6 halaman detail** (gallery foto, workflow, benefit, CTA, JSON-LD)
 
-### Portfolio
-- Filter by category
-- Project detail
-- Gallery
-- Video
-- Client information
+### Portfolio (`/portfolio`)
+- Grid 34 proyek (kartu + galeri), nested layout untuk metadata
 
-### Blog
-- Article list
-- Categories
-- Search
-- Related articles
+### Hubungi (`/hubungi`)
+- Informasi kontak (WhatsApp, Instagram, email, alamat)
+- Form inquiry → POST `/api/inquiries` → Supabase + email Resend
 
-### Career
-- Open positions
-- Benefits
-- Culture
-- Application form
-
-### Contact
-- Contact form
-- Office information
-- Google Maps
-- Social media
-- FAQ
-
-
-## Clean Architecture
+## Inquiry Flow
 
 ```text
-Presentation
-    ↓
-Application
-    ↓
-Domain
-    ↓
-Infrastructure
+Form (hubungi) → POST /api/inquiries
+  → validasi: field lengkap, format email, pesan ≥ 10 karakter
+  → simpan ke Supabase PostgREST (service role key, RLS server-only)
+  → [opsional] kirim notifikasi via Resend jika env RESEND_* terisi
+  → response { ok: true } / error ber-Bahasa Indonesia
 ```
 
-Business logic must remain independent from UI and infrastructure. Repository pattern should be used for database access, and each feature should be isolated within its own module.
+## Environment Variables
+
+| Env | Wajib | Fungsi |
+|---|---|---|
+| `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | Ya (untuk inquiry) | tulis ke tabel inquiries |
+| `RESEND_API_KEY`, `INQUIRY_FROM_EMAIL`, `INQUIRY_TO_EMAIL` | Opsional | notifikasi email inquiry |
+| `DEPLOY_KEY`, `DEPLOY_HOST` | Ya (CI/CD) | secret GitHub Actions untuk deploy VPS |
+
+## Deployment (Aktual)
+
+- **CI/CD:** GitHub Actions (`.github/workflows/deploy.yml`) — trigger push ke `main`
+- **Cara kerja:** cek secret → SSH `root@DEPLOY_HOST` → jalankan script server
+  `/usr/local/sbin/deploy-jcp-web` (build & restart di VPS)
+- **Domain:** jogjacreativepro.com
+- Commit kecil per batch (maks. 3 file) sesuai AGENTS.md; deploy otomatis per push.
+
+## Roadmap / Planned (belum diimplementasikan)
+
+- [ ] Analytics (GA4 / Clarity / Meta Pixel) — menunggu keputusan klien
+- [ ] Supabase Storage untuk portfolio dinamis (jika konten mulai sering berubah)
+- [ ] LCP mobile turun ke ≤ 2.5s (item tersisa: optimasi CSS render-blocking, evaluasi chunk)
