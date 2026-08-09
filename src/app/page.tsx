@@ -88,7 +88,7 @@ export default function Home() {
       </section>
 
       <section className="work shell" id="works">
-        <div className="section-topline"><p className="section-label">(03) Selected work</p><a href="/portfolio">See more projects ↗</a></div>
+        <div className="section-topline"><p className="section-label">(03) Selected work</p><a href="/portfolio">See more projects ↗︎</a></div>
         <div className="work-intro">
           <h2>Made with<br /><em>intention.</em></h2>
           <p>Dari pelatihan yang lebih aman sampai event yang lebih hidup, setiap proyek dimulai dengan tujuan yang jelas.</p>
@@ -105,7 +105,7 @@ export default function Home() {
 
       <section className="contact-cta shell" id="contact">
         <p className="section-label">(04) Start something</p>
-        <div><h2>Got a good<br /><em>idea?</em></h2><a href="/hubungi">Tell us everything <span>↗</span></a></div>
+        <div><h2>Got a good<br /><em>idea?</em></h2><a href="/hubungi">Tell us everything <span>↗︎</span></a></div>
       </section>
     </main>
   );

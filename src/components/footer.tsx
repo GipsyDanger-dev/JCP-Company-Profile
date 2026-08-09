@@ -6,7 +6,7 @@ export function Footer() {
           <div>
             <p>(Start a project)</p>
             <h2>Make the next<br /><em>move matter.</em></h2>
-            <a href="/hubungi">Tell us everything <span>↗</span></a>
+            <a href="/hubungi">Tell us everything <span>↗︎</span></a>
           </div>
           <div className="footer-orbit" aria-hidden="true"><i /><i /><b>JCP</b></div>
         </section>
@@ -37,9 +37,9 @@ export function Footer() {
           </div>
           <div>
             <span>Follow JCP</span>
-            <a href="https://wa.me/6285600604388">WhatsApp ↗</a>
-            <a href="https://www.instagram.com/jogjacreativeproduction/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noreferrer">Instagram ↗</a>
-            <a href="mailto:jogjacreativeproduction@gmail.com">Email us ↗</a>
+            <a href="https://wa.me/6285600604388">WhatsApp ↗︎</a>
+            <a href="https://www.instagram.com/jogjacreativeproduction/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noreferrer">Instagram ↗︎</a>
+            <a href="mailto:jogjacreativeproduction@gmail.com">Email us ↗︎</a>
           </div>
         </div>
         <div className="footer-bottom">
