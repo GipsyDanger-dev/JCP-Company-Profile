@@ -6,3 +6,6 @@ dev-server.log
 dev-server.err.log
 tsconfig.tsbuildinfo
 dev-server.out.log
+# Dokumen internal — hanya di lokal, tidak boleh di-push ke GitHub
+AGENTS.md
+TechnicalPRD.md
