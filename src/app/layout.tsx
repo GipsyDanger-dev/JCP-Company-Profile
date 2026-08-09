@@ -1,9 +1,14 @@
 import type { Metadata, Viewport } from "next";
+import { Bebas_Neue, DM_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 import { PageMotion } from "@/components/page-motion";
 import { Footer } from "@/components/footer";
 import { PreFooter } from "@/components/pre-footer";
 import { SITE_URL, SITE_NAME, OG_IMAGE } from "@/lib/seo";
+
+const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], display: "swap", variable: "--font-bebas-neue" });
+const dmMono = DM_Mono({ weight: "400", style: ["normal", "italic"], subsets: ["latin"], display: "swap", variable: "--font-dm-mono" });
+const manrope = Manrope({ subsets: ["latin"], display: "swap", variable: "--font-manrope" });
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -46,9 +51,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id">
-      <body>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <body className={`${bebasNeue.variable} ${dmMono.variable} ${manrope.variable}`}>
         <PageMotion>{children}</PageMotion>
         <PreFooter />
         <Footer />
