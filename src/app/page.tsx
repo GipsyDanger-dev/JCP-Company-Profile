@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { SiteNav } from "@/components/site-nav";
-import { FloatingLines } from "@/components/floating-lines";
 import { Magnet } from "@/components/magnet";
 import { GlareHover } from "@/components/glare-hover";
 import Image from "next/image";
 import { pageMetadata, organizationLd, SITE_URL, SITE_NAME } from "@/lib/seo";
+
+// Three.js dimuat terpisah (ssr:false) agar tidak menghambat LCP hero.
+// Hero tetap tampil dengan background gelap + teks saat chunk dimuat.
+const FloatingLines = dynamic(() => import("@/components/floating-lines"), { ssr: false });
 
 export const metadata: Metadata = pageMetadata(
   "Jogja Creative Production | Jasa Foto Video & Drone di Yogyakarta",
