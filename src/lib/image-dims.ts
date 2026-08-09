@@ -35,3 +35,15 @@ export const imageDims: Record<string, { width: number; height: number }> = {
   "/services/virtual-tour-360-gallery/virtual-tour-360-3.jpg": { width: 563, height: 427 },
   "/services/virtual-tour-360-gallery/virtual-tour-360-4.jpg": { width: 564, height: 282 },
 };
+
+const missingWarned = new Set<string>();
+
+/** Ambil dimensi gambar galeri; default 4:3 + peringatan (dev) jika belum ada di peta. */
+export function getImageDims(src: string): { width: number; height: number } {
+  const dims = imageDims[src];
+  if (!dims && process.env.NODE_ENV !== "production" && !missingWarned.has(src)) {
+    missingWarned.add(src);
+    console.warn(`[image-dims] Dimensi belum terdaftar untuk ${src} — tambahkan ke src/lib/image-dims.ts`);
+  }
+  return dims ?? { width: 1600, height: 1200 };
+}
