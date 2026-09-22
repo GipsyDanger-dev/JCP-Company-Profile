@@ -19,7 +19,7 @@ export async function getCms<T>(contentKey: string, fallback: T): Promise<T> {
   noStore();
   if (!ready()) return fallback;
   try {
-    const response = await fetch(`${url}/rest/v1/cms_content?key=eq.${encodeURIComponent(contentKey)}&select=value&limit=1`, { headers: headers(), cache: "no-store" });
+    const response = await fetch(`${url}/rest/v1/cms_content?key=eq.${encodeURIComponent(contentKey)}&select=value&limit=1`, { headers: headers(), cache: "no-store", signal: AbortSignal.timeout(5000) });
     if (!response.ok) return fallback;
     const rows = await response.json() as Array<{ value: T }>;
     return rows[0]?.value ?? fallback;
