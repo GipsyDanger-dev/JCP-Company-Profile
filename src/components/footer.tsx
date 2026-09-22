@@ -1,4 +1,9 @@
+"use client";
+import { usePathname } from "next/navigation";
+
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
   return (
     <footer className="site-footer is-full-width">
       <div className="footer-shell">
