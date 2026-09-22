@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { SiteNav } from "@/components/site-nav";
 import { pageMetadata, SITE_URL } from "@/lib/seo";
+import { cmsFallbacks, getCms } from "@/lib/cms";
 
 export const metadata: Metadata = pageMetadata(
   "Layanan Jasa Kreatif | Foto Video, Photobooth, Virtual Tour, Drone & AI",
@@ -26,7 +27,13 @@ const structuredData = {
   itemListElement: services.map((service, index) => ({ "@type": "ListItem", position: index + 1, name: service[1], url: `${SITE_URL}/layanan/${service[5]}` })),
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const content = await getCms("services", cmsFallbacks.services);
+  const originalBySlug = Object.fromEntries(services.map((service) => [service[5], service]));
+  const displayServices = content.items.map((item) => {
+    const original = originalBySlug[item.slug];
+    return [item.number, item.name, item.description, item.label, original?.[4] ?? "paper", item.slug, original?.[6] ?? "/jcp-logo-nav.png"];
+  });
   return (
     <main className="services-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
@@ -40,7 +47,7 @@ export default function ServicesPage() {
 
       <section className="service-showcase">
         <div className="shell">
-          {services.map(([number, title, description, label, tone, slug, logo]) => (
+          {displayServices.map(([number, title, description, label, tone, slug, logo]) => (
             <article className={`service-showcase-item ${tone}`} key={number}>
               <div className="service-index"><span>{number}</span><p>{label}</p></div>
               <div className="service-description"><h2>{title}</h2><p>{description}</p><a href={`/layanan/${slug}`}>Lihat detail</a></div>
