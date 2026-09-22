@@ -5,6 +5,7 @@ import { Magnet } from "@/components/magnet";
 import { GlareHover } from "@/components/glare-hover";
 import Image from "next/image";
 import { pageMetadata, organizationLd, SITE_URL, SITE_NAME } from "@/lib/seo";
+import { cmsFallbacks, getCms } from "@/lib/cms";
 
 export const metadata: Metadata = pageMetadata(
   "Jogja Creative Production | Jasa Foto Video & Drone di Yogyakarta",
@@ -35,7 +36,9 @@ const projects = [
   { number: "03", category: "Drone Training", title: "BPBD Kabupaten Gunungkidul", tone: "clay", image: "/portfolio/gunungkidul-drone-training.jpg" },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const content = await getCms("home", cmsFallbacks.home);
+  const lines = (value: string) => value.split("\\n").map((line, index) => <span key={line}>{index > 0 && <br />}{line}</span>);
   return (
     <main className="landing-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
@@ -45,9 +48,9 @@ export default function Home() {
         <HeroLines linesGradient={["#8f3f24", "#ff6826", "#ffbd34"]} lineCount={[7, 11, 15]} lineDistance={[0.18, 0.12, 0.085]} animationSpeed={0.42} parallax parallaxStrength={0.055} />
         <div className="hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow">PT. Jogja Creative Production</p>
+            <p className="eyebrow">{content.eyebrow}</p>
             <h1>Jogja Creative<br /><em>Production.</em></h1>
-            <p className="intro">Digital creative company dari Yogyakarta untuk visual production, branding, konten digital, dan pengalaman event yang punya arah serta dampak.</p>
+            <p className="intro">{content.heroIntro}</p>
             <a className="primary-cta" href="#services">Jelajahi layanan <b>↓</b></a>
           </div>
         </div>
@@ -62,7 +65,7 @@ export default function Home() {
           <p className="section-label">(01) Who we are</p>
           <div>
             <h2>Creative work,<br /><em>made useful.</em></h2>
-            <p className="manifesto-copy">JCP adalah partner kreatif untuk bisnis dan event yang ingin tampil lebih jelas, lebih berani, dan lebih mudah diingat.</p>
+            <p className="manifesto-copy">{content.manifestoCopy}</p>
           </div>
           <div className="manifesto-mark"><Magnet><GlareHover glareOpacity={0.28} glareSize={45}><Image className="manifesto-mark-logo" src="/jcp-logo-nav.png" alt="JCP - Jogja Creative Production" width={288} height={288} loading="lazy" sizes="(min-width: 720px) 16vw, 34vw" /></GlareHover></Magnet></div>
         </div>
@@ -77,7 +80,7 @@ export default function Home() {
       <section className="services shell" id="services">
         <div className="section-topline"><p className="section-label">(02) Our playground</p><p>Six ways we can move your story forward.</p></div>
         <div className="service-list">
-          {services.map(([number, title, description]) => (
+          {content.services.map(([number, title, description]) => (
             <article className="service" key={number}>
               <span>{number}</span>
               <h3>{title}</h3>

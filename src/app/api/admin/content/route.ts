@@ -1,0 +1,7 @@
+import { NextResponse } from "next/server";
+import { isAdmin } from "@/lib/admin-auth";
+import { listCms, removeCms, saveCms } from "@/lib/cms";
+const forbidden = () => NextResponse.json({ error: "Silakan masuk sebagai admin." }, { status: 401 });
+export async function GET() { if (!(await isAdmin())) return forbidden(); try { return NextResponse.json(await listCms()); } catch (error) { return NextResponse.json({ error: error instanceof Error ? error.message : "Gagal membaca CMS." }, { status: 502 }); } }
+export async function PUT(request: Request) { if (!(await isAdmin())) return forbidden(); const body = await request.json().catch(() => null); if (!body || typeof body.key !== "string" || !/^[a-z0-9._-]+$/.test(body.key)) return NextResponse.json({ error: "Key konten tidak valid." }, { status: 400 }); try { await saveCms(body.key, body.value); return NextResponse.json({ ok: true }); } catch (error) { return NextResponse.json({ error: error instanceof Error ? error.message : "Gagal menyimpan." }, { status: 502 }); } }
+export async function DELETE(request: Request) { if (!(await isAdmin())) return forbidden(); const key = new URL(request.url).searchParams.get("key"); if (!key) return NextResponse.json({ error: "Key wajib diisi." }, { status: 400 }); try { await removeCms(key); return NextResponse.json({ ok: true }); } catch (error) { return NextResponse.json({ error: error instanceof Error ? error.message : "Gagal menghapus." }, { status: 502 }); } }
