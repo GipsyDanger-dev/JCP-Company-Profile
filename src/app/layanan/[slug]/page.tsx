@@ -4,6 +4,7 @@ import Image from "next/image";
 import { SiteNav } from "@/components/site-nav";
 import { getImageDims } from "@/lib/image-dims";
 import { pageMetadata, SITE_URL } from "@/lib/seo";
+import { getCms } from "@/lib/cms";
 
 type GalleryItem = { image?:string; title:string; category:string; tone:string; video?:string; poster?:string; wide?:boolean };
 type ServiceDetail = { name:string; label:string; intro:string; audience:string; offers:string[]; points:string[]; faq:string; gallery?:GalleryItem[]; instagram?:string; ig?:string };
@@ -36,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 export function generateStaticParams(){ return Object.keys(details).map((slug)=>({slug})); }
-export default async function ServiceDetail({params}:{params:Promise<{slug:string}>}){ const {slug}=await params; const service=details[slug as keyof typeof details]; if(!service) notFound(); const ld = {
+export default async function ServiceDetail({params}:{params:Promise<{slug:string}>}){ const {slug}=await params; const baseService=details[slug as keyof typeof details]; if(!baseService) notFound(); const overrides=await getCms<Record<string,Partial<ServiceDetail>>>("service-details",{}); const service={...baseService,...overrides[slug]}; const ld = {
     "@context": "https://schema.org",
     "@graph": [
       {
