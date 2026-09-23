@@ -22,6 +22,17 @@ export function AdminConsole() {
   const [page, setPage] = useState("home"); const [servicesOpen, setServicesOpen] = useState(false); const [selected, setSelected] = useState<number | null>(null); const [notice, setNotice] = useState(""); const [busy, setBusy] = useState(false);
   const content = data[page] ?? {}; const services = ((data.services?.items as Service[]) ?? []); const service = page === "services" && selected !== null ? services[selected] : undefined; const details = (data["service-details"] ?? {}) as Record<string, Detail>; const detail = service ? (details[service.slug] ?? {}) : {}; const rawGallery = detail.gallery ?? []; const gallery = service?.slug === "north-production" && rawGallery.length < 5 ? [...rawGallery, ...productionPhotos.slice(rawGallery.length)] : rawGallery;
   useEffect(() => { fetch("/api/admin/content").then((r) => r.ok ? r.json() : []).then((rows: { key: string; value: Content }[]) => { if (rows.length) setData((old) => ({ ...old, ...Object.fromEntries(rows.map((row) => [row.key, row.value])) })); }); }, []);
+  useEffect(() => {
+    const sidebar = document.querySelector<HTMLElement>(".admin-shell aside");
+    if (!sidebar) return;
+    const scrollSidebar = (event: WheelEvent) => {
+      if (!event.deltaY) return;
+      sidebar.scrollTop += event.deltaY;
+      event.preventDefault();
+    };
+    sidebar.addEventListener("wheel", scrollSidebar, { passive: false });
+    return () => sidebar.removeEventListener("wheel", scrollSidebar);
+  }, []);
   const update = (key: string, value: Content) => setData((old) => ({ ...old, [key]: value }));
   const updateDetail = (next: Detail) => { if (service) update("service-details", { ...details, [service.slug]: next }); };
   const updatePhoto = (index: number, key: keyof Photo, value: string) => updateDetail({ ...detail, gallery: gallery.map((photo, i) => i === index ? { ...photo, [key]: value } : photo) });
