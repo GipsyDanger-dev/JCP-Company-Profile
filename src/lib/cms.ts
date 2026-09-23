@@ -63,7 +63,7 @@ export async function uploadMedia(file: File) {
 export const cmsFallbacks = {
   navigation: {
     announcement: "Punya project yang ingin diwujudkan? Mari mulai percakapannya",
-    links: [{ label: "Tentang", href: "/tentang" }, { label: "Layanan", href: "/layanan" }, { label: "Portofolio", href: "/portfolio" }],
+    items: [{ label: "Tentang", href: "/tentang" }, { label: "Layanan", href: "/layanan", dropdown: true }, { label: "Portofolio", href: "/portfolio" }],
     cta: "Let's talk",
   },
   home: {
@@ -71,6 +71,11 @@ export const cmsFallbacks = {
     heroIntro: "Digital creative company dari Yogyakarta untuk visual production, branding, konten digital, dan pengalaman event yang punya arah serta dampak.",
     heroCta: "Jelajahi layanan", manifestoTitle: "Creative work,\nmade useful.",
     manifestoCopy: "JCP adalah partner kreatif untuk bisnis dan event yang ingin tampil lebih jelas, lebih berani, dan lebih mudah diingat.",
+    manifestoLabel: "(01) Who we are", snapshotLabel: "(About the company)", snapshotTitle: "One stop creative\nsolution for real work.",
+    snapshotParagraph1: "PT Jogja Creative Production adalah perusahaan digital kreatif di Yogyakarta. Kami membantu bisnis, institusi, dan penyelenggara event yang membutuhkan visual profesional, tetapi terkendala waktu, sumber daya, atau konsistensi kualitas produksi.",
+    snapshotParagraph2: "Solusi kami terintegrasi: desain, branding, manajemen media sosial, dokumentasi foto-video, photobooth, virtual tour 360°, pelatihan drone, hingga solusi berbasis AI. Klien dapat fokus pada tujuan utamanya; kami mengelola proses kreatif dari perencanaan sampai hasil akhir.",
+    stat1Number: "06", stat1Text: "Unit layanan terintegrasi", stat2Number: "2022", stat2Text: "Tahun JCP mulai berkarya", stat3Number: "DIY", stat3Text: "Berbasis di Yogyakarta, melayani lintas kota",
+    servicesLabel: "(02) Our playground", servicesIntro: "Six ways we can move your story forward.", workLabel: "(03) Selected work", workLink: "See more projects", workTitle: "Made with\nintention.", workIntro: "Dari pelatihan yang lebih aman sampai event yang lebih hidup, setiap proyek dimulai dengan tujuan yang jelas.", contactLabel: "(04) Start something", contactTitle: "Got a good\nidea?", contactCta: "Tell us everything",
     services: [["01", "North Production", "Foto, video, dan visual story yang membuat brand terasa hidup."], ["02", "North Creative", "Identitas dan konten yang memberi brand Anda tempat untuk tumbuh."], ["03", "North Photobooth", "Momen event yang dibuat seru, mudah dibagikan, dan sulit dilupakan."], ["04", "Virtual Tour 360", "Pengalaman ruang yang bisa dijelajahi dari mana saja."], ["05", "Drone Training", "Pelatihan terarah untuk terbang lebih aman dan lebih percaya diri."], ["06", "AI Kreasi Cerdas", "Solusi AI tools yang dirancang dinamis sesuai kebutuhan."]],
   },
   contact: { title: "Make your next\nmove count.", intro: "Ceritakan apa yang sedang ingin Anda buat. Kami akan bantu menemukan titik mulai yang tepat.", email: "jogjacreativeproduction@gmail.com", whatsapp: "+62 856-0060-4388", whatsappUrl: "https://wa.me/6285600604388", address: "Perum Griya Mlati Indah No. B4, Mulungan Kulon, Sendangadi, Mlati, Sleman, DIY 55285" },

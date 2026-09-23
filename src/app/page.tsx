@@ -1,115 +1,24 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { SiteNav } from "@/components/site-nav";
 import { HeroLines } from "@/components/hero-lines";
 import { Magnet } from "@/components/magnet";
 import { GlareHover } from "@/components/glare-hover";
-import Image from "next/image";
-import { pageMetadata, organizationLd, SITE_URL, SITE_NAME } from "@/lib/seo";
 import { cmsFallbacks, getCms } from "@/lib/cms";
+import { pageMetadata, organizationLd, SITE_NAME, SITE_URL } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata(
-  "Jogja Creative Production | Jasa Foto Video & Drone di Yogyakarta",
-  "JCP — perusahaan kreatif digital Yogyakarta: jasa foto video, branding, social media, photobooth, virtual tour 360°, pelatihan drone, dan solusi AI untuk bisnis dan event.",
-  "/"
-);
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
-    organizationLd(),
-    { "@type": "WebSite", name: SITE_NAME, url: SITE_URL },
-  ],
-};
-
-const services = [
-  ["01", "North Production", "Foto, video, dan visual story yang membuat brand terasa hidup."],
-  ["02", "North Creative", "Identitas dan konten yang memberi brand Anda tempat untuk tumbuh."],
-  ["03", "North Photobooth", "Momen event yang dibuat seru, mudah dibagikan, dan sulit dilupakan."],
-  ["04", "Virtual Tour 360", "Pengalaman ruang yang bisa dijelajahi dari mana saja."],
-  ["05", "Drone Training", "Pelatihan terarah untuk terbang lebih aman dan lebih percaya diri."],
-  ["06", "AI Kreasi Cerdas", "Solusi AI tools yang dirancang dinamis sesuai kebutuhan."],
-];
-
-const projects = [
-  { number: "01", category: "Drone Training", title: "Badan Otorita Borobudur", tone: "sun", image: "/portfolio/sleman-jaring-pengaman-sosial.jpg" },
-  { number: "02", category: "North Photobooth", title: "360 Booth Activation", tone: "ink", image: "/services/north-booth-gallery/north-booth-1.jpg" },
-  { number: "03", category: "Drone Training", title: "BPBD Kabupaten Gunungkidul", tone: "clay", image: "/portfolio/gunungkidul-drone-training.jpg" },
-];
+export const metadata: Metadata = pageMetadata("Jogja Creative Production | Jasa Foto Video & Drone di Yogyakarta", "JCP adalah perusahaan kreatif digital Yogyakarta untuk visual production, branding, konten digital, dan pengalaman event.", "/");
+const projects = [{ number: "01", category: "Drone Training", title: "Badan Otorita Borobudur", tone: "sun", image: "/portfolio/sleman-jaring-pengaman-sosial.jpg" }, { number: "02", category: "North Photobooth", title: "360 Booth Activation", tone: "ink", image: "/services/north-booth-gallery/north-booth-1.jpg" }, { number: "03", category: "Drone Training", title: "BPBD Kabupaten Gunungkidul", tone: "clay", image: "/portfolio/gunungkidul-drone-training.jpg" }];
 
 export default async function Home() {
   const content = await getCms("home", cmsFallbacks.home);
-  const lines = (value: string) => value.split("\\n").map((line, index) => <span key={line}>{index > 0 && <br />}{line}</span>);
-  return (
-    <main className="landing-page">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-      <SiteNav />
-
-      <section className="hero hero-lines-hero hero-wide" id="home">
-        <HeroLines linesGradient={["#8f3f24", "#ff6826", "#ffbd34"]} lineCount={[7, 11, 15]} lineDistance={[0.18, 0.12, 0.085]} animationSpeed={0.42} parallax parallaxStrength={0.055} />
-        <div className="hero-grid">
-          <div className="hero-copy">
-            <p className="eyebrow">{content.eyebrow}</p>
-            <h1>Jogja Creative<br /><em>Production.</em></h1>
-            <p className="intro">{content.heroIntro}</p>
-            <a className="primary-cta" href="#services">Jelajahi layanan <b>↓</b></a>
-          </div>
-        </div>
-        <div className="hero-footer">
-          <p>From a single frame<br />to the whole story.</p>
-          <p>Scroll to discover <span>↓</span></p>
-        </div>
-      </section>
-
-      <section className="manifesto" id="about">
-        <div className="shell manifesto-grid">
-          <p className="section-label">(01) Who we are</p>
-          <div>
-            <h2>Creative work,<br /><em>made useful.</em></h2>
-            <p className="manifesto-copy">{content.manifestoCopy}</p>
-          </div>
-          <div className="manifesto-mark"><Magnet><GlareHover glareOpacity={0.28} glareSize={45}><Image className="manifesto-mark-logo" src="/jcp-logo-nav.png" alt="JCP - Jogja Creative Production" width={288} height={288} loading="lazy" sizes="(min-width: 720px) 16vw, 34vw" /></GlareHover></Magnet></div>
-        </div>
-      </section>
-
-      <section className="company-snapshot shell">
-        <p className="section-label">(About the company)</p>
-        <div className="snapshot-copy"><h2>One stop creative<br />solution for <em>real work.</em></h2><div><p>PT Jogja Creative Production adalah perusahaan digital kreatif di Yogyakarta. Kami membantu bisnis, institusi, dan penyelenggara event yang membutuhkan visual profesional, tetapi terkendala waktu, sumber daya, atau konsistensi kualitas produksi.</p><p>Solusi kami terintegrasi: desain, branding, manajemen media sosial, dokumentasi foto-video, photobooth, virtual tour 360°, pelatihan drone, hingga solusi berbasis AI. Klien dapat fokus pada tujuan utamanya; kami mengelola proses kreatif dari perencanaan sampai hasil akhir.</p></div></div>
-        <div className="snapshot-grid"><article><span>06</span><p>Unit layanan terintegrasi</p></article><article><span>2022</span><p>Tahun JCP mulai berkarya</p></article><article><span>DIY</span><p>Berbasis di Yogyakarta, melayani lintas kota</p></article></div>
-      </section>
-
-      <section className="services shell" id="services">
-        <div className="section-topline"><p className="section-label">(02) Our playground</p><p>Six ways we can move your story forward.</p></div>
-        <div className="service-list">
-          {content.services.map(([number, title, description]) => (
-            <article className="service" key={number}>
-              <span>{number}</span>
-              <h3>{title}</h3>
-              <p>{description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="work shell" id="works">
-        <div className="section-topline"><p className="section-label">(03) Selected work</p><a href="/portfolio">See more projects ↗︎</a></div>
-        <div className="work-intro">
-          <h2>Made with<br /><em>intention.</em></h2>
-          <p>Dari pelatihan yang lebih aman sampai event yang lebih hidup, setiap proyek dimulai dengan tujuan yang jelas.</p>
-        </div>
-        <div className="project-grid">
-          {projects.map((project) => (
-            <article className={`project-card ${project.tone}`} key={project.number}>
-              <div className="project-art"><Image src={project.image} alt={project.title} fill sizes="(min-width: 720px) 33vw, 100vw" /></div>
-              <div className="project-copy"><p>{project.category}</p><h3>{project.title}</h3></div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="contact-cta shell" id="contact">
-        <p className="section-label">(04) Start something</p>
-        <div><h2>Got a good<br /><em>idea?</em></h2><a href="/hubungi">Tell us everything <span>↗︎</span></a></div>
-      </section>
-    </main>
-  );
+  const lines = (value: string) => value.split("\n").map((line, i) => <span key={`${line}-${i}`}>{i > 0 && <br />}{line}</span>);
+  return <main className="landing-page"><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@graph": [organizationLd(), { "@type": "WebSite", name: SITE_NAME, url: SITE_URL }] }) }} /><SiteNav />
+    <section className="hero hero-lines-hero hero-wide" id="home"><HeroLines linesGradient={["#8f3f24", "#ff6826", "#ffbd34"]} lineCount={[7, 11, 15]} lineDistance={[0.18, 0.12, 0.085]} animationSpeed={0.42} parallax parallaxStrength={0.055} /><div className="hero-grid"><div className="hero-copy"><p className="eyebrow">{content.eyebrow}</p><h1>{lines(content.heroTitle)}</h1><p className="intro">{content.heroIntro}</p><a className="primary-cta" href="#services">{content.heroCta} <b>↓</b></a></div></div><div className="hero-footer"><p>From a single frame<br />to the whole story.</p><p>Scroll to discover <span>↓</span></p></div></section>
+    <section className="manifesto" id="about"><div className="shell manifesto-grid"><p className="section-label">{content.manifestoLabel}</p><div><h2>{lines(content.manifestoTitle)}</h2><p className="manifesto-copy">{content.manifestoCopy}</p></div><div className="manifesto-mark"><Magnet><GlareHover glareOpacity={0.28} glareSize={45}><Image className="manifesto-mark-logo" src="/jcp-logo-nav.png" alt="JCP" width={288} height={288} /></GlareHover></Magnet></div></div></section>
+    <section className="company-snapshot shell"><p className="section-label">{content.snapshotLabel}</p><div className="snapshot-copy"><h2>{lines(content.snapshotTitle)}</h2><div><p>{content.snapshotParagraph1}</p><p>{content.snapshotParagraph2}</p></div></div><div className="snapshot-grid"><article><span>{content.stat1Number}</span><p>{content.stat1Text}</p></article><article><span>{content.stat2Number}</span><p>{content.stat2Text}</p></article><article><span>{content.stat3Number}</span><p>{content.stat3Text}</p></article></div></section>
+    <section className="services shell" id="services"><div className="section-topline"><p className="section-label">{content.servicesLabel}</p><p>{content.servicesIntro}</p></div><div className="service-list">{content.services.map(([number, title, description]) => <article className="service" key={number}><span>{number}</span><h3>{title}</h3><p>{description}</p></article>)}</div></section>
+    <section className="work shell" id="works"><div className="section-topline"><p className="section-label">{content.workLabel}</p><a href="/portfolio">{content.workLink} ↗</a></div><div className="work-intro"><h2>{lines(content.workTitle)}</h2><p>{content.workIntro}</p></div><div className="project-grid">{projects.map((project) => <article className={`project-card ${project.tone}`} key={project.number}><div className="project-art"><Image src={project.image} alt={project.title} fill sizes="(min-width: 720px) 33vw, 100vw" /></div><div className="project-copy"><p>{project.category}</p><h3>{project.title}</h3></div></article>)}</div></section>
+    <section className="contact-cta shell" id="contact"><p className="section-label">{content.contactLabel}</p><div><h2>{lines(content.contactTitle)}</h2><a href="/hubungi">{content.contactCta} <span>↗</span></a></div></section>
+  </main>;
 }
