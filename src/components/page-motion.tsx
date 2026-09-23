@@ -9,6 +9,11 @@ export function PageMotion({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
 
+  // The admin uses its own full-screen scrolling panels. Keeping it out of
+  // the animated public-site wrapper prevents the wrapper from becoming a
+  // containing block for fixed/sticky controls.
+  if (pathname.startsWith("/admin")) return <>{children}</>;
+
   return <AnimatePresence mode="wait" initial={false}>
     <motion.div
       className="page-motion"
