@@ -532,7 +532,6 @@ export function AdminConsole() {
                 ? "Detail layanan & folder Selected Work"
                 : "Ubah konten halaman"}
             </span>
-            {service && <button className="danger-button admin-delete-current" onClick={() => { if (window.confirm(`Hapus layanan ${service.name}?`)) { const next = services.filter((item) => item.slug !== service.slug).map((item, index) => ({ ...item, number: String(index + 1).padStart(2, "0") })); update("services", { ...data.services, items: next }); setSelected(null); } }}>Hapus layanan</button>}
           </div>
           <a
             target="_blank"
@@ -546,6 +545,7 @@ export function AdminConsole() {
           >
             Lihat halaman ↗
           </a>
+          {service && <button className="danger-button admin-delete-current" onClick={() => { if (window.confirm(`Hapus layanan ${service.name}?`)) { const next = services.filter((item) => item.slug !== service.slug).map((item, index) => ({ ...item, number: String(index + 1).padStart(2, "0") })); update("services", { ...data.services, items: next }); setSelected(null); } }}>Hapus layanan</button>}
         </header>
         {service ? (
           <>
