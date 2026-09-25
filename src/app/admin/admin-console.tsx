@@ -555,11 +555,6 @@ export function AdminConsole() {
                 atau hapus satu media, lalu simpan.
               </span>
             </div>
-            <label className="admin-video-upload admin-video-upload-top">
-              <b>+ Tambah video dari perangkat</b>
-              <span>MP4, WebM, atau MOV; maksimal 100 MB.</span>
-              <input type="file" accept="video/mp4,video/webm,video/quicktime" disabled={busy} onChange={(event) => { void addVideo(event.target.files?.[0] ?? null); event.currentTarget.value = ""; }} />
-            </label>
             <div className="admin-fields">
               <label>
                 Nama layanan
@@ -679,11 +674,6 @@ export function AdminConsole() {
                 + Tambah keunggulan
               </button>
               <h2>Folder foto & video Selected Work</h2>
-              <label className="admin-video-upload">
-                <b>+ Tambah video dari perangkat</b>
-                <span>MP4, WebM, atau MOV; maksimal 100 MB.</span>
-                <input type="file" accept="video/mp4,video/webm,video/quicktime" disabled={busy} onChange={(event) => { void addVideo(event.target.files?.[0] ?? null); event.currentTarget.value = ""; }} />
-              </label>
               {gallery.map((photo, index) => (
                 <article
                   className="admin-photo-card"
@@ -764,25 +754,32 @@ export function AdminConsole() {
                   </button>
                 </article>
               ))}
-              <button
-                className="add-row"
-                onClick={() =>
-                  updateDetail({
-                    ...detail,
-                    gallery: [
-                      ...gallery,
-                      {
-                        image: "",
-                        title: "Foto baru",
-                        category: "Kategori",
-                        tone: "orange",
-                      },
-                    ],
-                  })
-                }
-              >
-                + Tambah foto
-              </button>
+              <div className="admin-media-actions">
+                <button
+                  type="button"
+                  className="add-row"
+                  onClick={() =>
+                    updateDetail({
+                      ...detail,
+                      gallery: [
+                        ...gallery,
+                        {
+                          image: "",
+                          title: "Foto baru",
+                          category: "Kategori",
+                          tone: "orange",
+                        },
+                      ],
+                    })
+                  }
+                >
+                  + Tambah foto
+                </button>
+                <label className="admin-video-upload">
+                  <b>+ Tambah video</b>
+                  <input type="file" accept="video/mp4,video/webm,video/quicktime" disabled={busy} onChange={(event) => { void addVideo(event.target.files?.[0] ?? null); event.currentTarget.value = ""; }} />
+                </label>
+              </div>
             </section>
           </>
         ) : (
