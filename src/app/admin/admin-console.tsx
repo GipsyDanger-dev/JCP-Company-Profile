@@ -549,12 +549,17 @@ export function AdminConsole() {
         {service ? (
           <>
             <div className="admin-help">
-              <strong>Folder foto Selected Work</strong>
+              <strong>Folder foto & video Selected Work</strong>
               <span>
-                Foto dari halaman website sudah tersedia. Ubah nama/kategori
-                atau hapus satu foto, lalu simpan.
+                Media dari halaman website sudah tersedia. Ubah nama/kategori
+                atau hapus satu media, lalu simpan.
               </span>
             </div>
+            <label className="admin-video-upload admin-video-upload-top">
+              <b>+ Tambah video dari perangkat</b>
+              <span>MP4, WebM, atau MOV; maksimal 100 MB.</span>
+              <input type="file" accept="video/mp4,video/webm,video/quicktime" disabled={busy} onChange={(event) => { void addVideo(event.target.files?.[0] ?? null); event.currentTarget.value = ""; }} />
+            </label>
             <div className="admin-fields">
               <label>
                 Nama layanan
