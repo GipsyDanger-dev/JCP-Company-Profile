@@ -387,6 +387,26 @@ export function AdminConsole() {
       ...detail,
       [key]: (detail[key] ?? []).map((item, i) => (i === index ? value : item)),
     });
+  async function addVideo(file: File | null) {
+    if (!file || !service) return;
+    setBusy(true);
+    setNotice("");
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const response = await fetch("/api/admin/media", { method: "POST", body: form });
+      const result = await response.json();
+      if (!response.ok || !result.url) throw new Error(result.error ?? "Upload video gagal.");
+      updateDetail({
+        ...detail,
+        gallery: [...gallery, { video: result.url, title: file.name.replace(/\.[^.]+$/, ""), category: "Video", tone: "ink" }],
+      });
+      setNotice("Video ditambahkan. Klik Simpan perubahan untuk menayangkannya.");
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : "Upload video gagal.");
+    }
+    setBusy(false);
+  }
   async function save() {
     setBusy(true);
     setNotice("");
@@ -653,7 +673,12 @@ export function AdminConsole() {
               >
                 + Tambah keunggulan
               </button>
-              <h2>Folder foto Selected Work</h2>
+              <h2>Folder foto & video Selected Work</h2>
+              <label className="admin-video-upload">
+                <b>+ Tambah video dari perangkat</b>
+                <span>MP4, WebM, atau MOV; maksimal 100 MB.</span>
+                <input type="file" accept="video/mp4,video/webm,video/quicktime" disabled={busy} onChange={(event) => { void addVideo(event.target.files?.[0] ?? null); event.currentTarget.value = ""; }} />
+              </label>
               {gallery.map((photo, index) => (
                 <article
                   className="admin-photo-card"
