@@ -27,6 +27,7 @@ type Detail = {
   offers?: string[];
   points?: string[];
   gallery?: Photo[];
+  mediaVersion?: number;
 };
 
 const pages = [
@@ -338,11 +339,14 @@ export function AdminConsole() {
       ? productionPhotos
       : service?.slug === "north-creative"
         ? creativePhotos
-        : [];
-  const gallery =
-    defaultGallery.length && rawGallery.length < defaultGallery.length
-      ? [...rawGallery, ...defaultGallery.slice(rawGallery.length)]
-      : rawGallery;
+        : service
+          ? serviceDefaults[service.slug]?.gallery ?? []
+          : [];
+  const gallery = detail.mediaVersion === 1
+    ? rawGallery
+    : [...rawGallery, ...defaultGallery.filter((defaultItem) => !rawGallery.some((item) =>
+      defaultItem.video ? item.video === defaultItem.video : item.image === defaultItem.image
+    ))];
   useEffect(() => {
     fetch("/api/admin/content")
       .then((r) => (r.ok ? r.json() : []))
@@ -390,7 +394,7 @@ export function AdminConsole() {
       for (const key of service ? ["services", "service-details"] : [page]) {
         const value =
           key === "service-details" && service
-            ? { ...details, [service.slug]: { ...detail, gallery } }
+            ? { ...details, [service.slug]: { ...detail, gallery, mediaVersion: 1 } }
             : data[key];
         const response = await fetch("/api/admin/content", {
           method: "PUT",
