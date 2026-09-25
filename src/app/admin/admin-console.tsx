@@ -488,7 +488,7 @@ export function AdminConsole() {
                         }}
                       >
                         {item.number} · {item.name}
-                      </button><button className="admin-service-delete" title="Hapus layanan" onClick={(event) => { event.stopPropagation(); if (window.confirm(`Hapus layanan ${item.name}?`)) { const next = services.filter((_, serviceIndex) => serviceIndex !== index).map((serviceItem, serviceIndex) => ({ ...serviceItem, number: String(serviceIndex + 1).padStart(2, "0") })); update("services", { ...data.services, items: next }); if (selected === index) setSelected(null); } }}>×</button></div>
+                      </button></div>
                     ))}
                     <button
                       className="add-sub"
