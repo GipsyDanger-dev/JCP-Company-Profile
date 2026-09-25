@@ -545,7 +545,6 @@ export function AdminConsole() {
           >
             Lihat halaman ↗
           </a>
-          {service && <button className="danger-button admin-delete-current" onClick={() => { if (window.confirm(`Hapus layanan ${service.name}?`)) { const next = services.filter((item) => item.slug !== service.slug).map((item, index) => ({ ...item, number: String(index + 1).padStart(2, "0") })); update("services", { ...data.services, items: next }); setSelected(null); } }}>Hapus layanan</button>}
         </header>
         {service ? (
           <>
@@ -811,6 +810,7 @@ export function AdminConsole() {
           <button onClick={save} disabled={busy}>
             {busy ? "Menyimpan…" : "Simpan perubahan"}
           </button>
+          {service && <button className="danger-button admin-delete-current" onClick={() => { if (window.confirm(`Hapus layanan ${service.name}?`)) { const next = services.filter((item) => item.slug !== service.slug).map((item, index) => ({ ...item, number: String(index + 1).padStart(2, "0") })); update("services", { ...data.services, items: next }); setSelected(null); } }}>Hapus layanan</button>}
           {notice && <p>{notice}</p>}
         </div>
       </section>
