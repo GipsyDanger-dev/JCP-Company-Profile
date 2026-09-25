@@ -421,11 +421,14 @@ export function AdminConsole() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ key, value }),
         });
-        if (!response.ok) throw new Error();
+        if (!response.ok) {
+          const errorBody = await response.json().catch(() => ({}));
+          throw new Error(errorBody.error ?? `Gagal menyimpan ${key} (${response.status}).`);
+        }
       }
       setNotice("Tersimpan. Perubahan langsung tampil di website.");
-    } catch {
-      setNotice("Gagal menyimpan perubahan.");
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : "Gagal menyimpan perubahan.");
     }
     setBusy(false);
   }
