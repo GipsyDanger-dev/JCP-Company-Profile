@@ -566,6 +566,7 @@ export function AdminConsole() {
             ),
           )}
         </nav>
+        <button className="logout" onClick={async () => { await fetch("/api/admin/logout", { method: "POST", credentials: "include" }); window.location.href = "/admin/login"; }}>Logout</button>
       </aside>
       <section className="admin-editor">
         <header>
