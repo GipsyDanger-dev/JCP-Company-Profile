@@ -337,6 +337,8 @@ export function AdminConsole() {
   );
   const [page, setPage] = useState("home");
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [portfolioOpen, setPortfolioOpen] = useState(false);
+  const [portfolioCategory, setPortfolioCategory] = useState("Semua");
   const [selected, setSelected] = useState<number | null>(null);
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
@@ -483,7 +485,7 @@ export function AdminConsole() {
         </p>
         <nav>
           {pages.map(([key, label]) =>
-            key !== "services" ? (
+            key !== "services" && key !== "portfolio" ? (
               <button
                 key={key}
                 className={page === key ? "active" : ""}
@@ -494,7 +496,7 @@ export function AdminConsole() {
               >
                 {label}
               </button>
-            ) : (
+            ) : key === "services" ? (
               <div className="admin-subnav" key={key}>
                 <button
                   className={page === key ? "active" : ""}
@@ -548,6 +550,8 @@ export function AdminConsole() {
                   </div>
                 )}
               </div>
+            ) : (
+              <div className="admin-subnav" key={key}><button className={page === "portfolio" ? "active" : ""} onClick={() => { setPage("portfolio"); setSelected(null); setPortfolioOpen((open) => !open); }}>Portofolio <span>{portfolioOpen ? "−" : "+"}</span></button>{portfolioOpen && <div><button className={portfolioCategory === "Semua" ? "active-sub" : ""} onClick={() => { setPage("portfolio"); setPortfolioCategory("Semua"); }}>Semua (34 proyek)</button>{["Drone Training", "North Production", "North Creative", "North Photobooth", "Virtual Tour 360", "AI Kreasi Cerdas"].map((category) => <button key={category} className={portfolioCategory === category ? "active-sub" : ""} onClick={() => { setPage("portfolio"); setPortfolioCategory(category); }}>{category}</button>)}<button className="add-sub" onClick={() => { setPage("portfolio"); setPortfolioCategory("Semua"); }}>+ Tambah proyek</button></div>}</div>
             ),
           )}
         </nav>
