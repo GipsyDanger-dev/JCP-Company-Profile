@@ -326,9 +326,10 @@ const serviceDefaults: Record<string, Detail> = {
   "ai-kreasi-cerdas": aiDetail,
 };
 
-function ArrayEditor({ title, items, fields, onChange, onRemove, onAdd }: { title: string; items: unknown; fields: (string | null)[]; onChange: (index: number, field: string | null, value: string) => void; onRemove: (index: number) => void; onAdd: () => void }) {
+function ArrayEditor({ title, items, fields, onChange, onRemove, onAdd, hidden = false }: { title: string; items: unknown; fields: (string | null)[]; onChange: (index: number, field: string | null, value: string) => void; onRemove: (index: number) => void; onAdd: () => void; hidden?: boolean }) {
   const rows = Array.isArray(items) ? items : [];
-  return <section className="admin-array-editor"><div className="admin-array-heading"><h3>{title}</h3><button type="button" className="add-row" onClick={onAdd}>+ Tambah</button></div>{rows.map((item, index) => <article key={index}>{fields.map((field) => { const value = field ? String((item as Record<string, unknown>)?.[field] ?? "") : String(item ?? ""); return <label key={field ?? "value"}>{field ? field : title}<textarea value={value} onChange={(event) => onChange(index, field, event.target.value)} /></label>; })}<button type="button" className="danger-button" onClick={() => onRemove(index)}>Hapus</button></article>)}</section>;
+  if (title === "Kategori filter") return null;
+  return <section className="admin-array-editor" hidden={hidden}><div className="admin-array-heading"><h3>{title}</h3><button type="button" className="add-row" onClick={onAdd}>+ Tambah</button></div>{rows.map((item, index) => <article key={index}>{fields.map((field) => { const value = field ? String((item as Record<string, unknown>)?.[field] ?? "") : String(item ?? ""); return <label key={field ?? "value"}>{field ? field : title}<textarea value={value} onChange={(event) => onChange(index, field, event.target.value)} /></label>; })}<button type="button" className="danger-button" onClick={() => onRemove(index)}>Hapus</button></article>)}</section>;
 }
 
 export function AdminConsole() {
@@ -343,6 +344,8 @@ export function AdminConsole() {
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
   const content = data[page] ?? {};
+  const allPortfolioProjects = (content.projects ?? defaultPortfolioProjects) as Array<Record<string, unknown>>;
+  const visiblePortfolioProjects = allPortfolioProjects.filter((item) => portfolioCategory === "Semua" || item.category === portfolioCategory);
   const services = (data.services?.items as Service[]) ?? [];
   const service =
     page === "services" && selected !== null ? services[selected] : undefined;
