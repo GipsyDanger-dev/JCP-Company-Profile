@@ -373,7 +373,7 @@ export function AdminConsole() {
       defaultItem.video ? item.video === defaultItem.video : item.image === defaultItem.image
     ))];
   useEffect(() => {
-    fetch("/api/admin/content")
+    fetch("/api/admin/content", { credentials: "include" })
       .then((r) => (r.ok ? r.json() : []))
       .then((rows: { key: string; value: Content }[]) => {
         if (rows.length)
@@ -457,6 +457,7 @@ export function AdminConsole() {
             : data[key];
         const response = await fetch("/api/admin/content", {
           method: "PUT",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ key, value }),
         });
