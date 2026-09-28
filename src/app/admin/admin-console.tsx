@@ -394,6 +394,11 @@ export function AdminConsole() {
     sidebar.addEventListener("wheel", scrollSidebar, { passive: false });
     return () => sidebar.removeEventListener("wheel", scrollSidebar);
   }, []);
+  useEffect(() => {
+    if (!notice) return;
+    const timer = window.setTimeout(() => setNotice(""), 4500);
+    return () => window.clearTimeout(timer);
+  }, [notice]);
   const update = (key: string, value: Content) =>
     setData((old) => ({ ...old, [key]: value }));
   const updateDetail = (next: Detail) => {
