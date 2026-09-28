@@ -3,7 +3,7 @@
 import { SiteNav } from "@/components/site-nav";
 import { SITE_URL } from "@/lib/seo";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const projects = [
   { number: "01", category: "Drone Training", client: "Universitas Gadjah Mada", title: "Pelatihan Drone bersama Civitas Akademika UGM", tone: "orange", image: "/portfolio/borobudur-drone-training.jpg" },
@@ -56,7 +56,10 @@ const structuredData = {
 
 export default function PortfolioPage() {
   const [filter, setFilter] = useState("Semua");
-  const visibleProjects = projects.filter((project) => filter === "Semua" || project.category === filter);
+  const [content, setContent] = useState<{heroLabel?: string; heroTitle?: string; heroIntro?: string; projects?: typeof projects}>({});
+  useEffect(() => { fetch("/api/public/content?key=portfolio").then((r) => r.ok ? r.json() : null).then((value) => value && setContent(value)).catch(() => {}); }, []);
+  const projectList = content.projects?.length ? content.projects : projects;
+  const visibleProjects = projectList.filter((project) => filter === "Semua" || project.category === filter);
 
   return (
     <main className="portfolio-page">
@@ -64,9 +67,9 @@ export default function PortfolioPage() {
       <SiteNav active="portfolio" />
 
       <section className="portfolio-hero shell">
-        <p className="section-label">(Selected projects)</p>
-        <h1>Work that<br /><em>moves.</em></h1>
-        <div><p>Berbagai cerita, medium, dan tantangan. Satu standar: karya yang terasa tepat untuk orang yang melihatnya.</p><span>34 projects / 6 disciplines</span></div>
+        <p className="section-label">{content.heroLabel ?? "(Selected projects)"}</p>
+        <h1>{(content.heroTitle ?? "Work that\nmoves.").split("\n").map((line, i) => <span key={line}>{i > 0 && <br />}<em>{i === 1 ? line : line}</em></span>)}</h1>
+        <div><p>{content.heroIntro ?? "Berbagai cerita, medium, dan tantangan. Satu standar: karya yang terasa tepat untuk orang yang melihatnya."}</p><span>{projectList.length} projects / 6 disciplines</span></div>
       </section>
 
       <section className="portfolio-list shell">

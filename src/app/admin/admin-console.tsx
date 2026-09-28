@@ -78,7 +78,7 @@ const labels: Record<string, Record<string, string>> = {
     assuranceCopy2: "Jaminan paragraf 2",
   },
   services: { heroTitle: "Judul utama", heroIntro: "Keterangan hero" },
-  portfolio: { heroTitle: "Judul utama", heroIntro: "Keterangan hero" },
+  portfolio: { heroLabel: "Label hero", heroTitle: "Judul utama", heroIntro: "Keterangan hero" },
   contact: {
     title: "Judul utama",
     intro: "Keterangan",
@@ -404,15 +404,15 @@ export function AdminConsole() {
       ...detail,
       [key]: (detail[key] ?? []).map((item, i) => (i === index ? value : item)),
     });
-  const updateAboutArray = (key: string, index: number, field: string | null, value: string) => {
+  const updateAboutArray = (key: string, index: number, field: string | null, value: string, pageKey = "about") => {
     const list = Array.isArray(content[key]) ? [...(content[key] as unknown[])] : [];
     list[index] = field ? { ...(list[index] as Record<string, unknown>), [field]: value } : value;
-    update("about", { ...content, [key]: list });
+    update(pageKey, { ...content, [key]: list });
   };
-  const addAboutArray = (key: string, value: unknown) =>
-    update("about", { ...content, [key]: [...(Array.isArray(content[key]) ? (content[key] as unknown[]) : []), value] });
-  const removeAboutArray = (key: string, index: number) =>
-    update("about", { ...content, [key]: (Array.isArray(content[key]) ? (content[key] as unknown[]) : []).filter((_, i) => i !== index) });
+  const addAboutArray = (key: string, value: unknown, pageKey = "about") =>
+    update(pageKey, { ...content, [key]: [...(Array.isArray(content[key]) ? (content[key] as unknown[]) : []), value] });
+  const removeAboutArray = (key: string, index: number, pageKey = "about") =>
+    update(pageKey, { ...content, [key]: (Array.isArray(content[key]) ? (content[key] as unknown[]) : []).filter((_, i) => i !== index) });
   async function addVideo(file: File | null) {
     if (!file || !service) return;
     setBusy(true);
@@ -843,6 +843,7 @@ export function AdminConsole() {
             <ArrayEditor title="Tim" items={content.teams} fields={["group", "names", "role"]} onChange={(i, f, v) => updateAboutArray("teams", i, f, v)} onRemove={(i) => removeAboutArray("teams", i)} onAdd={() => addAboutArray("teams", { group: "Tim baru", names: "Nama", role: "Peran" })} />
             <ArrayEditor title="Legal" items={content.legal} fields={["label", "text"]} onChange={(i, f, v) => updateAboutArray("legal", i, f, v)} onRemove={(i) => removeAboutArray("legal", i)} onAdd={() => addAboutArray("legal", { label: "Legal", text: "Keterangan" })} />
           </div>}
+          {page === "portfolio" && <div className="admin-about-arrays"><h2>Daftar proyek portofolio</h2><ArrayEditor title="Proyek" items={content.projects} fields={["number", "category", "client", "title", "image", "tone"]} onChange={(i, f, v) => updateAboutArray("projects", i, f, v, "portfolio")} onRemove={(i) => removeAboutArray("projects", i, "portfolio")} onAdd={() => addAboutArray("projects", { number: "01", category: "Kategori", client: "Klien", title: "Proyek baru", image: "/portfolio/", tone: "orange" }, "portfolio")} /></div>}
           </>
         )}
         <div className="admin-actions">
