@@ -56,9 +56,10 @@ const structuredData = {
 
 export default function PortfolioPage() {
   const [filter, setFilter] = useState("Semua");
-  const [content, setContent] = useState<{heroLabel?: string; heroTitle?: string; heroIntro?: string; projects?: typeof projects}>({});
+  const [content, setContent] = useState<{heroLabel?: string; heroTitle?: string; heroIntro?: string; projects?: typeof projects; categories?: string[]}>({});
   useEffect(() => { fetch("/api/public/content?key=portfolio").then((r) => r.ok ? r.json() : null).then((value) => value && setContent(value)).catch(() => {}); }, []);
   const projectList = content.projects?.length ? content.projects : projects;
+  const categories = content.categories?.length ? content.categories : ["Drone Training", "North Production", "North Creative", "North Photobooth", "Virtual Tour 360", "AI Kreasi Cerdas"];
   const visibleProjects = projectList.filter((project) => filter === "Semua" || project.category === filter);
 
   return (
@@ -73,7 +74,7 @@ export default function PortfolioPage() {
       </section>
 
       <section className="portfolio-list shell">
-        <div className="portfolio-filters"><span>Filter by</span><button className={filter === "Semua" ? "selected" : ""} onClick={() => setFilter("Semua")}>Semua <b>{projects.length}</b></button><button className={filter === "Drone Training" ? "selected" : ""} onClick={() => setFilter("Drone Training")}>Drone Training <b>{projects.filter(p => p.category === "Drone Training").length}</b></button><button className={filter === "North Production" ? "selected" : ""} onClick={() => setFilter("North Production")}>North Production <b>{projects.filter(p => p.category === "North Production").length}</b></button><button className={filter === "North Creative" ? "selected" : ""} onClick={() => setFilter("North Creative")}>North Creative <b>{projects.filter(p => p.category === "North Creative").length}</b></button><button className={filter === "North Photobooth" ? "selected" : ""} onClick={() => setFilter("North Photobooth")}>North Photobooth <b>{projects.filter(p => p.category === "North Photobooth").length}</b></button><button className={filter === "Virtual Tour 360" ? "selected" : ""} onClick={() => setFilter("Virtual Tour 360")}>Virtual Tour 360 <b>{projects.filter(p => p.category === "Virtual Tour 360").length}</b></button><button className={filter === "AI Kreasi Cerdas" ? "selected" : ""} onClick={() => setFilter("AI Kreasi Cerdas")}>AI Kreasi Cerdas <b>{projects.filter(p => p.category === "AI Kreasi Cerdas").length}</b></button></div>
+        <div className="portfolio-filters"><span>Filter by</span><button className={filter === "Semua" ? "selected" : ""} onClick={() => setFilter("Semua")}>Semua <b>{projectList.length}</b></button>{categories.map((category) => <button key={category} className={filter === category ? "selected" : ""} onClick={() => setFilter(category)}>{category} <b>{projectList.filter((p) => p.category === category).length}</b></button>)}</div>
         <div className="portfolio-grid">
           {visibleProjects.map((project) => (
             <article className={`portfolio-card ${project.tone}`} key={project.number}>
