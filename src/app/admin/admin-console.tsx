@@ -554,7 +554,7 @@ export function AdminConsole() {
                 )}
               </div>
             ) : (
-              <div className="admin-subnav" key={key}><button className={page === "portfolio" ? "active" : ""} onClick={() => { setPage("portfolio"); setSelected(null); setPortfolioOpen((open) => !open); }}>Portofolio <span>{portfolioOpen ? "−" : "+"}</span></button>{portfolioOpen && <div><button className={portfolioCategory === "Semua" ? "active-sub" : ""} onClick={() => { setPage("portfolio"); setPortfolioCategory("Semua"); }}>Semua (34 proyek)</button>{["Drone Training", "North Production", "North Creative", "North Photobooth", "Virtual Tour 360", "AI Kreasi Cerdas"].map((category) => <button key={category} className={portfolioCategory === category ? "active-sub" : ""} onClick={() => { setPage("portfolio"); setPortfolioCategory(category); }}>{category}</button>)}<button className="add-sub" onClick={() => { setPage("portfolio"); setPortfolioCategory("Semua"); }}>+ Tambah proyek</button></div>}</div>
+              <button key={key} className={page === key ? "active" : ""} onClick={() => { setPage(key); setSelected(null); }}>Portofolio</button>
             ),
           )}
         </nav>
