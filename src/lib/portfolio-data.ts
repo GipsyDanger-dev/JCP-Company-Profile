@@ -1,11 +1,5 @@
-"use client";
+export const portfolioProjects = [
 
-import { SiteNav } from "@/components/site-nav";
-import { SITE_URL } from "@/lib/seo";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-
-const projects = [
   { number: "01", category: "Drone Training", client: "Universitas Gadjah Mada", title: "Pelatihan Drone bersama Civitas Akademika UGM", tone: "orange", image: "/portfolio/borobudur-drone-training.jpg" },
   { number: "02", category: "Drone Training", client: "Badan Otorita Borobudur", title: "Pelatihan Drone Badan Otorita Borobudur", tone: "sage", image: "/portfolio/sleman-jaring-pengaman-sosial.jpg" },
   { number: "03", category: "North Production", client: "Hotel Grand Serela", title: "Hospitality Visual Story", tone: "clay", image: "/portfolio/grand-serela-hospitality-visual-story.jpg" },
@@ -39,55 +33,5 @@ const projects = [
   { number: "31", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "360 Experience", tone: "orange", image: "/services/virtual-tour-360-gallery/virtual-tour-360-1.jpg" },
   { number: "32", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "Interactive Walkthrough", tone: "ink", image: "/services/virtual-tour-360-gallery/virtual-tour-360-2.jpg" },
   { number: "33", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "Immersive Journey", tone: "clay", image: "/services/virtual-tour-360-gallery/virtual-tour-360-3.jpg" },
-  { number: "34", category: "Virtual Tour 360", client: "Virtual Tour 360", title: "Discover Every Corner", tone: "sun", image: "/services/virtual-tour-360-gallery/virtual-tour-360-4.jpg" },
+
 ];
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  name: "Portofolio Jogja Creative Production",
-  url: `${SITE_URL}/portfolio`,
-  description: "34 proyek pilihan Jogja Creative Production: pelatihan drone, foto video, photobooth, virtual tour 360°, hingga solusi AI.",
-  mainEntity: {
-    "@type": "ItemList",
-    itemListElement: projects.map((project, index) => ({ "@type": "ListItem", position: index + 1, name: project.title, image: `${SITE_URL}${project.image}` })),
-  },
-};
-
-export default function PortfolioPage() {
-  const [filter, setFilter] = useState("Semua");
-  const [content, setContent] = useState<{heroLabel?: string; heroTitle?: string; heroIntro?: string; projects?: typeof projects; categories?: string[]}>({});
-  useEffect(() => { fetch("/api/public/content?key=portfolio").then((r) => r.ok ? r.json() : null).then((value) => value && setContent(value)).catch(() => {}); }, []);
-  const projectList = content.projects?.length ? content.projects : projects;
-  const categories = content.categories?.length ? content.categories : ["Drone Training", "North Production", "North Creative", "North Photobooth", "Virtual Tour 360", "AI Kreasi Cerdas"];
-  const visibleProjects = projectList.filter((project) => filter === "Semua" || project.category === filter);
-
-  return (
-    <main className="portfolio-page">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-      <SiteNav active="portfolio" />
-
-      <section className="portfolio-hero shell">
-        <p className="section-label">{content.heroLabel ?? "(Selected projects)"}</p>
-        <h1>{(content.heroTitle ?? "Work that\nmoves.").split("\n").map((line, i) => <span key={line}>{i > 0 && <br />}<em>{i === 1 ? line : line}</em></span>)}</h1>
-        <div><p>{content.heroIntro ?? "Berbagai cerita, medium, dan tantangan. Satu standar: karya yang terasa tepat untuk orang yang melihatnya."}</p><span>{projectList.length} projects / 6 disciplines</span></div>
-      </section>
-
-      <section className="portfolio-list shell">
-        <div className="portfolio-filters"><span>Filter by</span><button className={filter === "Semua" ? "selected" : ""} onClick={() => setFilter("Semua")}>Semua <b>{projectList.length}</b></button>{categories.map((category) => <button key={category} className={filter === category ? "selected" : ""} onClick={() => setFilter(category)}>{category} <b>{projectList.filter((p) => p.category === category).length}</b></button>)}</div>
-        <div className="portfolio-grid">
-          {visibleProjects.map((project) => (
-            <article className={`portfolio-card ${project.tone}`} key={project.number}>
-              <div className="portfolio-art"><Image src={project.image} alt={project.title} fill sizes="(min-width: 720px) 50vw, 100vw" /><span>{project.number}</span><em>JCP</em></div>
-              <div className="portfolio-card-copy"><p>{project.category}</p><h2>{project.title}</h2><span>{project.client}</span></div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="portfolio-outro">
-        <div className="shell"><p className="section-label">Have a project in mind?</p><h2>Let&apos;s make<br /><em>something real.</em></h2><a href="/hubungi">Start a conversation <span>↗</span></a></div>
-      </section>
-    </main>
-  );
-}

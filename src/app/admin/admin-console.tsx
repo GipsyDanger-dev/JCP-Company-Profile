@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { cmsFallbacks } from "@/lib/cms";
-import { projects as defaultPortfolioProjects } from "@/app/portfolio/page";
+import { portfolioProjects } from "@/lib/portfolio-data";
+const defaultPortfolioProjects = portfolioProjects as Array<Record<string, unknown>>;
 
 type Content = Record<string, unknown>;
 type Service = {
@@ -328,7 +329,7 @@ const serviceDefaults: Record<string, Detail> = {
 
 function ArrayEditor({ title, items, fields, onChange, onRemove, onAdd, hidden = false }: { title: string; items: unknown; fields: (string | null)[]; onChange: (index: number, field: string | null, value: string) => void; onRemove: (index: number) => void; onAdd: () => void; hidden?: boolean }) {
   const rows = Array.isArray(items) ? items : [];
-  if (title === "Kategori filter") return null;
+  if (title === "Kategori filter") return <section className="admin-array-editor portfolio-filter-list"><div className="admin-array-heading"><h3>Filter by</h3></div><div className="portfolio-filter-buttons">{rows.map((item, index) => <button type="button" key={index} onClick={() => onChange(index, null, String(item))}>{String(item)}</button>)}</div></section>;
   return <section className="admin-array-editor" hidden={hidden}><div className="admin-array-heading"><h3>{title}</h3><button type="button" className="add-row" onClick={onAdd}>+ Tambah</button></div>{rows.map((item, index) => <article key={index}>{fields.map((field) => { const value = field ? String((item as Record<string, unknown>)?.[field] ?? "") : String(item ?? ""); return <label key={field ?? "value"}>{field ? field : title}<textarea value={value} onChange={(event) => onChange(index, field, event.target.value)} /></label>; })}<button type="button" className="danger-button" onClick={() => onRemove(index)}>Hapus</button></article>)}</section>;
 }
 
