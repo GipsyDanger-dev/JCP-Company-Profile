@@ -54,16 +54,28 @@ const labels: Record<string, Record<string, string>> = {
     contactCta: "Tombol kontak",
   },
   about: {
+    heroLabel: "Label hero",
     heroTitle: "Judul hero",
     heroIntro: "Keterangan hero",
+    storyLabel: "Label cerita",
     storyTitle: "Judul cerita",
     storyCopy: "Cerita paragraf 1",
     storyCopy2: "Cerita paragraf 2",
     profileTitle: "Judul profil",
+    profileLabel: "Label profil",
     profileCopy1: "Profil paragraf 1",
     profileCopy2: "Profil paragraf 2",
+    directionLabel: "Label arah",
     vision: "Visi",
+    valuesLabel: "Label nilai",
+    valuesTitle: "Judul nilai",
+    valuesIntro: "Pengantar nilai",
+    teamLabel: "Label tim",
     teamTitle: "Judul tim",
+    assuranceLabel: "Label jaminan",
+    assuranceTitle: "Judul jaminan",
+    assuranceCopy1: "Jaminan paragraf 1",
+    assuranceCopy2: "Jaminan paragraf 2",
   },
   services: { heroTitle: "Judul utama", heroIntro: "Keterangan hero" },
   portfolio: { heroTitle: "Judul utama", heroIntro: "Keterangan hero" },
@@ -313,6 +325,11 @@ const serviceDefaults: Record<string, Detail> = {
   "ai-kreasi-cerdas": aiDetail,
 };
 
+function ArrayEditor({ title, items, fields, onChange, onRemove, onAdd }: { title: string; items: unknown; fields: (string | null)[]; onChange: (index: number, field: string | null, value: string) => void; onRemove: (index: number) => void; onAdd: () => void }) {
+  const rows = Array.isArray(items) ? items : [];
+  return <section className="admin-array-editor"><div className="admin-array-heading"><h3>{title}</h3><button type="button" className="add-row" onClick={onAdd}>+ Tambah</button></div>{rows.map((item, index) => <article key={index}>{fields.map((field) => { const value = field ? String((item as Record<string, unknown>)?.[field] ?? "") : String(item ?? ""); return <label key={field ?? "value"}>{field ? field : title}<textarea value={value} onChange={(event) => onChange(index, field, event.target.value)} /></label>; })}<button type="button" className="danger-button" onClick={() => onRemove(index)}>Hapus</button></article>)}</section>;
+}
+
 export function AdminConsole() {
   const [data, setData] = useState<Record<string, Content>>(
     cmsFallbacks as Record<string, Content>,
@@ -387,6 +404,15 @@ export function AdminConsole() {
       ...detail,
       [key]: (detail[key] ?? []).map((item, i) => (i === index ? value : item)),
     });
+  const updateAboutArray = (key: string, index: number, field: string | null, value: string) => {
+    const list = Array.isArray(content[key]) ? [...(content[key] as unknown[])] : [];
+    list[index] = field ? { ...(list[index] as Record<string, unknown>), [field]: value } : value;
+    update("about", { ...content, [key]: list });
+  };
+  const addAboutArray = (key: string, value: unknown) =>
+    update("about", { ...content, [key]: [...(Array.isArray(content[key]) ? (content[key] as unknown[]) : []), value] });
+  const removeAboutArray = (key: string, index: number) =>
+    update("about", { ...content, [key]: (Array.isArray(content[key]) ? (content[key] as unknown[]) : []).filter((_, i) => i !== index) });
   async function addVideo(file: File | null) {
     if (!file || !service) return;
     setBusy(true);
@@ -786,6 +812,7 @@ export function AdminConsole() {
             </section>
           </>
         ) : (
+          <>
           <div className="admin-fields">
             {Object.entries(labels[page] ?? {}).map(([key, label]) => (
               <label key={key}>
@@ -808,6 +835,15 @@ export function AdminConsole() {
               </label>
             ))}
           </div>
+          {page === "about" && <div className="admin-about-arrays">
+            <h2>Konten berulang halaman Tentang</h2>
+            <ArrayEditor title="Unit bisnis" items={content.units} fields={["name", "description", "tags"]} onChange={(i, f, v) => updateAboutArray("units", i, f, v)} onRemove={(i) => removeAboutArray("units", i)} onAdd={() => addAboutArray("units", { name: "Unit baru", description: "Deskripsi unit", tags: "Tag" })} />
+            <ArrayEditor title="Misi" items={content.mission} fields={[null]} onChange={(i, f, v) => updateAboutArray("mission", i, null, v)} onRemove={(i) => removeAboutArray("mission", i)} onAdd={() => addAboutArray("mission", "Misi baru")} />
+            <ArrayEditor title="Nilai" items={content.values} fields={["number", "title", "description"]} onChange={(i, f, v) => updateAboutArray("values", i, f, v)} onRemove={(i) => removeAboutArray("values", i)} onAdd={() => addAboutArray("values", { number: "01", title: "Nilai baru", description: "Deskripsi nilai" })} />
+            <ArrayEditor title="Tim" items={content.teams} fields={["group", "names", "role"]} onChange={(i, f, v) => updateAboutArray("teams", i, f, v)} onRemove={(i) => removeAboutArray("teams", i)} onAdd={() => addAboutArray("teams", { group: "Tim baru", names: "Nama", role: "Peran" })} />
+            <ArrayEditor title="Legal" items={content.legal} fields={["label", "text"]} onChange={(i, f, v) => updateAboutArray("legal", i, f, v)} onRemove={(i) => removeAboutArray("legal", i)} onAdd={() => addAboutArray("legal", { label: "Legal", text: "Keterangan" })} />
+          </div>}
+          </>
         )}
         <div className="admin-actions">
           <button onClick={save} disabled={busy}>
