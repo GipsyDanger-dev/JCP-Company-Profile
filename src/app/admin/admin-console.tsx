@@ -345,7 +345,8 @@ export function AdminConsole() {
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
   const content = data[page] ?? {};
-  const allPortfolioProjects = (content.projects ?? defaultPortfolioProjects) as Array<Record<string, unknown>>;
+  const storedPortfolioProjects = Array.isArray(content.projects) ? content.projects as Array<Record<string, unknown>> : [];
+  const allPortfolioProjects = (storedPortfolioProjects.length >= 30 ? storedPortfolioProjects : defaultPortfolioProjects) as Array<Record<string, unknown>>;
   const visiblePortfolioProjects = allPortfolioProjects.filter((item) => portfolioCategory === "Semua" || item.category === portfolioCategory);
   const services = (data.services?.items as Service[]) ?? [];
   const service =
@@ -412,7 +413,7 @@ export function AdminConsole() {
       [key]: (detail[key] ?? []).map((item, i) => (i === index ? value : item)),
     });
   const updateAboutArray = (key: string, index: number, field: string | null, value: string, pageKey = "about") => {
-    const list = Array.isArray(content[key]) ? [...(content[key] as unknown[])] : (pageKey === "portfolio" && key === "projects" ? [...defaultPortfolioProjects] : []);
+    const list = pageKey === "portfolio" && key === "projects" ? [...allPortfolioProjects] : (Array.isArray(content[key]) ? [...(content[key] as unknown[])] : []);
     list[index] = field ? { ...(list[index] as Record<string, unknown>), [field]: value } : value;
     update(pageKey, { ...content, [key]: list });
   };
