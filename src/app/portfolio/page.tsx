@@ -5,7 +5,7 @@ import { SITE_URL } from "@/lib/seo";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const projects = [
+export const projects = [
   { number: "01", category: "Drone Training", client: "Universitas Gadjah Mada", title: "Pelatihan Drone bersama Civitas Akademika UGM", tone: "orange", image: "/portfolio/borobudur-drone-training.jpg" },
   { number: "02", category: "Drone Training", client: "Badan Otorita Borobudur", title: "Pelatihan Drone Badan Otorita Borobudur", tone: "sage", image: "/portfolio/sleman-jaring-pengaman-sosial.jpg" },
   { number: "03", category: "North Production", client: "Hotel Grand Serela", title: "Hospitality Visual Story", tone: "clay", image: "/portfolio/grand-serela-hospitality-visual-story.jpg" },
