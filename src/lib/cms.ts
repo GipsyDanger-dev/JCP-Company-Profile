@@ -4,6 +4,16 @@ export type CmsRecord<T = unknown> = { key: string; value: T; updated_at?: strin
 
 const url = process.env.SUPABASE_URL;
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const localFile = process.env.CMS_LOCAL_FILE || "/app/data/cms.json";
+
+async function readLocal(): Promise<CmsRecord[]> {
+  if (typeof window !== "undefined") return [];
+  try { const runtimeRequire = eval("require"); const { readFile } = runtimeRequire("fs/promises"); return JSON.parse(await readFile(localFile, "utf8")) as CmsRecord[]; } catch { return []; }
+}
+async function writeLocal(rows: CmsRecord[]) {
+  const runtimeRequire = eval("require"); const { mkdir, writeFile } = runtimeRequire("fs/promises"); const path = runtimeRequire("path");
+  await mkdir(path.dirname(localFile), { recursive: true }); await writeFile(localFile, JSON.stringify(rows), "utf8");
+}
 
 function ready() {
   return Boolean(url && key && !url.includes("your-project") && !key.includes("replace-with"));
@@ -17,30 +27,28 @@ function headers(extra: Record<string, string> = {}) {
  * existing site working before the one-time SQL migration is applied. */
 export async function getCms<T>(contentKey: string, fallback: T): Promise<T> {
   noStore();
-  if (!ready()) return fallback;
+  if (!ready()) return (await readLocal()).find((row) => row.key === contentKey)?.value as T ?? fallback;
   try {
     const response = await fetch(`${url}/rest/v1/cms_content?key=eq.${encodeURIComponent(contentKey)}&select=value&limit=1`, { headers: headers(), cache: "no-store", signal: AbortSignal.timeout(5000) });
     if (!response.ok) return fallback;
     const rows = await response.json() as Array<{ value: T }>;
     return rows[0]?.value ?? fallback;
-  } catch { return fallback; }
+  } catch { return (await readLocal()).find((row) => row.key === contentKey)?.value as T ?? fallback; }
 }
 
 export async function listCms(): Promise<CmsRecord[]> {
-  if (!ready()) return [];
-  const response = await fetch(`${url}/rest/v1/cms_content?select=key,value,updated_at&order=key.asc`, { headers: headers(), cache: "no-store" });
-  if (!response.ok) throw new Error("CMS tidak dapat dibaca.");
-  return response.json();
+  if (!ready()) return readLocal();
+  try { const response = await fetch(`${url}/rest/v1/cms_content?select=key,value,updated_at&order=key.asc`, { headers: headers(), cache: "no-store" }); if (!response.ok) throw new Error(); return response.json(); } catch { return readLocal(); }
 }
 
 export async function saveCms(contentKey: string, value: unknown) {
-  if (!ready()) throw new Error("Supabase belum dikonfigurasi.");
-  const response = await fetch(`${url}/rest/v1/cms_content?on_conflict=key`, {
+  const localSave = async () => { const rows = await readLocal(); const next = rows.filter((row) => row.key !== contentKey); next.push({ key: contentKey, value, updated_at: new Date().toISOString() }); await writeLocal(next); return next; };
+  if (!ready()) return localSave();
+  try { const response = await fetch(`${url}/rest/v1/cms_content?on_conflict=key`, {
     method: "POST", headers: headers({ Prefer: "resolution=merge-duplicates,return=representation" }),
     body: JSON.stringify({ key: contentKey, value, updated_at: new Date().toISOString() }),
   });
-  if (!response.ok) throw new Error("CMS gagal disimpan.");
-  return response.json();
+  if (!response.ok) throw new Error("CMS gagal disimpan."); return response.json(); } catch { return localSave(); }
 }
 
 export async function removeCms(contentKey: string) {
