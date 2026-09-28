@@ -412,7 +412,7 @@ export function AdminConsole() {
       [key]: (detail[key] ?? []).map((item, i) => (i === index ? value : item)),
     });
   const updateAboutArray = (key: string, index: number, field: string | null, value: string, pageKey = "about") => {
-    const list = Array.isArray(content[key]) ? [...(content[key] as unknown[])] : [];
+    const list = Array.isArray(content[key]) ? [...(content[key] as unknown[])] : (pageKey === "portfolio" && key === "projects" ? [...defaultPortfolioProjects] : []);
     list[index] = field ? { ...(list[index] as Record<string, unknown>), [field]: value } : value;
     update(pageKey, { ...content, [key]: list });
   };
