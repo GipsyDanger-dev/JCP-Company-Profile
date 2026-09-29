@@ -45,13 +45,22 @@ const labels: Record<string, Record<string, string>> = {
     heroTitle: "Judul hero",
     heroIntro: "Keterangan hero",
     heroCta: "Tombol hero",
+    heroFooterLeft: "Teks bawah hero kiri",
+    heroFooterRight: "Teks bawah hero kanan",
+    manifestoLabel: "Label pengenalan",
     manifestoTitle: "Judul pengenalan",
     manifestoCopy: "Keterangan pengenalan",
+    snapshotLabel: "Label profil",
     snapshotTitle: "Judul profil",
     snapshotParagraph1: "Profil paragraf 1",
     snapshotParagraph2: "Profil paragraf 2",
+    servicesLabel: "Label layanan",
+    servicesIntro: "Keterangan layanan",
+    workLabel: "Label portofolio",
     workTitle: "Judul portofolio",
     workIntro: "Keterangan portofolio",
+    workLink: "Tombol portofolio",
+    contactLabel: "Label kontak",
     contactTitle: "Judul kontak",
     contactCta: "Tombol kontak",
   },
@@ -348,6 +357,8 @@ export function AdminConsole() {
   const storedPortfolioProjects = Array.isArray(content.projects) ? content.projects as Array<Record<string, unknown>> : [];
   const allPortfolioProjects = (storedPortfolioProjects.length >= 30 ? storedPortfolioProjects : defaultPortfolioProjects) as Array<Record<string, unknown>>;
   const visiblePortfolioProjects = allPortfolioProjects.filter((item) => portfolioCategory === "Semua" || item.category === portfolioCategory);
+  const homeServices = (Array.isArray(content.services) ? content.services : []).map((item) => Array.isArray(item) ? { number: String(item[0] ?? ""), title: String(item[1] ?? ""), description: String(item[2] ?? "") } : item) as Array<Record<string, unknown>>;
+  const homeProjects = (Array.isArray(content.featuredProjects) ? content.featuredProjects : []) as Array<Record<string, unknown>>;
   const services = (data.services?.items as Service[]) ?? [];
   const service =
     page === "services" && selected !== null ? services[selected] : undefined;
@@ -871,6 +882,11 @@ export function AdminConsole() {
             <ArrayEditor title="Nilai" items={content.values} fields={["number", "title", "description"]} onChange={(i, f, v) => updateAboutArray("values", i, f, v)} onRemove={(i) => removeAboutArray("values", i)} onAdd={() => addAboutArray("values", { number: "01", title: "Nilai baru", description: "Deskripsi nilai" })} />
             <ArrayEditor title="Tim" items={content.teams} fields={["group", "names", "role"]} onChange={(i, f, v) => updateAboutArray("teams", i, f, v)} onRemove={(i) => removeAboutArray("teams", i)} onAdd={() => addAboutArray("teams", { group: "Tim baru", names: "Nama", role: "Peran" })} />
             <ArrayEditor title="Legal" items={content.legal} fields={["label", "text"]} onChange={(i, f, v) => updateAboutArray("legal", i, f, v)} onRemove={(i) => removeAboutArray("legal", i)} onAdd={() => addAboutArray("legal", { label: "Legal", text: "Keterangan" })} />
+          </div>}
+          {page === "home" && <div className="admin-about-arrays">
+            <h2>Konten berulang Beranda</h2>
+            <ArrayEditor title="Daftar layanan" items={homeServices} fields={["number", "title", "description"]} onChange={(i, f, v) => update("home", { ...content, services: homeServices.map((item, index) => index === i ? { ...item, [f!]: v } : item) })} onRemove={(i) => update("home", { ...content, services: homeServices.filter((_, index) => index !== i) })} onAdd={() => update("home", { ...content, services: [...homeServices, { number: String(homeServices.length + 1).padStart(2, "0"), title: "Layanan baru", description: "Keterangan layanan" }] })} />
+            <ArrayEditor title="Proyek unggulan" items={homeProjects} fields={["image", "number", "category", "title", "tone"]} onChange={(i, f, v) => update("home", { ...content, featuredProjects: homeProjects.map((item, index) => index === i ? { ...item, [f!]: v } : item) })} onRemove={(i) => update("home", { ...content, featuredProjects: homeProjects.filter((_, index) => index !== i) })} onAdd={() => update("home", { ...content, featuredProjects: [...homeProjects, { number: "01", category: "Kategori", title: "Proyek baru", image: "/portfolio/", tone: "orange" }] })} />
           </div>}
           {page === "portfolio" && <div className="admin-about-arrays"><h2>Filter by</h2><ArrayEditor title="Kategori filter" items={content.categories ?? ["Drone Training", "North Production", "North Creative", "North Photobooth", "Virtual Tour 360", "AI Kreasi Cerdas"]} fields={[null]} onChange={(i, f, v) => setPortfolioCategory(v)} onRemove={() => {}} onAdd={() => {}} /><ArrayEditor title={`Proyek (${visiblePortfolioProjects.length})`} items={visiblePortfolioProjects} fields={["image", "number", "category", "client", "title", "tone"]} onChange={(i, f, v) => updateAboutArray("projects", i, f, v, "portfolio")} onRemove={(i) => removeAboutArray("projects", i, "portfolio")} onAdd={() => addAboutArray("projects", { number: "01", category: "Kategori", client: "Klien", title: "Proyek baru", image: "/portfolio/", tone: "orange" }, "portfolio")} onSave={() => { update("portfolio", { ...content, projects: allPortfolioProjects }); setNotice("Menyimpan proyek…"); setTimeout(() => { void save(); }, 0); }} /></div>}
           </>
