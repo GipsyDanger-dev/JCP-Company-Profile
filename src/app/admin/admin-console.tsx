@@ -327,10 +327,10 @@ const serviceDefaults: Record<string, Detail> = {
   "ai-kreasi-cerdas": aiDetail,
 };
 
-function ArrayEditor({ title, items, fields, onChange, onRemove, onAdd, onSave, hidden = false }: { title: string; items: unknown; fields: (string | null)[]; onChange: (index: number, field: string | null, value: string) => void; onRemove: (index: number) => void; onAdd: () => void; onSave?: () => void; hidden?: boolean }) {
+function ArrayEditor({ title, items, fields, onChange, onRemove, onAdd, onSave, onUpload, hidden = false }: { title: string; items: unknown; fields: (string | null)[]; onChange: (index: number, field: string | null, value: string) => void; onRemove: (index: number) => void; onAdd: () => void; onSave?: () => void; onUpload?: (index: number, file: File) => void; hidden?: boolean }) {
   const rows = Array.isArray(items) ? items : [];
   if (title === "Kategori filter") return <section className="admin-array-editor portfolio-filter-list"><div className="admin-array-heading"><h3>Filter by</h3></div><div className="portfolio-filter-buttons">{rows.map((item, index) => <button type="button" key={index} onClick={() => onChange(index, null, String(item))}>{String(item)}</button>)}</div></section>;
-  return <section className="admin-array-editor" hidden={hidden}><div className="admin-array-heading"><h3>{title}</h3><button type="button" className="add-row" onClick={onAdd}>+ Tambah</button></div>{rows.map((item, index) => <article key={index}>{fields.map((field) => { const value = field ? String((item as Record<string, unknown>)?.[field] ?? "") : String(item ?? ""); return <label key={field ?? "value"}>{field ? field : title}{field === "image" && value ? <img className="admin-project-thumb" src={value} alt="Preview proyek" /> : null}<textarea value={value} onChange={(event) => onChange(index, field, event.target.value)} /></label>; })}<button type="button" className="danger-button" onClick={() => onRemove(index)}>Hapus</button>{onSave && <button type="button" className="row-save-button" onClick={onSave}>Simpan</button>}</article>)}</section>;
+  return <section className="admin-array-editor" hidden={hidden}><div className="admin-array-heading"><h3>{title}</h3><button type="button" className="add-row" onClick={onAdd}>+ Tambah</button></div>{rows.map((item, index) => <article key={index}>{fields.map((field) => { const value = field ? String((item as Record<string, unknown>)?.[field] ?? "") : String(item ?? ""); return <label key={field ?? "value"}>{field ? field : title}{field === "image" && value ? <img className="admin-project-thumb" src={value} alt="Preview proyek" /> : null}{field === "image" ? <input className="admin-image-upload" type="file" accept="image/jpeg,image/png,image/webp" onChange={async (event) => { const file = event.target.files?.[0]; event.currentTarget.value = ""; if (!file) return; const form = new FormData(); form.append("file", file); const response = await fetch("/api/admin/media", { method: "POST", body: form, credentials: "include" }); const result = await response.json().catch(() => ({})); if (response.ok && result.url) onChange(index, "image", result.url); else window.alert(result.error ?? "Upload foto gagal."); }} /> : null}<textarea value={value} onChange={(event) => onChange(index, field, event.target.value)} /></label>; })}<button type="button" className="danger-button" onClick={() => onRemove(index)}>Hapus</button>{onSave && <button type="button" className="row-save-button" onClick={onSave}>Simpan</button>}</article>)}</section>;
 }
 
 export function AdminConsole() {
@@ -444,6 +444,18 @@ export function AdminConsole() {
     } catch (error) {
       setNotice(error instanceof Error ? error.message : "Upload video gagal.");
     }
+    setBusy(false);
+  }
+  async function uploadPortfolioImage(index: number, file: File) {
+    setBusy(true); setNotice("");
+    try {
+      const form = new FormData(); form.append("file", file);
+      const response = await fetch("/api/admin/media", { method: "POST", body: form, credentials: "include" });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.url) throw new Error(result.error ?? "Upload foto gagal.");
+      updateAboutArray("projects", index, "image", result.url, "portfolio");
+      setNotice("Foto berhasil diunggah. Klik Simpan pada proyek.");
+    } catch (error) { setNotice(error instanceof Error ? error.message : "Upload foto gagal."); }
     setBusy(false);
   }
   async function save() {
