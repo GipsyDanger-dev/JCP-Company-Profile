@@ -27,13 +27,14 @@ function headers(extra: Record<string, string> = {}) {
  * existing site working before the one-time SQL migration is applied. */
 export async function getCms<T>(contentKey: string, fallback: T): Promise<T> {
   noStore();
-  if (!ready()) return (await readLocal()).find((row) => row.key === contentKey)?.value as T ?? fallback;
+  const merge = (value: unknown): T => value && typeof value === "object" && !Array.isArray(value) && fallback && typeof fallback === "object" && !Array.isArray(fallback) ? { ...(fallback as object), ...(value as object) } as T : value as T ?? fallback;
+  if (!ready()) return merge((await readLocal()).find((row) => row.key === contentKey)?.value);
   try {
     const response = await fetch(`${url}/rest/v1/cms_content?key=eq.${encodeURIComponent(contentKey)}&select=value&limit=1`, { headers: headers(), cache: "no-store", signal: AbortSignal.timeout(5000) });
     if (!response.ok) return fallback;
     const rows = await response.json() as Array<{ value: T }>;
-    return rows[0]?.value ?? fallback;
-  } catch { return (await readLocal()).find((row) => row.key === contentKey)?.value as T ?? fallback; }
+    return merge(rows[0]?.value);
+  } catch { return merge((await readLocal()).find((row) => row.key === contentKey)?.value); }
 }
 
 export async function listCms(): Promise<CmsRecord[]> {

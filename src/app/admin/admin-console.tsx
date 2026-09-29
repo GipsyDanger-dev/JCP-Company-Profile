@@ -390,7 +390,7 @@ export function AdminConsole() {
         if (rows.length)
           setData((old) => ({
             ...old,
-            ...Object.fromEntries(rows.map((row) => [row.key, row.value])),
+            ...Object.fromEntries(rows.map((row) => [row.key, { ...(cmsFallbacks as Record<string, Content>)[row.key], ...row.value }])),
           }));
       });
   }, []);
