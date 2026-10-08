@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { cmsFallbacks } from "@/lib/cms";
 import { portfolioProjects } from "@/lib/portfolio-data";
 const defaultPortfolioProjects = portfolioProjects as Array<Record<string, unknown>>;
@@ -39,6 +39,18 @@ const pages = [
   ["portfolio", "Portofolio"],
   ["contact", "Let's talk"],
 ] as const;
+function NavIcon({ name }: { name: string }) {
+  const paths: Record<string, ReactNode> = {
+    home: <><path d="m3 10 9-7 9 7v10H3z" /><path d="M9 21v-6h6v6" /></>,
+    about: <><circle cx="12" cy="12" r="8.5" /><path d="M12 10v5" /><path d="M12 7.2h.01" /></>,
+    services: <><rect x="4" y="4" width="6" height="6" rx="1" /><rect x="14" y="4" width="6" height="6" rx="1" /><rect x="4" y="14" width="6" height="6" rx="1" /><rect x="14" y="14" width="6" height="6" rx="1" /></>,
+    portfolio: <><path d="m12 3 8 4.5-8 4.5-8-4.5z" /><path d="m4 12 8 4.5 8-4.5" /><path d="m4 16.5 8 4.5 8-4.5" /></>,
+    contact: <><path d="m12 3 1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7z" /></>,
+    arrow: <path d="M6 18 18 6M9 6h9v9" />,
+    logout: <><path d="M10 5H5v14h5" /><path d="m14 8 4 4-4 4M18 12H9" /></>,
+  };
+  return <svg className="admin-nav-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{paths[name]}</svg>;
+}
 const labels: Record<string, Record<string, string>> = {
   home: {
     eyebrow: "Nama perusahaan",
@@ -524,24 +536,26 @@ export function AdminConsole() {
               <button
                 key={key}
                 className={page === key ? "active" : ""}
+                title={label}
                 onClick={() => {
                   setPage(key);
                   setSelected(null);
                 }}
               >
-                {label}
+                <NavIcon name={key} />{label}
               </button>
             ) : key === "services" ? (
               <div className="admin-subnav" key={key}>
                 <button
                   className={page === key ? "active" : ""}
+                  title="Layanan"
                   onClick={() => {
                     setPage(key);
                     setSelected(null);
                     setServicesOpen((open) => !open);
                   }}
                 >
-                  Layanan <span>{servicesOpen ? "−" : "+"}</span>
+                  <NavIcon name="services" />Layanan <span>{servicesOpen ? "−" : "+"}</span>
                 </button>
                 {servicesOpen && (
                   <div>
@@ -549,16 +563,18 @@ export function AdminConsole() {
                       <div className="admin-service-nav-row" key={item.slug}>
                       <button
                         className={selected === index ? "active-sub" : ""}
+                        title={`${item.number} · ${item.name}`}
                         onClick={() => {
                           setPage("services");
                           setSelected(index);
                         }}
                       >
-                        {item.number} · {item.name}
+                        <NavIcon name="arrow" /><span className="admin-service-number">{item.number}</span><span className="admin-service-name"> · {item.name}</span>
                       </button></div>
                     ))}
                     <button
                       className="add-sub"
+                      title="Tambah layanan"
                       onClick={() => {
                         update("services", {
                           ...data.services,
@@ -586,11 +602,11 @@ export function AdminConsole() {
                 )}
               </div>
             ) : (
-              <button key={key} className={page === key ? "active" : ""} onClick={() => { setPage(key); setSelected(null); }}>Portofolio</button>
+              <button key={key} className={page === key ? "active" : ""} title="Portofolio" onClick={() => { setPage(key); setSelected(null); }}><NavIcon name="portfolio" />Portofolio</button>
             ),
           )}
         </nav>
-        <button className="logout" onClick={async () => { await fetch("/api/admin/logout", { method: "POST", credentials: "include" }); window.location.href = "/admin/login"; }}>Logout</button>
+        <button className="logout" title="Logout" onClick={async () => { await fetch("/api/admin/logout", { method: "POST", credentials: "include" }); window.location.href = "/admin/login"; }}><NavIcon name="logout" />Logout</button>
       </aside>
       <section className="admin-editor">
         <header>

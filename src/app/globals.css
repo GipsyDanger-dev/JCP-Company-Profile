@@ -150,3 +150,49 @@ main.admin-shell{margin:0!important;padding:0!important;border:0!important}
 @media(max-width:1050px){.admin-portfolio-projects-editor article{grid-template-columns:minmax(170px,220px) repeat(2,minmax(0,1fr));grid-template-areas:"image number category" "image client title" "image tone actions"}.admin-portfolio-projects-editor .row-actions{flex-direction:row;align-self:end;padding-top:0}.admin-portfolio-projects-editor .row-actions .row-save-button,.admin-portfolio-projects-editor .row-actions .danger-button{flex:1}}
 @media(max-width:680px){.admin-portfolio-projects-editor{padding:16px}.admin-portfolio-projects-editor .admin-array-heading{align-items:flex-start}.admin-portfolio-projects-editor article{grid-template-columns:minmax(0,1fr);grid-template-areas:"image" "number" "category" "client" "title" "tone" "actions";gap:13px;padding:18px 0}.admin-portfolio-projects-editor .admin-project-thumb{max-width:320px}.admin-portfolio-projects-editor .row-actions{padding-top:4px}.admin-portfolio-projects-editor .row-actions .row-save-button,.admin-portfolio-projects-editor .row-actions .danger-button{min-height:44px}}
 .admin-shell aside{min-height:100vh;box-sizing:border-box;position:sticky;top:0;height:100vh}.admin-shell .logout{display:block;margin-top:auto!important;width:100%;padding:14px 12px!important;border-top:1px solid #686157!important}
+
+/* Keep the admin workspace usable as the browser window narrows. */
+.admin-shell{grid-template-columns:240px minmax(0,1fr)!important;width:100%;box-sizing:border-box}
+.admin-shell aside{width:100%!important;min-width:0;box-sizing:border-box;font-family:Inter,"Segoe UI",system-ui,sans-serif}
+.admin-editor{width:auto!important;max-width:none!important;min-width:0!important;padding:clamp(14px,2.5vw,40px)!important;box-sizing:border-box!important}
+.admin-shell nav button{display:flex;align-items:center;min-width:0}
+.admin-nav-icon{flex:0 0 auto;width:18px;height:18px;margin-right:12px;color:#ff8a55}
+.admin-subnav>button{justify-content:flex-start}
+.admin-subnav>button span{margin-left:auto}
+.admin-subnav>div button .admin-nav-icon{width:14px;height:14px;margin-right:9px}
+.logout .admin-nav-icon{width:19px;height:19px}
+
+@media (min-width:721px) and (max-width:1100px){
+  .admin-shell{grid-template-columns:190px minmax(0,1fr)!important}
+  .admin-shell aside{padding:20px 12px!important}
+  .admin-shell nav button{padding:11px 9px!important;font-size:13px!important}
+  .admin-editor{padding:24px 20px!important}
+  .admin-fields{gap:16px}
+}
+
+@media (max-width:720px){
+  html:has(.admin-shell),body:has(.admin-shell){overflow:hidden!important}
+  .admin-shell{position:fixed!important;inset:0!important;display:grid!important;grid-template-columns:68px minmax(0,1fr)!important;height:100dvh!important;min-height:0!important;overflow:hidden!important}
+  .admin-shell aside{position:relative!important;inset:auto!important;width:68px!important;height:100dvh!important;min-height:0!important;max-height:none!important;padding:14px 8px!important;overflow-y:auto!important;overflow-x:hidden!important;gap:14px!important}
+  .admin-brand{display:block;font-size:0!important;line-height:1;text-align:center;letter-spacing:0!important}
+  .admin-brand::before{content:"JCP";font:800 15px/1 Inter,"Segoe UI",sans-serif;letter-spacing:-.08em}
+  .admin-brand span,.admin-shell aside>p{display:none!important}
+  .admin-shell nav{display:grid!important;grid-template-columns:minmax(0,1fr)!important;align-content:start;gap:6px!important}
+  .admin-shell nav button,.admin-shell .logout{display:flex!important;align-items:center!important;justify-content:center!important;min-width:0;min-height:46px;padding:10px!important;font-size:0!important;line-height:1!important}
+  .admin-nav-icon,.logout .admin-nav-icon{width:21px!important;height:21px!important;margin:0!important}
+  .admin-subnav{grid-column:auto!important;min-width:0}
+  .admin-subnav>button{position:relative}
+  .admin-subnav>button span{position:absolute;right:8px;font-size:15px!important;line-height:1}
+  .admin-subnav>div{grid-template-columns:minmax(0,1fr)!important;margin:0!important;border-left:0!important}
+  .admin-subnav>div button{min-height:38px!important;padding:8px!important;font-size:0!important}
+  .admin-subnav>div button .admin-nav-icon,.admin-subnav>div button .admin-service-name{display:none!important}
+  .admin-subnav>div button .admin-service-number{font-size:11px!important;font-weight:800;letter-spacing:0}
+  .admin-subnav>div button.add-sub::before{content:"+";font-size:20px;line-height:1}
+  .admin-shell .logout{margin-top:auto!important;border-top:1px solid #686157!important}
+  .admin-editor{position:relative!important;inset:auto!important;width:auto!important;height:100dvh!important;min-height:0!important;max-width:none!important;padding:20px 16px!important;overflow-y:auto!important;overflow-x:hidden!important}
+  .admin-editor header{flex-direction:column-reverse;align-items:stretch;gap:12px!important;margin-bottom:20px!important}
+  .admin-editor header h1{font-size:clamp(40px,12vw,52px)!important}
+  .admin-editor header>a{align-self:flex-end;font-size:12px;white-space:nowrap}
+  .admin-fields{grid-template-columns:minmax(0,1fr)}
+  .admin-fields label:has(textarea){grid-column:1}
+}
