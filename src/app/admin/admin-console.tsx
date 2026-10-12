@@ -569,7 +569,7 @@ export function AdminConsole() {
                           setSelected(index);
                         }}
                       >
-                        <NavIcon name="arrow" /><span className="admin-service-number">{item.number}</span><span className="admin-service-name"> · {item.name}</span>
+                        <NavIcon name="arrow" /><span className="admin-service-number">{item.number}</span><span className="admin-service-name">{item.name}</span>
                       </button></div>
                     ))}
                     <button
