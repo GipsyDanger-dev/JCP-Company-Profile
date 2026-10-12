@@ -196,3 +196,12 @@ main.admin-shell{margin:0!important;padding:0!important;border:0!important}
   .admin-fields{grid-template-columns:minmax(0,1fr)}
   .admin-fields label:has(textarea){grid-column:1}
 }
+
+/* Keep article card content and read links aligned within each grid row. */
+.articles-grid .article-card{grid-template-rows:auto minmax(0,1fr);align-content:stretch;min-width:0}
+.articles-grid .article-card>div{display:flex;flex-direction:column;min-width:0}
+.articles-grid .article-card h2{min-height:2.88em}
+.articles-grid .article-card .article-summary{margin-top:0;margin-bottom:0}
+.articles-grid .article-card .article-read{align-self:flex-start;margin-top:auto;padding-top:24px}
+@media (max-width:1100px) and (min-width:721px){.articles-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:720px){.articles-grid .article-card h2{min-height:0}}
