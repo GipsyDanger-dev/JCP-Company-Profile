@@ -3,6 +3,7 @@
 import { type ReactNode, useEffect, useState } from "react";
 import { cmsFallbacks } from "@/lib/cms";
 import { portfolioProjects } from "@/lib/portfolio-data";
+import { currentPortfolioCategory, portfolioServiceForCategory, type PortfolioService } from "@/lib/portfolio-services";
 const defaultPortfolioProjects = portfolioProjects as Array<Record<string, unknown>>;
 
 type Content = Record<string, unknown>;
@@ -368,18 +369,21 @@ export function AdminConsole() {
   const [busy, setBusy] = useState(false);
   const content = data[page] ?? {};
   const storedPortfolioProjects = Array.isArray(content.projects) ? content.projects as Array<Record<string, unknown>> : [];
-  const allPortfolioProjects = (storedPortfolioProjects.length >= 30 ? storedPortfolioProjects : defaultPortfolioProjects) as Array<Record<string, unknown>>;
-  const visiblePortfolioProjects = allPortfolioProjects.filter((item) => portfolioCategory === "Semua" || item.category === portfolioCategory);
+  const allPortfolioProjects = (Array.isArray(content.projects) ? storedPortfolioProjects : defaultPortfolioProjects) as Array<Record<string, unknown>>;
   const homeServices = (Array.isArray(content.services) ? content.services : []).map((item) => Array.isArray(item) ? { number: String(item[0] ?? ""), title: String(item[1] ?? ""), description: String(item[2] ?? "") } : item) as Array<Record<string, unknown>>;
   const homeProjects = (Array.isArray(content.featuredProjects) ? content.featuredProjects : []) as Array<Record<string, unknown>>;
   const services = (data.services?.items as Service[]) ?? [];
+  const portfolioServices = services as PortfolioService[];
+  const portfolioCategories = [...new Set(services.map((item) => item.name.trim()).filter(Boolean))];
+  const visiblePortfolioProjects = allPortfolioProjects.filter((item) => portfolioCategory === "Semua" || currentPortfolioCategory(item.category, portfolioServices) === portfolioCategory);
   const service =
     page === "services" && selected !== null ? services[selected] : undefined;
   const details = (data["service-details"] ?? {}) as Record<string, Detail>;
+  const isUnconfiguredNewService = Boolean(service && service.slug.startsWith("layanan-") && service.name === "Layanan baru" && service.description === "Keterangan layanan");
   const detail = service
     ? {
         ...(serviceDefaults[service.slug] ?? {}),
-        ...(details[service.slug] ?? {}),
+        ...(isUnconfiguredNewService ? {} : details[service.slug] ?? {}),
       }
     : {};
   const rawGallery = detail.gallery ?? [];
@@ -446,10 +450,14 @@ export function AdminConsole() {
     list[index] = field ? { ...(list[index] as Record<string, unknown>), [field]: value } : value;
     update(pageKey, { ...content, [key]: list });
   };
-  const addAboutArray = (key: string, value: unknown, pageKey = "about") =>
-    update(pageKey, { ...content, [key]: [...(Array.isArray(content[key]) ? (content[key] as unknown[]) : []), value] });
-  const removeAboutArray = (key: string, index: number, pageKey = "about") =>
-    update(pageKey, { ...content, [key]: (Array.isArray(content[key]) ? (content[key] as unknown[]) : []).filter((_, i) => i !== index) });
+  const addAboutArray = (key: string, value: unknown, pageKey = "about") => {
+    const current = pageKey === "portfolio" && key === "projects" ? allPortfolioProjects : (Array.isArray(content[key]) ? content[key] as unknown[] : []);
+    update(pageKey, { ...content, [key]: [...current, value] });
+  };
+  const removeAboutArray = (key: string, index: number, pageKey = "about") => {
+    const current = pageKey === "portfolio" && key === "projects" ? allPortfolioProjects : (Array.isArray(content[key]) ? content[key] as unknown[] : []);
+    update(pageKey, { ...content, [key]: current.filter((_, i) => i !== index) });
+  };
   async function addVideo(file: File | null) {
     if (!file || !service) return;
     setBusy(true);
@@ -486,7 +494,10 @@ export function AdminConsole() {
     setBusy(true);
     setNotice("");
     try {
-      for (const key of service ? ["services", "service-details"] : [page]) {
+      const saveKeys = page === "services"
+        ? ["services", "service-details", ...(service ? ["portfolio"] : [])]
+        : [page];
+      for (const key of saveKeys) {
         const value =
           key === "service-details" && service
             ? { ...details, [service.slug]: { ...detail, gallery, mediaVersion: 1 } }
@@ -576,6 +587,7 @@ export function AdminConsole() {
                       className="add-sub"
                       title="Tambah layanan"
                       onClick={() => {
+                        const newSlug = `layanan-${services.length + 1}`;
                         update("services", {
                           ...data.services,
                           items: [
@@ -588,10 +600,11 @@ export function AdminConsole() {
                               name: "Layanan baru",
                               description: "Keterangan layanan",
                               label: "Kategori",
-                              slug: `layanan-${services.length + 1}`,
+                              slug: newSlug,
                             },
                           ],
                         });
+                        update("service-details", { ...details, [newSlug]: {} });
                         setPage("services");
                         setSelected(services.length);
                       }}
@@ -646,16 +659,24 @@ export function AdminConsole() {
                 Nama layanan
                 <input
                   value={service.name}
-                  onChange={(event) =>
+                  onChange={(event) => {
+                    const nextName = event.target.value;
                     update("services", {
                       ...data.services,
-                      items: services.map((item, index) =>
-                        index === selected
-                          ? { ...item, name: event.target.value }
-                          : item,
-                      ),
-                    })
-                  }
+                      items: services.map((item, index) => index === selected ? { ...item, name: nextName } : item),
+                    });
+                    const savedProjects = data.portfolio?.projects;
+                    if (Array.isArray(savedProjects)) {
+                      update("portfolio", {
+                        ...data.portfolio,
+                        projects: (savedProjects as Array<Record<string, unknown>>).map((project) =>
+                          portfolioServiceForCategory(project.category, services)?.slug === service.slug
+                            ? { ...project, category: nextName }
+                            : project,
+                        ),
+                      });
+                    }
+                  }}
                 />
               </label>
               <label>
@@ -905,14 +926,14 @@ export function AdminConsole() {
             <ArrayEditor title="Daftar layanan" items={homeServices} fields={["number", "title", "description"]} onChange={(i, f, v) => update("home", { ...content, services: homeServices.map((item, index) => index === i ? { ...item, [f!]: v } : item) })} onRemove={(i) => update("home", { ...content, services: homeServices.filter((_, index) => index !== i) })} onAdd={() => update("home", { ...content, services: [...homeServices, { number: String(homeServices.length + 1).padStart(2, "0"), title: "Layanan baru", description: "Keterangan layanan" }] })} onSave={() => { setNotice("Menyimpan layanan…"); setTimeout(() => { void save(); }, 0); }} />
             <ArrayEditor title="Proyek unggulan" items={homeProjects} fields={["image", "number", "category", "title", "tone"]} onChange={(i, f, v) => update("home", { ...content, featuredProjects: homeProjects.map((item, index) => index === i ? { ...item, [f!]: v } : item) })} onRemove={(i) => update("home", { ...content, featuredProjects: homeProjects.filter((_, index) => index !== i) })} onAdd={() => update("home", { ...content, featuredProjects: [...homeProjects, { number: "01", category: "Kategori", title: "Proyek baru", image: "/portfolio/", tone: "orange" }] })} />
           </div>}
-          {page === "portfolio" && <div className="admin-about-arrays"><h2>Filter by</h2><ArrayEditor title="Kategori filter" items={content.categories ?? ["Drone Training", "North Production", "North Creative", "North Photobooth", "Virtual Tour 360", "AI Kreasi Cerdas"]} fields={[null]} onChange={(i, f, v) => setPortfolioCategory(v)} onRemove={() => {}} onAdd={() => {}} /><ArrayEditor title={`Proyek (${visiblePortfolioProjects.length})`} items={visiblePortfolioProjects} fields={["image", "number", "category", "client", "title", "tone"]} onChange={(i, f, v) => updateAboutArray("projects", i, f, v, "portfolio")} onRemove={(i) => removeAboutArray("projects", i, "portfolio")} onAdd={() => addAboutArray("projects", { number: "01", category: "Kategori", client: "Klien", title: "Proyek baru", image: "/portfolio/", tone: "orange" }, "portfolio")} onSave={() => { update("portfolio", { ...content, projects: allPortfolioProjects }); setNotice("Menyimpan proyek…"); setTimeout(() => { void save(); }, 0); }} /></div>}
+          {page === "portfolio" && <div className="admin-about-arrays"><h2>Filter by</h2><div className="portfolio-filter-buttons">{["Semua", ...portfolioCategories].map((category) => <button type="button" key={category} className={portfolioCategory === category ? "selected" : ""} onClick={() => setPortfolioCategory(category)}>{category}</button>)}</div><ArrayEditor title={`Proyek (${visiblePortfolioProjects.length})`} items={visiblePortfolioProjects.map((item) => ({ ...item, category: currentPortfolioCategory(item.category, portfolioServices) }))} fields={["image", "number", "category", "client", "title", "tone"]} onChange={(i, f, v) => updateAboutArray("projects", allPortfolioProjects.indexOf(visiblePortfolioProjects[i]), f, v, "portfolio")} onRemove={(i) => removeAboutArray("projects", allPortfolioProjects.indexOf(visiblePortfolioProjects[i]), "portfolio")} onAdd={() => addAboutArray("projects", { number: "01", category: portfolioCategories[0] ?? "Kategori", client: "Klien", title: "Proyek baru", image: "/portfolio/", tone: "orange" }, "portfolio")} onSave={() => { update("portfolio", { ...content, projects: allPortfolioProjects.map((item) => ({ ...item, category: currentPortfolioCategory(item.category, portfolioServices) })) }); setNotice("Menyimpan proyek…"); setTimeout(() => { void save(); }, 0); }} /></div>}
           </>
         )}
         <div className="admin-actions">
           <button onClick={save} disabled={busy}>
             {busy ? "Menyimpan…" : "Simpan perubahan"}
           </button>
-          {service && <button className="danger-button admin-delete-current" onClick={() => { if (window.confirm(`Hapus layanan ${service.name}?`)) { const next = services.filter((item) => item.slug !== service.slug).map((item, index) => ({ ...item, number: String(index + 1).padStart(2, "0") })); update("services", { ...data.services, items: next }); setSelected(null); } }}>Hapus layanan</button>}
+          {service && <button className="danger-button admin-delete-current" onClick={() => { if (window.confirm(`Hapus layanan ${service.name}?`)) { const next = services.filter((item) => item.slug !== service.slug).map((item, index) => ({ ...item, number: String(index + 1).padStart(2, "0") })); const { [service.slug]: _removedDetail, ...remainingDetails } = details; update("services", { ...data.services, items: next }); update("service-details", remainingDetails); setNotice("Layanan dan detailnya dihapus. Klik Simpan perubahan untuk menyimpan."); setSelected(null); } }}>Hapus layanan</button>}
           {notice && <p>{notice}</p>}
         </div>
       </section>

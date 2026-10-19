@@ -4,6 +4,7 @@ import { SiteNav } from "@/components/site-nav";
 import { SITE_URL } from "@/lib/seo";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { currentPortfolioCategory, type PortfolioService } from "@/lib/portfolio-services";
 
 const projects = [
   { number: "01", category: "Drone Training", client: "Universitas Gadjah Mada", title: "Pelatihan Drone bersama Civitas Akademika UGM", tone: "orange", image: "/portfolio/borobudur-drone-training.jpg" },
@@ -56,11 +57,21 @@ const structuredData = {
 
 export default function PortfolioPage() {
   const [filter, setFilter] = useState("Semua");
-  const [content, setContent] = useState<{heroLabel?: string; heroTitle?: string; heroIntro?: string; projects?: typeof projects; categories?: string[]}>({});
-  useEffect(() => { fetch("/api/public/content?key=portfolio").then((r) => r.ok ? r.json() : null).then((value) => value && setContent(value)).catch(() => {}); }, []);
-  const projectList = content.projects?.length ? content.projects : projects;
-  const categories = content.categories?.length ? content.categories : ["Drone Training", "North Production", "North Creative", "North Photobooth", "Virtual Tour 360", "AI Kreasi Cerdas"];
-  const visibleProjects = projectList.filter((project) => filter === "Semua" || project.category === filter);
+  const [content, setContent] = useState<{heroLabel?: string; heroTitle?: string; heroIntro?: string; projects?: typeof projects}>({});
+  const [services, setServices] = useState<PortfolioService[]>([]);
+  useEffect(() => {
+    Promise.all([
+      fetch("/api/public/content?key=portfolio").then((r) => r.ok ? r.json() : null),
+      fetch("/api/public/content?key=services").then((r) => r.ok ? r.json() : null),
+    ]).then(([portfolio, serviceContent]) => {
+      if (portfolio) setContent(portfolio);
+      if (Array.isArray(serviceContent?.items)) setServices(serviceContent.items);
+    }).catch(() => {});
+  }, []);
+  const projectList = Array.isArray(content.projects) ? content.projects : projects;
+  const categories = [...new Set(services.map((service) => service.name.trim()).filter(Boolean))];
+  const getCategory = (project: (typeof projectList)[number]) => currentPortfolioCategory(project.category, services);
+  const visibleProjects = projectList.filter((project) => filter === "Semua" || getCategory(project) === filter);
 
   return (
     <main className="portfolio-page">
@@ -74,12 +85,12 @@ export default function PortfolioPage() {
       </section>
 
       <section className="portfolio-list shell">
-        <div className="portfolio-filters"><span>Filter by</span><button className={filter === "Semua" ? "selected" : ""} onClick={() => setFilter("Semua")}>Semua <b>{projectList.length}</b></button>{categories.map((category) => <button key={category} className={filter === category ? "selected" : ""} onClick={() => setFilter(category)}>{category} <b>{projectList.filter((p) => p.category === category).length}</b></button>)}</div>
+        <div className="portfolio-filters"><span>Filter by</span><button className={filter === "Semua" ? "selected" : ""} onClick={() => setFilter("Semua")}>Semua <b>{projectList.length}</b></button>{categories.map((category) => <button key={category} className={filter === category ? "selected" : ""} onClick={() => setFilter(category)}>{category} <b>{projectList.filter((project) => getCategory(project) === category).length}</b></button>)}</div>
         <div className="portfolio-grid">
           {visibleProjects.map((project) => (
             <article className={`portfolio-card ${project.tone}`} key={project.number}>
               <div className="portfolio-art"><Image src={project.image} alt={project.title} fill sizes="(min-width: 720px) 50vw, 100vw" /><span>{project.number}</span><em>JCP</em></div>
-              <div className="portfolio-card-copy"><p>{project.category}</p><h2>{project.title}</h2><span>{project.client}</span></div>
+              <div className="portfolio-card-copy"><p>{getCategory(project)}</p><h2>{project.title}</h2><span>{project.client}</span></div>
             </article>
           ))}
         </div>
