@@ -101,7 +101,14 @@ const labels: Record<string, Record<string, string>> = {
     assuranceCopy1: "Jaminan paragraf 1",
     assuranceCopy2: "Jaminan paragraf 2",
   },
-  services: { heroTitle: "Judul utama", heroIntro: "Keterangan hero" },
+  services: {
+    heroTitle: "Judul utama",
+    heroIntro: "Keterangan hero",
+    menuLabel: "Dropdown layanan - Label",
+    menuTitle: "Dropdown layanan - Judul",
+    menuCta: "Dropdown layanan - Tombol",
+    menuLink: "Dropdown layanan - Link tombol",
+  },
   portfolio: { heroLabel: "Label hero", heroTitle: "Judul utama", heroIntro: "Keterangan hero" },
   contact: {
     title: "Judul utama",
@@ -194,11 +201,11 @@ const boothDetail: Detail = {
 };
 const virtualTourDetail: Detail = {
   intro:
-    "Layanan tour virtual interaktif yang memungkinkan pengguna menjelajahi ruang atau fasilitas secara 360°. Dengan kualitas visual tinggi dan navigasi yang mudah, klien dapat menampilkan lokasi mereka secara menarik dan informatif, kapan saja dan dari mana saja.",
+    "Layanan tour virtual interaktif yang memungkinkan pengguna menjelajahi ruang atau fasilitas secara 360 derajat. Dengan kualitas visual tinggi dan navigasi yang mudah, klien dapat menampilkan lokasi mereka secara menarik dan informatif, kapan saja dan dari mana saja.",
   audience:
     "Properti, hotel, sekolah, pabrik, showroom, dan destinasi wisata yang ingin memberikan pengalaman kunjungan virtual dengan detail yang realistis dan profesional.",
   offers: [
-    "Pemotretan 360° berkualitas tinggi",
+    "Pemotretan 360 derajat berkualitas tinggi",
     "Navigasi interaktif",
     "Custom branding interface",
     "Cross-platform ready",
@@ -538,7 +545,7 @@ export function AdminConsole() {
           JCP<span>ADMINISTRATOR</span>
         </a>
         <p>
-          Kelola seluruh konten halaman situs. Klik menu lalu gunakan ↑ atau ↓
+          Kelola seluruh konten halaman situs. Klik menu lalu gunakan panah atas atau bawah
           untuk menggulir daftar menu.
         </p>
         <nav>
@@ -566,7 +573,7 @@ export function AdminConsole() {
                     setServicesOpen((open) => !open);
                   }}
                 >
-                  <NavIcon name="services" />Layanan <span>{servicesOpen ? "−" : "+"}</span>
+                  <NavIcon name="services" />Layanan <span>{servicesOpen ? "-" : "+"}</span>
                 </button>
                 {servicesOpen && (
                   <div>
@@ -574,7 +581,7 @@ export function AdminConsole() {
                       <div className="admin-service-nav-row" key={item.slug}>
                       <button
                         className={selected === index ? "active-sub" : ""}
-                        title={`${item.number} · ${item.name}`}
+                        title={`${item.number} - ${item.name}`}
                         onClick={() => {
                           setPage("services");
                           setSelected(index);
@@ -642,7 +649,7 @@ export function AdminConsole() {
                   : `/${page === "about" ? "tentang" : page === "contact" ? "hubungi" : page}`
             }
           >
-            Lihat halaman ↗
+            Lihat halaman &rarr;
           </a>
         </header>
         {service ? (
@@ -923,15 +930,15 @@ export function AdminConsole() {
           </div>}
           {page === "home" && <div className="admin-about-arrays">
             <h2>Konten berulang Beranda</h2>
-            <ArrayEditor title="Daftar layanan" items={homeServices} fields={["number", "title", "description"]} onChange={(i, f, v) => update("home", { ...content, services: homeServices.map((item, index) => index === i ? { ...item, [f!]: v } : item) })} onRemove={(i) => update("home", { ...content, services: homeServices.filter((_, index) => index !== i) })} onAdd={() => update("home", { ...content, services: [...homeServices, { number: String(homeServices.length + 1).padStart(2, "0"), title: "Layanan baru", description: "Keterangan layanan" }] })} onSave={() => { setNotice("Menyimpan layanan…"); setTimeout(() => { void save(); }, 0); }} />
+            <ArrayEditor title="Daftar layanan" items={homeServices} fields={["number", "title", "description"]} onChange={(i, f, v) => update("home", { ...content, services: homeServices.map((item, index) => index === i ? { ...item, [f!]: v } : item) })} onRemove={(i) => update("home", { ...content, services: homeServices.filter((_, index) => index !== i) })} onAdd={() => update("home", { ...content, services: [...homeServices, { number: String(homeServices.length + 1).padStart(2, "0"), title: "Layanan baru", description: "Keterangan layanan" }] })} onSave={() => { setNotice("Menyimpan layanan..."); setTimeout(() => { void save(); }, 0); }} />
             <ArrayEditor title="Proyek unggulan" items={homeProjects} fields={["image", "number", "category", "title", "tone"]} onChange={(i, f, v) => update("home", { ...content, featuredProjects: homeProjects.map((item, index) => index === i ? { ...item, [f!]: v } : item) })} onRemove={(i) => update("home", { ...content, featuredProjects: homeProjects.filter((_, index) => index !== i) })} onAdd={() => update("home", { ...content, featuredProjects: [...homeProjects, { number: "01", category: "Kategori", title: "Proyek baru", image: "/portfolio/", tone: "orange" }] })} />
           </div>}
-          {page === "portfolio" && <div className="admin-about-arrays"><h2>Filter by</h2><div className="portfolio-filter-buttons">{["Semua", ...portfolioCategories].map((category) => <button type="button" key={category} className={portfolioCategory === category ? "selected" : ""} onClick={() => setPortfolioCategory(category)}>{category}</button>)}</div><ArrayEditor title={`Proyek (${visiblePortfolioProjects.length})`} items={visiblePortfolioProjects.map((item) => ({ ...item, category: currentPortfolioCategory(item.category, portfolioServices) }))} fields={["image", "number", "category", "client", "title", "tone"]} onChange={(i, f, v) => updateAboutArray("projects", allPortfolioProjects.indexOf(visiblePortfolioProjects[i]), f, v, "portfolio")} onRemove={(i) => removeAboutArray("projects", allPortfolioProjects.indexOf(visiblePortfolioProjects[i]), "portfolio")} onAdd={() => addAboutArray("projects", { number: "01", category: portfolioCategories[0] ?? "Kategori", client: "Klien", title: "Proyek baru", image: "/portfolio/", tone: "orange" }, "portfolio")} onSave={() => { update("portfolio", { ...content, projects: allPortfolioProjects.map((item) => ({ ...item, category: currentPortfolioCategory(item.category, portfolioServices) })) }); setNotice("Menyimpan proyek…"); setTimeout(() => { void save(); }, 0); }} /></div>}
+          {page === "portfolio" && <div className="admin-about-arrays"><h2>Filter by</h2><div className="portfolio-filter-buttons">{["Semua", ...portfolioCategories].map((category) => <button type="button" key={category} className={portfolioCategory === category ? "selected" : ""} onClick={() => setPortfolioCategory(category)}>{category}</button>)}</div><ArrayEditor title={`Proyek (${visiblePortfolioProjects.length})`} items={visiblePortfolioProjects.map((item) => ({ ...item, category: currentPortfolioCategory(item.category, portfolioServices) }))} fields={["image", "number", "category", "client", "title", "tone"]} onChange={(i, f, v) => updateAboutArray("projects", allPortfolioProjects.indexOf(visiblePortfolioProjects[i]), f, v, "portfolio")} onRemove={(i) => removeAboutArray("projects", allPortfolioProjects.indexOf(visiblePortfolioProjects[i]), "portfolio")} onAdd={() => addAboutArray("projects", { number: "01", category: portfolioCategories[0] ?? "Kategori", client: "Klien", title: "Proyek baru", image: "/portfolio/", tone: "orange" }, "portfolio")} onSave={() => { update("portfolio", { ...content, projects: allPortfolioProjects.map((item) => ({ ...item, category: currentPortfolioCategory(item.category, portfolioServices) })) }); setNotice("Menyimpan proyek..."); setTimeout(() => { void save(); }, 0); }} /></div>}
           </>
         )}
         <div className="admin-actions">
           <button onClick={save} disabled={busy}>
-            {busy ? "Menyimpan…" : "Simpan perubahan"}
+            {busy ? "Menyimpan..." : "Simpan perubahan"}
           </button>
           {service && <button className="danger-button admin-delete-current" onClick={() => { if (window.confirm(`Hapus layanan ${service.name}?`)) { const next = services.filter((item) => item.slug !== service.slug).map((item, index) => ({ ...item, number: String(index + 1).padStart(2, "0") })); const { [service.slug]: _removedDetail, ...remainingDetails } = details; update("services", { ...data.services, items: next }); update("service-details", remainingDetails); setNotice("Layanan dan detailnya dihapus. Klik Simpan perubahan untuk menyimpan."); setSelected(null); } }}>Hapus layanan</button>}
           {notice && <p>{notice}</p>}
